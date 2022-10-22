@@ -1,0 +1,43 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# empty list
+ASK {
+	BIND("[]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 1, 0) = ?list)
+};
+
+# subseq 1-1
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 1, 1) = "[1]"^^cdt:List)
+};
+
+# subseq 2-3
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 2, 3) = "[2, 3, 4]"^^cdt:List)
+};
+
+# subseq overrun 10-2
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 10, 2) = "[10]"^^cdt:List)
+};
+
+# subseq underrun 0-2
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 0, 2) = "[1]"^^cdt:List)
+};
+
+# subseq 1-arg
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, 7) = "[7,8,9,10]"^^cdt:List)
+};
+
+# subseq 1-arg underrun
+ASK {
+	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
+	FILTER(cdt:subseq(?list, -2) = ?list)
+};

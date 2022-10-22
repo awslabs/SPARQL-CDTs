@@ -1,0 +1,64 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# empty list
+ASK {
+	BIND("[]"^^cdt:List AS ?list)
+	BIND(cdt:head(?list) AS ?head)
+	FILTER(!BOUND(?head))
+};
+
+# list with one integer
+ASK {
+	BIND("[1]"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = 1)
+};
+
+# list with two integers
+ASK {
+	BIND("[1, 2]"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = 1)
+};
+
+# list with one string
+ASK {
+	BIND("['a']"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = 'a')
+};
+
+# list with two strings
+ASK {
+	BIND("['a', 'b']"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = 'a')
+};
+
+# list with two mixed types
+ASK {
+	BIND("["a", 1]"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = 'a')
+};
+
+# list with null
+ASK {
+	BIND("[null]"^^cdt:List AS ?list)
+	BIND(cdt:head(?list) AS ?head)
+	FILTER(!BOUND(?head))
+};
+
+# list with nested empty list
+ASK {
+	BIND("[[]]"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = "[]"^^cdt:List)
+};
+
+# list with mixed types including nested list
+ASK {
+	BIND("[[1], 2]"^^cdt:List AS ?list)
+	FILTER(cdt:head(?list) = "[1]"^^cdt:List)
+};
+
+# list with mixed defined and undefined types
+ASK {
+	BIND("[null, 2]"^^cdt:List AS ?list)
+	BIND(cdt:head(?list) AS ?head)
+	FILTER(!BOUND(?head))
+};
