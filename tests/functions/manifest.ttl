@@ -17,8 +17,6 @@
 		:list-constructor-04
 		:list-constructor-05
 		:list-constructor-06
-		:list-constructor-07
-		:list-constructor-08
 		:list-constructor-09
 		:list-constructor-10
 		:list-constructor-11
@@ -108,11 +106,25 @@
 		:subseq-06
 		:subseq-07
     	
+		# Null-values
+		
+		:list-constructor-null-01
+		:list-constructor-null-02
+		:concat-null-01
+		:contains-null-01
+		:contains_term-null-01
+		:get-null-01
+		:get-null-02
+		:get-null-03
+		:head-null-01
+		:head-null-02
+
     ) .
 
 
 :list-constructor-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-01" ;
+    rdfs:comment    "construct an empty list" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -123,6 +135,7 @@
 
 :list-constructor-02 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-02" ;
+    rdfs:comment    "construct a list with a single integer element" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -133,6 +146,7 @@
 
 :list-constructor-03 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-03" ;
+    rdfs:comment    "construct a list with two integer elements" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -143,6 +157,7 @@
 
 :list-constructor-04 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-04" ;
+    rdfs:comment    "construct a list with a single string element" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -153,6 +168,7 @@
 
 :list-constructor-05 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-05" ;
+    rdfs:comment    "construct a list with two string elements" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -163,6 +179,7 @@
 
 :list-constructor-06 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-06" ;
+    rdfs:comment    "construct a list with two elements of differing type" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -171,28 +188,9 @@
     mf:result  <true.srx> ;
 	.
 
-:list-constructor-07 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-constructor-07" ;
-    mf:feature cdt:list-constructor ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-constructor-07.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-constructor-08 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-constructor-08" ;
-    mf:feature cdt:list-constructor ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-constructor-08.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
 :list-constructor-09 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-09" ;
+    rdfs:comment    "construct a list with a nested, empty list element" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -203,6 +201,7 @@
 
 :list-constructor-10 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-10" ;
+    rdfs:comment    "construct a list with a nested list with a single integer element" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -213,6 +212,7 @@
 
 :list-constructor-11 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-11" ;
+    rdfs:comment    "construct a list with two elements of different type, one being a nested list" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -223,6 +223,7 @@
 
 :list-constructor-12 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-12" ;
+    rdfs:comment    "construct a list with two elements of different type, one being a null element produced by unbound variable error" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -233,6 +234,7 @@
 
 :list-constructor-13 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-13" ;
+    rdfs:comment    "construct two equal lists, one by list constructor and the other by literal syntax" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -243,6 +245,7 @@
 
 :list-constructor-14 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-14" ;
+    rdfs:comment    "construct a list using STRDT" ;
     mf:feature cdt:list-constructor ;
     dawgt:approval dawgt:Proposed ;
     mf:action
@@ -980,4 +983,124 @@
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
+
+
+
+
+
+
+
+
+
+:list-constructor-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-null-01" ;
+    rdfs:comment    "list constructor on null argument" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-null-02" ;
+    rdfs:comment    "construct a list one null element produced by expression evaluation error" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-null-01" ;
+    rdfs:comment    "concat with null" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-null-01" ;
+    rdfs:comment    "contains over list containing null" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-null-01" ;
+    rdfs:comment    "containsTerm over list containing null" ;
+    mf:feature cdt:containsTerm ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-null-01" ;
+    rdfs:comment    "get returning null" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-null-02" ;
+    rdfs:comment    "get on empty list" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-null-03" ;
+    rdfs:comment    "get on invalid index" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-null-01" ;
+    rdfs:comment    "head returning null" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-null-02" ;
+    rdfs:comment    "head on empty list" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+
 
