@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+# list with one string
+ASK {
+	BIND("['a']"^^cdt:List AS ?list)
+	FILTER(cdt:get(?list, 0) = 'a')
+}

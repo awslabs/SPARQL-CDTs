@@ -1,0 +1,9 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+
+# list with unbound as null
+ASK {
+	BIND(cdt:List(?unbound) AS ?list)
+	FILTER(?list = "[null]"^^cdt:List)
+}

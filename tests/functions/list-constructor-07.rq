@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# list with error as null
+ASK {
+	BIND(cdt:List(1/0) AS ?list)
+	FILTER(?list = "[null]"^^cdt:List)
+}

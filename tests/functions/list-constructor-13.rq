@@ -1,0 +1,9 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# rdf literal syntax
+ASK {
+	BIND(cdt:List() AS ?list)
+	BIND("[]"^^cdt:List AS ?expected)
+	FILTER(?list = ?expected)
+}

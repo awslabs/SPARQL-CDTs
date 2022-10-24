@@ -1,19 +1,5 @@
 PREFIX cdt:    <http://example.org/cdt/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
-
-# empty lists
-ASK {
-	BIND("[]"^^cdt:List AS ?list)
-	FILTER(!cdt:contains(?list, 1))
-};
-
-# contains integer
-ASK {
-	BIND("[1]"^^cdt:List AS ?list)
-	FILTER(cdt:contains(?list, 1))
-	FILTER(!cdt:contains(?list, 2))
-};
-
 # contains equality
 ASK {
 	BIND("[1,'a','b'@en,2.0]"^^cdt:List AS ?list)
@@ -33,5 +19,4 @@ ASK {
 	FILTER(cdt:contains(?list, 'a'))
 	FILTER(cdt:contains(?list, 'b'@en))
 	FILTER(!cdt:contains(?list, 'b'))
-};
-
+}

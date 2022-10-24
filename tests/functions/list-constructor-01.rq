@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# empty list
+ASK {
+	BIND(cdt:List() AS ?list)
+	FILTER(?list = "[]"^^cdt:List)
+}

@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# list with mixed defined and undefined types
+ASK {
+	BIND(cdt:List(?unbound, 1) AS ?list)
+	FILTER(?list = "[null, 2]"^^cdt:List)
+}

@@ -1,0 +1,983 @@
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <manifest#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mf:     <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt:     <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+@prefix dawgt:   <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix sparql:  <http://www.w3.org/ns/sparql#> .
+@prefix cdt:     <http://example.org/cdt/> .
+
+<>  rdf:type mf:Manifest ;
+    rdfs:label "SPARQL Composite Type Functions" ;
+    mf:entries
+    (
+		:list-constructor-01
+		:list-constructor-02
+		:list-constructor-03
+		:list-constructor-04
+		:list-constructor-05
+		:list-constructor-06
+		:list-constructor-07
+		:list-constructor-08
+		:list-constructor-09
+		:list-constructor-10
+		:list-constructor-11
+		:list-constructor-12
+		:list-constructor-13
+		:list-constructor-14
+
+		:concat-01
+		:concat-02
+		:concat-03
+		:concat-04
+		:concat-05
+		:concat-06
+		:concat-07
+		
+		:contains-01
+		:contains-02
+		:contains-03
+
+		:contains_term-01
+		:contains_term-02
+		:contains_term-03
+
+		:get-01
+		:get-02
+		:get-03
+		:get-04
+		:get-05
+		:get-06
+		:get-07
+		:get-08
+		:get-09
+		:get-10
+		:get-11
+
+		:head-01
+		:head-02
+		:head-03
+		:head-04
+		:head-05
+		:head-06
+		:head-07
+		:head-08
+		:head-09
+		:head-10
+
+		:tail-01
+		:tail-02
+		:tail-03
+		:tail-04
+		:tail-05
+		:tail-06
+		:tail-07
+		:tail-08
+		:tail-09
+		:tail-10
+
+		:reverse-01
+		:reverse-02
+		:reverse-03
+		:reverse-04
+		:reverse-05
+		:reverse-06
+		:reverse-07
+		:reverse-08
+		:reverse-09
+		:reverse-10
+
+		:size-01
+		:size-02
+		:size-03
+		:size-04
+		:size-05
+		:size-06
+		:size-07
+		:size-08
+		:size-09
+		:size-10
+		:size-11
+		:size-12
+
+		:subseq-01
+		:subseq-02
+		:subseq-03
+		:subseq-04
+		:subseq-05
+		:subseq-06
+		:subseq-07
+    	
+    ) .
+
+
+:list-constructor-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-01" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-02" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-03" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-04" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-05" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-06" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-07" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-08" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-09" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-10" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-11" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-12" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-12.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-13 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-13" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-13.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-14 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-14" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-14.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-01" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-02" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-03" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-04" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-05" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-06" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-07" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-01" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-02" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-03" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-01" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-02" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-03" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-01" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-02" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-03" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-04" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-05" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-06" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-07" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-08" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-09" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-10" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-11" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-01" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-02" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-03" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-04" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-05" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-06" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-07" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-08" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-09" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:head-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-10" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-01" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-02" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-03" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-04" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-05" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-06" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-07" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-08" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-09" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:tail-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-10" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-01" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-02" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-03" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-04" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-05" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-06" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-07" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-08" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-09" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:reverse-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-10" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-01" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-02" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-03" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-04" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-05" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-06" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-07" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-08" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-09" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-10" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-11" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:size-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-12" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-12.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-01" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-02" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-03" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-04" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-05" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-06" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-07" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+

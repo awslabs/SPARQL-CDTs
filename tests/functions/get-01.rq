@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# list with one integer
+ASK {
+	BIND("[1]"^^cdt:List AS ?list)
+	FILTER(cdt:get(?list, 0) = 1)
+}
