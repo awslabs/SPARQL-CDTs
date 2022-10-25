@@ -45,8 +45,6 @@
 		:get-03
 		:get-04
 		:get-05
-		:get-06
-		:get-07
 		:get-08
 		:get-09
 		:get-10
@@ -115,10 +113,37 @@
 		:contains_term-null-01
 		:get-null-01
 		:get-null-02
-		:get-null-03
 		:head-null-01
 		:head-null-02
 
+		# TODO: Errors
+		:get-error-01 # invalid index
+		# :get-error-02 # non-integer index
+		# :subseq-error-01 # non-integer index
+		# :subseq-error-02 # non-integer index
+		# :concat-error-01 # non-list argument
+		# :contains-error-01 # non-list argument
+		# :contains_term-error-01 # non-list argument
+		# :head-error-01 # non-list argument
+		# :tail-error-01 # non-list argument
+		# :reverse-error-01 # non-list argument
+		# :size-error-01 # non-list argument
+		# :subseq-error-01 # non-list argument
+
+		# TODO: Equality Tests
+		# :list-equals-01 # empty list
+		# :list-equals-02 # single-element
+		# :list-equals-03 # multiple-element
+		# :list-equals-04 # multiple-element, value-space comparison
+		# :list-equals-null-error-01 # cannot test equality of lists with null
+
+		# TODO: sameTerm Tests
+		# :list-sameterm-01 # empty list
+		# :list-sameterm-02 # single-element
+		# :list-sameterm-03 # multiple-element
+		# :list-sameterm-04 # multiple-element, lexical-space comparison
+		# :list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
+		# :list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
     ) .
 
 
@@ -434,22 +459,12 @@
     mf:result  <true.srx> ;
 	.
 
-:get-06 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-06" ;
+:get-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-null-01" ;
     mf:feature cdt:get ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <get-06.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-07 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-07" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-07.rq> ;
+         [ qt:query  <get-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -1068,13 +1083,13 @@
     mf:result  <true.srx> ;
 	.
 
-:get-null-03 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-null-03" ;
+:get-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-01" ;
     rdfs:comment    "get on invalid index" ;
     mf:feature cdt:get ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <get-null-03.rq> ;
+         [ qt:query  <get-error-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
