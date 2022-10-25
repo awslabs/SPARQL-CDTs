@@ -116,34 +116,34 @@
 		:head-null-01
 		:head-null-02
 
-		# TODO: Errors
+		# Errors
 		:get-error-01 # invalid index
-		# :get-error-02 # non-integer index
-		# :subseq-error-01 # non-integer index
-		# :subseq-error-02 # non-integer index
-		# :concat-error-01 # non-list argument
-		# :contains-error-01 # non-list argument
-		# :contains_term-error-01 # non-list argument
-		# :head-error-01 # non-list argument
-		# :tail-error-01 # non-list argument
-		# :reverse-error-01 # non-list argument
-		# :size-error-01 # non-list argument
-		# :subseq-error-01 # non-list argument
+		:get-error-02 # non-integer index
+		:get-error-03 # non-list argument
+		:subseq-error-01 # non-list argument
+		:subseq-error-02 # non-integer index
+		:concat-error-01 # non-list argument
+		:contains-error-01 # non-list argument
+		:contains_term-error-01 # non-list argument
+		:head-error-01 # non-list argument
+		:tail-error-01 # non-list argument
+		:reverse-error-01 # non-list argument
+		:size-error-01 # non-list argument
 
-		# TODO: Equality Tests
-		# :list-equals-01 # empty list
-		# :list-equals-02 # single-element
-		# :list-equals-03 # multiple-element
-		# :list-equals-04 # multiple-element, value-space comparison
-		# :list-equals-null-error-01 # cannot test equality of lists with null
+		# Equality Tests
+		# TODO :list-equals-01 # empty list
+		# TODO :list-equals-02 # single-element
+		# TODO :list-equals-03 # multiple-element
+		# TODO :list-equals-04 # multiple-element, value-space comparison
+		# TODO :list-equals-null-error-01 # cannot test equality of lists with null
 
-		# TODO: sameTerm Tests
-		# :list-sameterm-01 # empty list
-		# :list-sameterm-02 # single-element
-		# :list-sameterm-03 # multiple-element
-		# :list-sameterm-04 # multiple-element, lexical-space comparison
-		# :list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
-		# :list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
+		# sameTerm Tests
+		# TODO :list-sameterm-01 # empty list
+		# TODO :list-sameterm-02 # single-element
+		# TODO :list-sameterm-03 # multiple-element
+		# TODO :list-sameterm-04 # multiple-element, lexical-space comparison
+		# TODO :list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
+		# TODO :list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
     ) .
 
 
@@ -1083,17 +1083,6 @@
     mf:result  <true.srx> ;
 	.
 
-:get-error-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-error-01" ;
-    rdfs:comment    "get on invalid index" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-error-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
 :head-null-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "head-null-01" ;
     rdfs:comment    "head returning null" ;
@@ -1117,5 +1106,144 @@
 	.
 
 
+
+
+:get-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-01" ;
+    rdfs:comment    "get on invalid index" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-error-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-02" ;
+    rdfs:comment    "get with non-integer index" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-error-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-03" ;
+    rdfs:comment    "get with non-list argument" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-error-01" ;
+    rdfs:comment    "subseq with non-list argument" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-error-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-error-02" ;
+    rdfs:comment    "subseq with non-integer index" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-error-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:concat-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "concat-error-01" ;
+    rdfs:comment    "concat with non-list argument" ;
+    mf:feature cdt:concat ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <concat-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:contains-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-error-01" ;
+    rdfs:comment    "contains with non-list argument" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:contains_term-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-error-01" ;
+    rdfs:comment    "contains_term with non-list argument" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:head-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "head-error-01" ;
+    rdfs:comment    "head with non-list argument" ;
+    mf:feature cdt:head ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <head-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:tail-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "tail-error-01" ;
+    rdfs:comment    "tail with non-list argument" ;
+    mf:feature cdt:tail ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <tail-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:reverse-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "reverse-error-01" ;
+    rdfs:comment    "reverse with non-list argument" ;
+    mf:feature cdt:reverse ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <reverse-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+
+:size-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "size-error-01" ;
+    rdfs:comment    "size with non-list argument" ;
+    mf:feature cdt:size ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <size-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
 
 
