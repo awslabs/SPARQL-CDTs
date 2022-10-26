@@ -3,5 +3,7 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 # list with null
 ASK {
 	BIND("[null]"^^cdt:List AS ?list)
-	FILTER(cdt:reverse(?list) = "[null]"^^cdt:List)
+	BIND(cdt:reverse(?list) AS ?result)
+	BIND(cdt:List(?unbound) AS ?expected)
+	FILTER(SAMETERM(?result, ?expected))
 }

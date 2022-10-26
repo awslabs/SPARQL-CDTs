@@ -1,0 +1,6 @@
+PREFIX cdt:    <http://example.org/cdt/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+ASK {
+	FILTER(SAMETERM("[1]"^^cdt:List, "[1]"^^cdt:List))
+}

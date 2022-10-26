@@ -31,7 +31,7 @@
 		:concat-05
 		:concat-06
 		:concat-07
-		
+
 		:contains-01
 		:contains-02
 		:contains-03
@@ -131,21 +131,20 @@
 		:size-error-01 # non-list argument
 
 		# Equality Tests
-		# TODO :list-equals-01 # empty list
-		# TODO :list-equals-02 # single-element
-		# TODO :list-equals-03 # multiple-element
-		# TODO :list-equals-04 # multiple-element, value-space comparison
-		# TODO :list-equals-null-error-01 # cannot test equality of lists with null
+		:list-equals-01 # empty list
+		:list-equals-02 # single-element
+		:list-equals-03 # multiple-element
+		:list-equals-04 # multiple-element, value-space comparison
+		:list-equals-null-error-01 # cannot test equality of lists with null
 
 		# sameTerm Tests
-		# TODO :list-sameterm-01 # empty list
-		# TODO :list-sameterm-02 # single-element
-		# TODO :list-sameterm-03 # multiple-element
-		# TODO :list-sameterm-04 # multiple-element, lexical-space comparison
-		# TODO :list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
-		# TODO :list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
+		:list-sameterm-01 # empty list
+		:list-sameterm-02 # single-element
+		:list-sameterm-03 # multiple-element
+		:list-sameterm-04 # multiple-element, lexical-space comparison
+		:list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
+		:list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
     ) .
-
 
 :list-constructor-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-01" ;
@@ -999,14 +998,6 @@
     mf:result  <true.srx> ;
 	.
 
-
-
-
-
-
-
-
-
 :list-constructor-null-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-constructor-null-01" ;
     rdfs:comment    "list constructor on null argument" ;
@@ -1105,9 +1096,6 @@
     mf:result  <true.srx> ;
 	.
 
-
-
-
 :get-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "get-error-01" ;
     rdfs:comment    "get on invalid index" ;
@@ -1174,7 +1162,6 @@
     mf:result  <true.srx> ;
 	.
 
-
 :contains-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "contains-error-01" ;
     rdfs:comment    "contains with non-list argument" ;
@@ -1185,7 +1172,6 @@
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
-
 
 :contains_term-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "contains_term-error-01" ;
@@ -1198,7 +1184,6 @@
     mf:result  <true.srx> ;
 	.
 
-
 :head-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "head-error-01" ;
     rdfs:comment    "head with non-list argument" ;
@@ -1209,7 +1194,6 @@
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
-
 
 :tail-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "tail-error-01" ;
@@ -1222,7 +1206,6 @@
     mf:result  <true.srx> ;
 	.
 
-
 :reverse-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "reverse-error-01" ;
     rdfs:comment    "reverse with non-list argument" ;
@@ -1233,7 +1216,6 @@
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
-
 
 :size-error-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "size-error-01" ;
@@ -1246,4 +1228,112 @@
     mf:result  <true.srx> ;
 	.
 
+:list-equals-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-01" ;
+    rdfs:comment    "equals test on empty list" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
 
+:list-equals-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-02" ;
+    rdfs:comment    "equals test on single-element" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-03" ;
+    rdfs:comment    "equals test on multiple-element" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-04" ;
+    rdfs:comment    "equals test on multiple-element, value-space comparison" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-null-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-null-error-01" ;
+    rdfs:comment    "equals test on cannot test equality of lists with null" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-null-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-01" ;
+    rdfs:comment    "sameterm test on empty list" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-02" ;
+    rdfs:comment    "sameterm test on single-element" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-03" ;
+    rdfs:comment    "sameterm test on multiple-element" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-04" ;
+    rdfs:comment    "sameterm test on multiple-element, lexical-space comparison" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-05" ;
+    rdfs:comment    "sameterm test on multiple-element, different lexical-space, same value-space elements (!sameTerm)" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-sameterm-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-sameterm-null-01" ;
+    rdfs:comment    "sameterm test on list with null (allowed since the test is on the list lexical, not the elements)" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-sameterm-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
