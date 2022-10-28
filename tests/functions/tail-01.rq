@@ -3,5 +3,6 @@ PREFIX cdt:    <http://example.org/cdt/>
 # empty list
 ASK {
 	BIND("[]"^^cdt:List AS ?list)
-	FILTER(cdt:tail(?list) = "[]"^^cdt:List)
+	BIND(cdt:tail(?list) AS ?result)
+	FILTER(!BOUND(?result))
 }
