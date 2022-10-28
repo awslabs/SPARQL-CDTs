@@ -3,5 +3,5 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 # list with one string
 ASK {
 	BIND("['a']"^^cdt:List AS ?list)
-	FILTER(cdt:get(?list, 0) = 'a')
+	FILTER(cdt:get(?list, 1) = 'a')
 }

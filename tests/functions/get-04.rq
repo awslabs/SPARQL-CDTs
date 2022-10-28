@@ -3,6 +3,6 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 # list with two strings
 ASK {
 	BIND("['a', 'b']"^^cdt:List AS ?list)
-	FILTER(cdt:get(?list, 0) = 'a')
-	FILTER(cdt:get(?list, 1) = 'b')
+	FILTER(cdt:get(?list, 1) = 'a')
+	FILTER(cdt:get(?list, 2) = 'b')
 }
