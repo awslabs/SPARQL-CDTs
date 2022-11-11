@@ -25,126 +25,126 @@
 		:list-constructor-14
 		:list-constructor-15
 
-# 		:concat-01
-# 		:concat-02
-# 		:concat-03
-# 		:concat-04
-# 		:concat-05
-# 		:concat-06
-# 		:concat-07
-# 
-# 		:contains-01
-# 		:contains-02
-# 		:contains-03
-# 
-# 		:contains_term-01
-# 		:contains_term-02
-# 		:contains_term-03
-# 
-# 		:get-01
-# 		:get-02
-# 		:get-03
-# 		:get-04
-# 		:get-05
-# 		:get-08
-# 		:get-09
-# 		:get-10
-# 		:get-11
-# 
-# 		:head-01
-# 		:head-02
-# 		:head-03
-# 		:head-04
-# 		:head-05
-# 		:head-06
-# 		:head-07
-# 		:head-08
-# 		:head-09
-# 		:head-10
-# 
-# 		:tail-01
-# 		:tail-02
-# 		:tail-03
-# 		:tail-04
-# 		:tail-05
-# 		:tail-06
-# 		:tail-07
-# 		:tail-08
-# 		:tail-09
-# 		:tail-10
-# 
-# 		:reverse-01
-# 		:reverse-02
-# 		:reverse-03
-# 		:reverse-04
-# 		:reverse-05
-# 		:reverse-06
-# 		:reverse-07
-# 		:reverse-08
-# 		:reverse-09
-# 		:reverse-10
-# 
-# 		:size-01
-# 		:size-02
-# 		:size-03
-# 		:size-04
-# 		:size-05
-# 		:size-06
-# 		:size-07
-# 		:size-08
-# 		:size-09
-# 		:size-10
-# 		:size-11
-# 		:size-12
-# 
-# 		:subseq-01
-# 		:subseq-02
-# 		:subseq-03
-# 		:subseq-04
-# 		:subseq-05
-# 		:subseq-06
-# 		:subseq-07
-#     	
-# 		# Null-values
-# 		
-# 		:list-constructor-null-01
-# 		:list-constructor-null-02
-# 		:concat-null-01
-# 		:contains-null-01
-# 		:contains_term-null-01
-# 		:get-null-01
-# 		:get-null-02
-# 		:head-null-01
-# 		:head-null-02
-# 
-# 		# Errors
-# 		:get-error-01 # invalid index
-# 		:get-error-02 # non-integer index
-# 		:get-error-03 # non-list argument
-# 		:subseq-error-01 # non-list argument
-# 		:subseq-error-02 # non-integer index
-# 		:concat-error-01 # non-list argument
-# 		:contains-error-01 # non-list argument
-# 		:contains_term-error-01 # non-list argument
-# 		:head-error-01 # non-list argument
-# 		:tail-error-01 # non-list argument
-# 		:reverse-error-01 # non-list argument
-# 		:size-error-01 # non-list argument
-# 
-# 		# Equality Tests
-# 		:list-equals-01 # empty list
-# 		:list-equals-02 # single-element
-# 		:list-equals-03 # multiple-element
-# 		:list-equals-04 # multiple-element, value-space comparison
-# 		:list-equals-null-error-01 # cannot test equality of lists with null
-# 
-# 		# sameTerm Tests
-# 		:list-sameterm-01 # empty list
-# 		:list-sameterm-02 # single-element
-# 		:list-sameterm-03 # multiple-element
-# 		:list-sameterm-04 # multiple-element, lexical-space comparison
-# 		:list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
-# 		:list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
+		:concat-01
+		:concat-02
+		:concat-03
+		:concat-04
+		:concat-05
+		:concat-06
+		:concat-07
+
+		:contains-01
+		:contains-02
+		:contains-03
+
+		:contains_term-01
+		:contains_term-02
+		:contains_term-03
+
+		:get-01
+		:get-02
+		:get-03
+		:get-04
+		:get-05
+		:get-08
+		:get-09
+		:get-10
+		:get-11
+
+		:head-01
+		:head-02
+		:head-03
+		:head-04
+		:head-05
+		:head-06
+		:head-07
+		:head-08
+		:head-09
+		:head-10
+
+		:tail-01
+		:tail-02
+		:tail-03
+		:tail-04
+		:tail-05
+		:tail-06
+		:tail-07
+		:tail-08
+		:tail-09
+		:tail-10
+
+		:reverse-01
+		:reverse-02
+		:reverse-03
+		:reverse-04
+		:reverse-05
+		:reverse-06
+		:reverse-07
+		:reverse-08
+		:reverse-09
+		:reverse-10
+
+		:size-01
+		:size-02
+		:size-03
+		:size-04
+		:size-05
+		:size-06
+		:size-07
+		:size-08
+		:size-09
+		:size-10
+		:size-11
+		:size-12
+
+		:subseq-01
+		:subseq-02
+		:subseq-03
+		:subseq-04
+		:subseq-05
+		:subseq-06
+		:subseq-07
+    	
+		# Null-values
+		
+		:list-constructor-null-01
+		:list-constructor-null-02
+		:concat-null-01
+		:contains-null-01
+		:contains_term-null-01
+		:get-null-01
+		:get-null-02
+		:head-null-01
+		:head-null-02
+
+		# Errors
+		:get-error-01 # invalid index
+		:get-error-02 # non-integer index
+		:get-error-03 # non-list argument
+		:subseq-error-01 # non-list argument
+		:subseq-error-02 # non-integer index
+		:concat-error-01 # non-list argument
+		:contains-error-01 # non-list argument
+		:contains_term-error-01 # non-list argument
+		:head-error-01 # non-list argument
+		:tail-error-01 # non-list argument
+		:reverse-error-01 # non-list argument
+		:size-error-01 # non-list argument
+
+		# Equality Tests
+		:list-equals-01 # empty list
+		:list-equals-02 # single-element
+		:list-equals-03 # multiple-element
+		:list-equals-04 # multiple-element, value-space comparison
+		:list-equals-null-error-01 # cannot test equality of lists with null
+
+		# sameTerm Tests
+		:list-sameterm-01 # empty list
+		:list-sameterm-02 # single-element
+		:list-sameterm-03 # multiple-element
+		:list-sameterm-04 # multiple-element, lexical-space comparison
+		:list-sameterm-05 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
+		:list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
     ) .
 
 :list-constructor-01 rdf:type mf:QueryEvaluationTest ;
