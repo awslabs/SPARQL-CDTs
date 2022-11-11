@@ -8,5 +8,5 @@ ASK {
 	# we could use SAMETERM, but that would likely depend on the lexical form produced by
 	# the system for lists, and not necessarily tell us that the expected terms were actuall
 	# in the resulting list.
-	FILTER(REGEX(STR(?list), "[[]\\s*null\\s*,\\s*<http://example[.]org/>\\s*[]]"))
+	FILTER(REGEX(STR(?list), "\\[\\s*null\\s*,\\s*<http://example[.]org/>\\s*\\]"))
 }
