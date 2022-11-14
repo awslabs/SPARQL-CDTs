@@ -36,6 +36,12 @@
 		:contains-01
 		:contains-02
 		:contains-03
+		:contains-04
+		:contains-05
+		:contains-06
+		:contains-07
+		:contains-08
+		:contains-09
 
 		:contains_term-01
 		:contains_term-02
@@ -386,6 +392,66 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-04" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-05" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-06" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-07" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-08" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-09" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-09.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
