@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Composite Datatype Literals in RDF and SPARQL</title>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script>
+  <script class="remove">
+   // All config options at https://respec.org/docs/
+   var respecConfig = {
+      specStatus: "unofficial",
+// TODO:
+      edDraftURI: "https://w3c.github.io/rdf-star/cg-spec/editors_draft.html",
+      editors: [
+        {
+          "name": "Olaf Hartig",
+          "url": "http://olafhartig.de/",
+          "company": "Amazon",
+          "companyURL": "https://amazon.com/",
+          "orcid": "0000-0002-1741-2090",
+          "w3cid": 112469,
+        },
+        {
+          "name": "Gregory Todd Williams",
+          "url": "https://kasei.us/",
+          "company": "Amazon",
+          "companyURL": "https://amazon.com/",
+          "w3cid": 112469,
+        },
+// TODO: Greg's w3cid ?
+      ],
+      github: {
+        repoURL: "hartig/SPARQL-CDTs",
+        branch: "main",
+      },
+      localBiblio: {
+        "EBNF-NOTATION": {
+          title: "EBNF NOTATION",
+          href: "http://www.w3.org/TR/REC-xml/#sec-notation",
+          publisher: "W3C",
+          date: "26 November 2008",
+          status: "W3C Recommendation",
+          authors: [
+            "Tim Bray",
+            "Jean Paoli",
+            "C. M. Sperberg-McQueen",
+            "Eve Maler",
+            "François Yergeau"
+          ]
+        }
+      },
+//       wgPublicList: "public-rdf-star",
+//       shortName: "rdf-star",
+//       group: "rdf-dev",
+
+//       testSuiteURI: "https://w3c.github.io/rdf-star/tests/",
+//       implementationReportURI:"https://w3c.github.io/rdf-star/reports/",
+      xref: ["RDF11-CONCEPTS", "SPARQL11-QUERY", "RDF11-MT"],
+      maxTocLevel: 3,
+//       latestVersion: "https://w3c.github.io/rdf-star/cg-spec",
+    };
+    // set publishDate and previousDate in order to make a published draft
+    var publishDate = null;
+    var previousDate = null;
+    if (publishDate !== null && previousDate !== null) {
+      var thisVersion = "https://w3c.github.io/rdf-star/cg-spec/" + publishDate + ".html";
+      var previousVersion = "https://w3c.github.io/rdf-star/cg-spec/" + previousDate + ".html";
+      respecConfig.otherLinks.push({
+        key: "This version:",
+          data: [
+            {
+              value: thisVersion,
+              href: thisVersion,
+            }
+          ]
+      });
+      respecConfig.otherLinks.push({
+        key: "Previous version:",
+          data: [
+            {
+              value: previousVersion,
+              href: previousVersion,
+            }
+          ]
+      });
+      respecConfig.publishDate = publishDate;
+      respecConfig.doJsonLd = true;
+      respecConfig.canonicalURI = thisVersion;
+      window.addEventListener('load', () => {
+        document.body.classList.add('no-watermark');
+      })
+    }
+  </script>
+  <style>
+    /* copied from TR/turtle, and adapted for SPARQL rules */
+    .grammar td { font-family: monospace; vertical-align: top; }
+    .grammar-literal, .token { color: gray;}
+    .grammar_comment { color: #A52A2A; font-style: italic; }
+
+    /* better looking quoted examples */
+    .example .example {
+      border-left-width: .15em;
+    }
+
+    /* better numbering of algorithm steps */
+    .algorithm ol {
+      counter-reset: numsection;
+      list-style-type: none;
+    }
+    .algorithm ol>li {
+      margin: 0.5em 0;
+    }
+    .algorithm ol>li:before {
+      font-weight: bold;
+      counter-increment: numsection;
+      content: counters(numsection, ".") ") ";
+    }
+
+    /* SPARQL modification section */
+
+    .defn	{ 
+        margin-left:5% ; margin-right: 7%; 
+        margin-top: 0.1ex ; margin-bottom: 0.1ex ;
+        border: thin solid #888888;
+        padding: 1ex 2ex 0.5ex 2ex ;
+        page-break-inside: avoid ;
+        background-color: #F0F8F8 ;
+    }
+    
+    div.defn p	{ margin-top: 1ex ; margin-bottom: 1.5ex ;}
+    div.defn ul	{ margin-top: 1ex ; margin-bottom: 1.5ex ; }
+
+    .operator {
+        border: solid;
+        border-width: 1px;
+        border-color: #888;
+        width: 100%;
+        margin: 0px;
+    }
+
+    .operator tr {
+        border: solid;
+        border-color: #888;
+        border-width: 1px;
+    }
+    
+    .operator th {
+        border: solid;
+        border-color: #888;
+        border-width: 1px;
+    }
+
+    .operator td {
+        border: solid;
+        border-color: #888;
+        border-width: 1px;
+    }
+    
+    .heavy { color:black; font-weight:bold }
+    .small { font-size: smaller; }
+
+    #structure-map table {
+      background-image: url("visual-map-bg.svg");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+
+    #structure-map table td {
+      width: 33.34%;
+    }
+
+    #structure-map .box {
+      display: block;
+      border: thin solid gray;
+      border-radius: 0.5em;
+      background-color: white;
+      margin: 0.7em 1em;
+      padding: 0.35em 0.5em;
+      box-shadow: 0.25em 0.25em 0.5em darkgray;
+      text-align: center;
+    }
+
+    /* remove "unofficial draft" watermark */
+    body.no-watermark {
+      background: url('https://www.w3.org/StyleSheets/TR/2016/logos/back-cg-draft') no-repeat !important
+    }
+  </style>
+  <script>
+    /* copied from JSON-LD specs */
+    function updateExample(doc, content) {
+      // perform transformations to make it render and prettier
+      return _esc(reindent(unComment(doc, content)));
+    }
+
+    function _esc(s) {
+      return s.replace(/&/g,'&amp;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/</g,'&lt;');
+    }
+
+    function reindent(text) {
+      // TODO: use trimEnd when Edge supports it
+      const lines = text.trimRight().split("\n");
+      while (lines.length && !lines[0].trim()) {
+        lines.shift();
+      }
+      const indents = lines.filter(s => s.trim()).map(s => s.search(/[^\s]/));
+      const leastIndent = Math.min(...indents);
+      return lines.map(s => s.slice(leastIndent)).join("\n");
+    }
+
+    function unComment(doc, content) {
+      // perform transformations to make it render and prettier
+      return content
+        .replace(/<!--/, '')
+        .replace(/-->/, '')
+        .replace(/< !\s*-\s*-/g, '<!--')
+        .replace(/-\s*- >/g, '-->')
+        .replace(/-\s*-\s*&gt;/g, '--&gt;');
+    }
+  </script>
+</head>
+<body>
+  <section id="abstract">
+    <p>The Resource Description Framework (RDF) is a general-purpose framework for representing information on the Web, and the SPARQL language is a declarative language for querying and updating RDF data. This specification defines an approach to represent composite values (lists and maps) as literals in RDF, and corresponding extensions of the SPARQL language. These extensions include an aggregation function to produce such composite values, functions to operate on such composite values in expressions, and a new operator to transform such composite values into their individual components.</p>
+  </section>
+  <section id="sotd">
+  </section>
+
+  <section id="introduction">
+    <h1>Introduction</h1>
+
+    <section class="informative">
+      <h2>Background and Motivation</h2>
+
+      <p>The RDF data model lets you state facts in three-part subject-predicate-object statements known as triples. For example, with a single RDF triple, you can say that employee38 has a familyName of "Smith". A triple's predicate is a property specified with an IRI (an Internationalized version of a URI), identifying that property in a globally unambiguous way. A triple's subject and object can each be an IRI referencing any entity, and the object can also be a literal value such as "Smith" or data of other types such as dates, numbers, or Boolean values.</p>
+
+      <p>TODO</p>
+<!-- <p class="issue" data-number="43">Although the examples in this document, and the tests in <a href="https://w3c.github.io/rdf-star/tests/">the test suite</a>, adopt the optimistic approach, it should be noted that no clear consensus emerged from the group on which approach is the best.</p> -->
+
+    </section>
+
+    <section class="informative">
+      <h2>Overview</h2>
+
+      <p>
+        The basis of the approach is to capture composite values (lists and maps) as RDF literals. The components of such a composite value may be RDF terms, including literals representing other composite values. The <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> (i.e., the string representation) of such a literal that represents a composite value contains the components of the composite value serialized in a format that is based on the <a href="https://www.w3.org/TR/turtle/">RDF Turtle format</a> [[TURTLE]]. For instance, the literals in the object positions of the following two RDF triples represent lists. Notice that, in the lexical form of these literals, the elements of the lists are separated by commas and enclosed in square brackets.
+      </p>
+      <pre id="first-list-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:s ex:p1 "[ '1999-08-16'^^<http://www.w3.org/2001/XMLSchema#date>, 42 ]"^^cdt:List .
+        ex:s ex:p2 "[ <http://example.org/>, [1,2,3], 2.5 ]"^^cdt:List .
+        -->
+      </pre>
+      <p>
+        In addition to lists, the approach considers maps, as demonstrated by the literal in the object position of the following triple.
+      </p>
+      <pre id="first-map-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:s ex:p1 "{ 'name' : 'Tuva', 1: <http://example.org/> }"^^cdt:Map .
+        -->
+      </pre>
+      <p>
+        For a more detailed description of this form of literals for composite values, refer to the more extensive <a href="#description-of-literals">informal description of the approach</a>. For the definition of the datatypes used for these literals, refer to Sections&nbsp;<a href="#list-datatype" class="sectionRef"></a> and <a href="#map-datatype" class="sectionRef"></a>.
+      </p>
+      <p>
+        Given such composite datatype literals, the approach extends the SPARQL language with functionality related to the types of composite values that these literals capture. In particular, SPARQL is extended in the following three ways.
+      </p>
+      <p>
+        First, the approach introduces various functions for such literals that can be used in expressions (as given in BIND clauses, FILTER clauses, and SELECT clauses). As an example, consider the following SPARQL query (prefix declarations omitted) that uses two such functions in a BIND clause; one of these functions (<a href="#func_concat">`cdt:concat`</a>) concatenates two lists, returning the resulting list as a literal again, and the other function (<a href="#func_size">`cdt:size`</a>) returns the cardinality of the resulting list.
+      </p>
+      <pre id="first-functions-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT * WHERE {
+          ex:s ex:p1 ?l1 .
+          ex:s ex:p2 ?l2 .
+          BIND( cdt:size( cdt:concat(?l1,?l2) ) AS ?combinedLength )
+        }
+        -->
+      </pre>
+      <p>
+        When executing this query over the <a href="#first-list-example">first example data above</a> (the example with the two lists), the value produced for the `?combinedLength` variable would be&nbsp;5.
+      </p>
+      <p>
+        As its second extension to SPARQL, the approach introduces an aggregation function called FOLD that produces composite values for groups of solution mappings. The following query illustrates how this function can be used to create lists of persons that have the same name.
+      </p>
+      <pre id="first-fold-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?name (FOLD(?person) AS ?list) WHERE {
+          ?person rdf:type foaf:Person .
+          ?person foaf:name ?name .
+        }
+        GROUP BY ?name
+        -->
+      </pre>
+      <p>
+        The third extension to SPARQL is a new operator called UNFOLD that transforms composite values into their individual components and, then, assigns these components separately to a new query variable. The following query illustrates how this operator can be used to extract all elements from all lists represented by the objects of triples that match a given triple pattern.
+      </p>
+      <pre id="first-fold-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?element ?list WHERE {
+          ex:s ?p ?list .
+          UNFOLD( ?list AS ?element )
+        }
+        -->
+      </pre>
+      <p>
+        When executing this query over the <a href="#first-list-example">first example data above</a>, the query result consists of five solutions: two for the two elements of the list in the first triple of the example data and another three for the three elements of the list in the second triple.
+        For a more detailed description and more examples of these three extensions to SPARQL, refer to the extensive <a href="#description-of-literals">informal description of the approach</a>.
+      </p>
+
+    </section>
+
+    <section>
+      <h2>Conventions</h2>
+      <p>
+        For the remainder of this document, examples will assume that the following prefixes have been declared to represent the IRIs shown with them here:
+      </p>
+
+      <table>
+        <tr><td>`:`</td><td>`&lt;http://www.example.org/&gt;`</td></tr>
+        <tr><td>`rdf:`</td><td>`&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;`</td></tr>
+        <tr><td>`rdfs:`</td><td>`&lt;http://www.w3.org/2000/01/rdf-schema#&gt;`</td></tr>
+        <tr><td>`owl:`</td><td>`&lt;http://www.w3.org/2002/07/owl#&gt;`</td></tr>
+        <tr><td>`foaf:`</td><td>`&lt;http://xmlns.com/foaf/0.1/&gt;`</td></tr>
+        <tr><td>`prov:`</td><td>`&lt;http://www.w3.org/ns/prov#&gt;`</td></tr>
+        <tr><td>`dbo:`</td><td>`&lt;http://dbpedia.org/ontology/&gt;`</td></tr>
+        <tr><td>`dbr:`</td><td>`&lt;http://dbpedia.org/resource/&gt;`</td></tr>
+        <tr><td>`dc:`</td><td>`&lt;http://purl.org/dc/elements/1.1/&gt;`</td></tr>
+        <tr><td>`dct:`</td><td>`&lt;http://purl.org/dc/terms/&gt;`</td></tr>
+        <tr><td>`rdf-star:`</td><td>`&lt;http://www.w3.org/ns/rdf-star#&gt;`</td></tr>
+      </table>
+
+    </section>
+
+    <section id="structure">
+      <h2>Structure of this document</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="conformance">
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="description" class="informative">
+    <h1>Informal Description of the Approach</h1>
+    
+    <p>TODO</p>
+
+    <section id="description-of-literals">
+      <h2>Representation of Composite Values as RDF Literals</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="description-of-functions">
+      <h2>SPARQL Functions on Composite Datatype Literals</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="description-of-fold">
+      <h2>FOLD Function</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="description-of-unfold">
+      <h2>UNFOLD Operator</h2>
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="list-datatype">
+    <h2>The cdt:List Datatype</h2>
+
+    <p>
+      The <dfn data-lt="cdt:List datatype">cdt:List datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section, and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
+    </p>
+    <p>
+      `http://example.org/cdt/List`
+    </p>
+
+    <section id="list-datatype-valuespace">
+      <h2>Value Space</h2>
+        
+      <p>TODO</p>
+    </section>
+
+    <section id="list-datatype-lexspace">
+      <h2>Lexical Space</h2>
+        
+      <p>
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:List datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the following grammar (the <a data-cite="XML#sec-notation"><abbr title="Extended Backus-Naur Form">EBNF</abbr> notation</a> used here is defined in XML 1.0 [[EBNF-NOTATION]]). The grammar uses productions from the grammar of the Turtle serialization format for RDF data [[TURTLE]]. In particular, the terminal and nonterminal symbols for which no production rule is provided below (i.e.,
+        <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>,
+        <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">BLANK_NODE_LABEL</a>,
+        <a data-cite="TURTLE#grammar-production-NumericLiteral">NumericLiteral</a>,
+        <a data-cite="TURTLE#grammar-production-BooleanLiteral">BooleanLiteral</a>,
+        <a data-cite="TURTLE#grammar-production-String">String</a>,
+        and
+        <a data-cite="TURTLE#grammar-production-LANGTAG">LANGTAG</a>)
+        are defined in the Turtle grammar. The <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production is special as the Turtle grammar also contains a very similar production for the same symbol (see <a data-cite="TURTLE#grammar-production-RDFLiteral">RDFLiteral</a> in [[TURTLE]]). The difference is that the version of the rule in the Turtle grammar permits the <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> of a <a data-cite="RDF11-CONCEPTS#literal">literal</a> to be written as a <a data-cite="TURTLE#prefixed-name">prefixed name</a>, whereas the version of the rule as defined below does not permit datatype IRIs written as prefixed names (but only as absolute IRIs and as <a data-cite="TURTLE#relative-iri">relative IRIs</a>).
+      <p>
+
+      <table class="grammar">
+
+        <tr id="cdt-grammar-production-List">
+          <td>[1]</td>
+          <td>`List`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <code class="token">'['</code>
+            `(`
+            <a href="#cdt-grammar-production-NonEmptyListContent">NonEmptyListContent</a>
+            `)?`
+            <code class="token">']'</code>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-NonEmptyListContent">
+          <td>[2]</td>
+          <td>`NonEmptyListContent`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a href="#cdt-grammar-production-ListElement">ListElement</a>
+            `(`
+            <code class="token">','</code>
+            <a href="#cdt-grammar-production-ListElement">ListElement</a>
+            `)*`
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-ListElement">
+          <td>[3]</td>
+          <td>`ListElement`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">BLANK_NODE_LABEL</a>
+            `|`
+            <a href="#cdt-grammar-production-RDFLiteral">RDFLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-NumericLiteral">NumericLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BooleanLiteral">BooleanLiteral</a>
+            `|`
+            <a href="#cdt-grammar-production-NULL">NULL</a>
+            `|`
+            <a href="#cdt-grammar-production-List">List</a>
+            `|`
+            <a href="#cdt-grammar-production-Map">Map</a>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-Map">
+          <td>[4]</td>
+          <td>`Map`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <code class="token">'{'</code>
+            `(`
+            <a href="#cdt-grammar-production-NonEmptyMapContent">NonEmptyMapContent</a>
+            `)?`
+            <code class="token">'}'</code>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-NonEmptyMapContent">
+          <td>[5]</td>
+          <td>`NonEmptyMapContent`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a href="#cdt-grammar-production-MapEntry">MapEntry</a>
+            `(`
+            <code class="token">','</code>
+            <a href="#cdt-grammar-production-MapEntry">MapEntry</a>
+            `)*`
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-MapEntry">
+          <td>[6]</td>
+          <td>`MapEntry`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a href="#cdt-grammar-production-MapKey">MapKey</a>
+            `:`
+            <a href="#cdt-grammar-production-MapValue">MapValue</a>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-MapKey">
+          <td>[7]</td>
+          <td>`MapKey`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">BLANK_NODE_LABEL</a>
+            `|`
+            <a href="#cdt-grammar-production-RDFLiteral">RDFLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-NumericLiteral">NumericLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BooleanLiteral">BooleanLiteral</a>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-MapValue">
+          <td>[8]</td>
+          <td>`MapValue`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">BLANK_NODE_LABEL</a>
+            `|`
+            <a href="#cdt-grammar-production-RDFLiteral">RDFLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-NumericLiteral">NumericLiteral</a>
+            `|`
+            <a data-cite="TURTLE#grammar-production-BooleanLiteral">BooleanLiteral</a>
+            `|`
+            <a href="#cdt-grammar-production-NULL">NULL</a>
+            `|`
+            <a href="#cdt-grammar-production-List">List</a>
+            `|`
+            <a href="#cdt-grammar-production-Map">Map</a>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-NULL">
+          <td>[9]</td>
+          <td>`NULL`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <code class="token">'null'</code>
+          </td>
+        </tr>
+
+        <tr id="cdt-grammar-production-RDFLiteral">
+          <td>[128s]</td>
+          <td>`RDFLiteral`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <a data-cite="TURTLE#grammar-production-String">String</a>
+            `(`
+            <a data-cite="TURTLE#grammar-production-LANGTAG">LANGTAG</a>
+            `|`
+            <code class="token">'^^'</code> <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>
+            `)?`
+          </td>
+        </tr>
+
+      </table>
+
+      <p class="note">
+        The complete grammar can be found in <a href="#cdt-ebnf"></a>.
+      </p>
+
+    </section>
+
+    <section id="list-datatype-lex-to-value-mapping">
+      <h2>Lexical-To-Value Mapping</h2>
+        
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="map-datatype">
+    <h2>The cdt:Map Datatype</h2>
+
+    <p>
+      The <dfn data-lt="cdt:Map datatype">cdt:Map datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section, and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
+    </p>
+    <p>
+      `http://example.org/cdt/Map`
+    </p>
+
+    <section id="map-datatype-valuespace">
+      <h2>Value Space</h2>
+        
+      <p>TODO</p>
+    </section>
+
+    <section id="map-datatype-lexspace">
+      <h2>Lexical Space</h2>
+
+      <p>
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:Map datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+      </p>
+    </section>
+
+    <section id="map-datatype-lex-to-value-mapping">
+      <h2>Lexical-To-Value Mapping</h2>
+        
+      <p>TODO</p>
+    </section>
+
+    <section id="map-datatype-versus-json">
+      <h2>Relationship to JSON</h2>
+        
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="extension-of-sparql">
+    <h2>Extensions of Existing SPARQL Operators and Functions</h2>
+
+    <p>TODO</p>
+
+    <section id="operator-mapping">
+      <h2>Operator Mapping</h2>
+        
+      <p>TODO</p>
+    </section>
+
+    <section id="sameTerm">
+      <h2>sameTerm</h2>
+        
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="list-functions">
+    <h2>Functions on Lists</h2>
+
+    <p>TODO</p>
+
+    <section id="func_concat">
+      <h2>cdt:concat</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="func_size">
+      <h2>cdt:size</h2>
+      <p>TODO</p>
+    </section>
+
+  </section>
+
+
+  <section id="map-functions">
+    <h2>Functions on Maps</h2>
+
+    <p>TODO</p>
+
+  </section>
+
+
+  <section id="fold">
+    <h2>FOLD</h2>
+
+    <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)<p>
+
+  </section>
+
+
+  <section id="unfold">
+    <h2>UNFOLD</h2>
+
+    <p>TODO</p>
+
+  </section>
+
+
+  <section class="appendix informative">
+    <h2>IANA Considerations</h2>
+
+    <p>TODO</p>
+
+  </section>
+
+  <section class="appendix">
+    <h2>Complete EBNF Grammars</h2>
+
+    <section class="appendix informative" id="cdt-ebnf">
+      <h2>Composite Datatypes EBNF Grammar</h2>
+      <p>
+        The following is a complete grammar for composite datatype literals (i.e., literals that conform either to the <a>cdt:List datatype</a> or to the <a>cdt:Map datatype</a>). The EBNF used here is defined in XML 1.0 [[EBNF-NOTATION]].
+      </p>
+      <div data-include="../ebnf/cdt-literals.html"></div>
+    </section>
+
+    <section class="appendix informative" id="sparql-cdt-ebnf">
+      <h2>SPARQL-CDT EBNF Grammar</h2>
+      <p>
+        The following is a complete grammar for the SPARQL language with the extensions for composite datatype literals as defined in this document. The EBNF used here is defined in XML 1.0 [[EBNF-NOTATION]].
+      </p>
+      <div data-include="../ebnf/sparql-cdt.html"></div>
+    </section>
+
+  </section>
+
+<!--   <section class="appendix informative" id="issue-summary"> -->
+    <!-- A list of issues will magically appear here -->
+<!--   </section> -->
+
+</body>
+</html>
