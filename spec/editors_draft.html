@@ -601,8 +601,45 @@
       <h2>Lexical-To-Value Mapping</h2>
         
       <p>
-        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> ...
-        TODO
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> is defined as follows for every string&nbsp;|S| that is recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+      </p>
+      <p>
+        If the string&nbsp;|S| does <em>not</em> contain a substring that is recognized by the <a href="#cdt-grammar-production-NonEmptyListContent">`NonEmptyListContent`</a> production of the grammar, then |S| is mapped to the <a>empty term list</a>.
+      </p>
+      <p>
+        Otherwise, let |S|' be the greatest substring of |S| that is recognized by the <a href="#cdt-grammar-production-NonEmptyListContent">`NonEmptyListContent`</a> production and let (|E|<sub>1</sub>, ..., |E|<sub>|n|</sub>) be the sequence of all substrings of |S|' that are recognized by the <a href="#cdt-grammar-production-ListElement">`ListElement`</a> production, in the order in which they appear in |S|'. Then, |S| is mapped to the <a>term list</a>&nbsp;|tm| that consists of |n| <a>list elements</a> such that, for all |i| in {1, ..., |n|}, the |i|-th element in |tm| is the following <a>list element</a>, depending on which of the cases of the <a href="#cdt-grammar-production-ListElement">`ListElement`</a> production recognizes the substring&nbsp;|E|<sub>|i|</sub>:
+        <ul>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="TURTLE#cdt-grammar-production-IRIREF">`IRIREF`</a> production, then the |i|-th element in |tm| is the IRI constructed from the substring |E|<sub>|i|</sub> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
+<br/><strong>TODO:</strong> <em>`IRIREF` also recognizes relative IRIs and the table in the Turtle spec says that they are resolved based on a base IRI. How do we handle this here?</em>
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="TURTLE#cdt-grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then the |i|-th element in |tm| is the blank node constructed from the substring |E|<sub>|i|</sub> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production, then the |i|-th element in |tm| is a literal that has as its lexical form the string that has matched the first rule argument, <a href="TURTLE#cdt-grammar-production-String">`String`</a>, and the datatype IRI and language tag of the literal are as follows.
+            <ul>
+              <li>If the <a href="TURTLE#cdt-grammar-production-LANGTAG">`LANGTAG`</a> rule matched, the datatype IRI is `rdf:langString` and the language tag is the string that has matched the <a href="TURTLE#cdt-grammar-production-LANGTAG">`LANGTAG`</a> rule.</li>
+              <li>If the `'^^'`<a href="TURTLE#cdt-grammar-production-IRIREF">`IRIREF`</a> rule matched, the datatype IRI is the IRI constructed from the <a href="TURTLE#cdt-grammar-production-IRIREF">`IRIREF`</a> match according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]], and the literal has no language tag.</li>
+              <li>If neither matched, the datatype is `xsd:string` and the literal has no language tag.</li>
+            </ul>
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by either the <a href="TURTLE#cdt-grammar-production-NumericLiteral">`NumericLiteral`</a> production or the <a href="TURTLE#cdt-grammar-production-BooleanLiteral">`BooleanLiteral`</a> production, then the |i|-th element in |tm| is the literal constructed from the substring |E|<sub>|i|</sub> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="#cdt-grammar-production-NULL">`NULL`</a> production, then the |i|-th element in |tm| is <a>null</a>.
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="#cdt-grammar-production-List">`List`</a> production, then the |i|-th element in |tm| is the literal that has the string |E|<sub>|i|</sub> as its lexical form, the IRI `cdt:List` as its datatype IRI, and no language tag.
+          </li>
+          <li>
+            If |E|<sub>|i|</sub> is recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production, then the |i|-th element in |tm| is the literal that has the string |E|<sub>|i|</sub> as its lexical form, the IRI `cdt:Map` as its datatype IRI, and no language tag.
+          </li>
+        </ul>
+      </p>
+      <p>
+        Since producing the <a>term list</a> for |S| as defined above relies on the capability to construct RDF terms according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]], it requires a parser that maintains state of the `bnodeLabels` mapping used for parsing Turtle, as defined in <a href="https://www.w3.org/TR/turtle/#sec-parsing-state">Section&nbsp;7.1</a> of [[TURTLE]].
       </p>
 
       <p class="note">
