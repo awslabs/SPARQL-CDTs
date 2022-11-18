@@ -392,16 +392,35 @@
     <h2>The cdt:List Datatype</h2>
 
     <p>
-      The <dfn data-lt="cdt:List datatype">cdt:List datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section, and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
+      The <dfn data-lt="cdt:List datatype">cdt:List datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#list-datatype-valuespace" class="sectionRef"></a>, <a href="#list-datatype-lexspace" class="sectionRef"></a>, and <a href="#list-datatype-lex-to-value-mapping" class="sectionRef"></a>, respectively), and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
       `http://example.org/cdt/List`
     </p>
+    <p>
+      Every <a data-cite="RDF11-CONCEPTS#dfn-literal">literal</a> that has this IRI as its <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:List literal">cdt:List literal</dfn>.
+    </p>
 
     <section id="list-datatype-valuespace">
       <h2>Value Space</h2>
-        
-      <p>TODO</p>
+
+      <p>
+        The <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a> of the <a>cdt:List datatype</a> consists of all finite <a href="https://en.wikipedia.org/wiki/Sequence">sequences</a> of <a>list elements</a>, where the notion of a <dfn data-lt="list element">list element</dfn> is defined as follows:
+        <ul>
+          <li>every <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> is a list element and</li>
+          <li><a>null</a> is a list element.</li>
+        </ul>
+        Any such sequence is called <dfn data-lt="term list">term list</dfn>, and the empty sequence of <a>list elements</a> is the <dfn data-lt="empty term list">empty term list</dfn>.
+      </p>
+
+      <p>
+        <dfn data-lt="null">null</dfn> is a special symbol that can be used as a <a>list element</a> (and as a <a>map value</a>) and that is <em>not</em> an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a>.
+      </p>
+
+      <p class="note">
+        Every RDF term MAY occur multiple times in a <a>term list</a>, and so may <a>null</a>.
+      </p>
+
     </section>
 
     <section id="list-datatype-lexspace">
@@ -581,7 +600,15 @@
     <section id="list-datatype-lex-to-value-mapping">
       <h2>Lexical-To-Value Mapping</h2>
         
-      <p>TODO</p>
+      <p>
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> ...
+        TODO
+      </p>
+
+      <p class="note">
+        By the definition of the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a>, there can be no <a>term list</a> that contains a <a>cdt:List literal</a> whose <a data-cite="RDF11-CONCEPTS#dfn-literal-value">literal value</a> is that same term list.
+      </p>
+
     </section>
 
   </section>
@@ -591,16 +618,39 @@
     <h2>The cdt:Map Datatype</h2>
 
     <p>
-      The <dfn data-lt="cdt:Map datatype">cdt:Map datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section, and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
+      The <dfn data-lt="cdt:Map datatype">cdt:Map datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#map-datatype-valuespace" class="sectionRef"></a>, <a href="#map-datatype-lexspace" class="sectionRef"></a>, and <a href="#map-datatype-lex-to-value-mapping" class="sectionRef"></a>, respectively), and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
       `http://example.org/cdt/Map`
     </p>
+    <p>
+      Every <a data-cite="RDF11-CONCEPTS#dfn-literal">literal</a> that has this IRI as its <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:Map literal">cdt:Map literal</dfn>.
+    </p>
 
     <section id="map-datatype-valuespace">
       <h2>Value Space</h2>
-        
-      <p>TODO</p>
+
+      <p>
+        The <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a> of the <a>cdt:Map datatype</a> consists of all <a href="https://en.wikipedia.org/wiki/Function_(mathematics)">functions</a> that map from a finite set of <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF terms</a> to the set of <a>map values</a>, where the notion of a <dfn data-lt="map value">map value</dfn> is defined as follows:
+        <ul>
+          <li>every <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> is a map value and</li>
+          <li><a>null</a> is a map value.</li>
+        </ul>
+        Any such function is called <dfn data-lt="term map">term map</dfn>, and the <a href="https://en.wikipedia.org/wiki/Function_(mathematics)#empty_function">empty function</a> for the set of <a>map values</a> (i.e., the function that maps from the empty set to the set of <a>map values</a>) is the <dfn data-lt="empty term map">empty term map</dfn>.
+        Moreover, every pair&nbsp;(|k|,|v|) consisting of an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a>&nbsp;|k| and a <a>map value</a>&nbsp;|v| is called a <dfn data-lt="map entry">map entry</dfn> where the |k| is called the <dfn data-lt="key of map entry">key</dfn> of the map entry and |v| is called the <dfn data-lt="value of map entry">value</dfn> of the map entry.
+      </p>
+      <p>
+        Given a <a>term map</a>&nbsp;|tm| and a <a>map entry</a>&nbsp;(|k|,|v|), we say that |tm| <dfn data-lt="contains map entry">contains</dfn> this map entry if |k| is in the <a href="https://en.wikipedia.org/wiki/Domain_of_a_function">domain</a> of |tm| and |tm| maps |k| to |v|; i.e., |tm|(|k|)=|v|.
+      </p>
+
+      <p class="note">
+        A <a>term map</a> MAY <a>contain</a> multiple map entries that all have the same <a>value</a>, but they MUST have different <a>keys</a>.
+      </p>
+
+      <p class="note">
+        The <a>empty term map</a> does not <a>contain</a> any map entries.
+      </p>
+
     </section>
 
     <section id="map-datatype-lexspace">
@@ -690,6 +740,14 @@
 
   <section class="appendix informative">
     <h2>IANA Considerations</h2>
+
+    <p>TODO</p>
+
+  </section>
+
+
+  <section class="appendix informative">
+    <h2>Mapping Between cdt:List Literals and RDF Lists</h2>
 
     <p>TODO</p>
 
