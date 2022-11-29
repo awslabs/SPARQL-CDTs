@@ -1,0 +1,14 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# lists with maps given as literals
+ASK {
+	BIND("[1,'{ 2:3}'^^<http://example.org/cdt/Map>]"^^cdt:List AS ?list)
+	BIND("{2:3}"^^cdt:Map AS ?map1)
+	BIND("{ 2:3}"^^cdt:Map AS ?map2)
+
+	FILTER(cdt:containsTerm(?list, 1))
+	FILTER(!cdt:containsTerm(?list, 2))
+	FILTER(!cdt:containsTerm(?list, 3))
+	FILTER(!cdt:containsTerm(?list, ?map1))
+	FILTER(cdt:containsTerm(?list, ?map2))
+}

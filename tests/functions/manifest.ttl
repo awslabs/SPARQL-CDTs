@@ -46,6 +46,12 @@
 		:contains_term-01
 		:contains_term-02
 		:contains_term-03
+		:contains_term-04
+		:contains_term-05
+		:contains_term-06
+		:contains_term-07
+		:contains_term-08
+		:contains_term-09
 
 		:get-01
 		:get-02
@@ -482,6 +488,66 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains_term-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-04" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-05" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-06" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-07" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-08" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains_term-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains_term-09" ;
+    mf:feature cdt:contains_term ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains_term-09.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
