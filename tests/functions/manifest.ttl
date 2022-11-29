@@ -58,10 +58,14 @@
 		:get-03
 		:get-04
 		:get-05
+		:get-06
+		:get-07
 		:get-08
 		:get-09
 		:get-10
 		:get-11
+		:get-12
+		:get-13
 
 		:head-01
 		:head-02
@@ -602,12 +606,22 @@
     mf:result  <true.srx> ;
 	.
 
-:get-null-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-null-01" ;
+:get-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-06" ;
     mf:feature cdt:get ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <get-null-01.rq> ;
+         [ qt:query  <get-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-07" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-07.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -648,6 +662,36 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <get-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-12" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-12.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-13 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-13" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-13.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-null-01" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.

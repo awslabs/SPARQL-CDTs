@@ -1,9 +1,9 @@
 PREFIX cdt:    <http://example.org/cdt/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
-# list with nested list with one integer
+# list with mixed defined and undefined types
 ASK {
-	BIND("[[1]]"^^cdt:List AS ?list)
+	BIND("[null, 3]"^^cdt:List AS ?list)
 	BIND((cdt:get(?list, 1)) AS ?l0)
-	BIND((cdt:get(?l0, 1)) AS ?l1)
-	FILTER(?l1 = 1)
+	FILTER(!BOUND(?l0))
+	FILTER(cdt:get(?list, 2) = 3)
 }
