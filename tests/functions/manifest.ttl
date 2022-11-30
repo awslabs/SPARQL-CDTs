@@ -62,10 +62,6 @@
 		:get-07
 		:get-08
 		:get-09
-		:get-10
-		:get-11
-		:get-12
-		:get-13
 
 		:head-01
 		:head-02
@@ -134,9 +130,12 @@
 		:head-null-02
 
 		# Errors
-		:get-error-01 # invalid index
-		:get-error-02 # non-integer index
-		:get-error-03 # non-list argument
+		:get-error-01 # non-list argument
+		:get-error-02 # invalid index (greater than size)
+		:get-error-03 # invalid index (zero)
+		:get-error-04 # invalid index (negative)
+		:get-error-05 # (non-integer) string index
+		:get-error-06 # (non-integer) decimal index
 		:subseq-error-01 # non-list argument
 		:subseq-error-02 # non-integer index
 		:concat-error-01 # non-list argument
@@ -642,56 +641,6 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <get-09.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-10 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-10" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-10.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-11 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-11" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-11.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-12 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-12" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-12.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-13 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-13" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-13.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:get-null-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "get-null-01" ;
-    mf:feature cdt:get ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <get-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -1313,6 +1262,39 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <get-error-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-error-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-04" ;
+    rdfs:comment    "get with non-list argument" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-error-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-05" ;
+    rdfs:comment    "get with non-list argument" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-error-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-error-06" ;
+    rdfs:comment    "get with non-list argument" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-error-06.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.

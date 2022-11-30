@@ -2,6 +2,6 @@ PREFIX cdt:    <http://example.org/cdt/>
 
 ASK {
 	BIND("[1,2,3]"^^cdt:List AS ?list)
-	BIND(cdt:get(?list, 0) AS ?element)
+	BIND(cdt:get(?list, 2.0) AS ?element)
 	FILTER(!BOUND(?element))
 }
