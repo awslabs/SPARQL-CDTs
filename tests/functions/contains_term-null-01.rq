@@ -6,4 +6,5 @@ ASK {
 	BIND("[1,null,2]"^^cdt:List AS ?list)
 	FILTER(cdt:containsTerm(?list, 1))
 	FILTER(cdt:containsTerm(?list, 2))
+	FILTER(!cdt:containsTerm(?list, "null"))
 }
