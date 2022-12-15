@@ -846,13 +846,54 @@
 
       <section id="func_map-equal">
         <h2>cdt:map-equal</h2>
-        <p>TODO</p>
+
+        <p>
+          <code>xsd:boolean </code>
+          <code style="color:black;font-weight:bold">cdt:map-equal</code>
+          (
+             <code><a>cdt:Map literal</a> term1</code>,
+             <code><a>cdt:Map literal</a> term2</code>
+          )
+        </p>
+
+        <p>
+          If both `term1` and `term2` are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
+        </p>
+        <div class="algorithm">
+          <ol>
+            <li>Let `map1` be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of `term1` (i.e., `map1` is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of `term1`).</li>
+            <li>Let `map2` be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of `term2` (i.e., `map2` is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of `term2`).</li>
+            <li>If both `map1` and `map2` are the <a>empty term map</a>, then return `TRUE`.</li>
+            <li>If the number of <a>map entries</a> that `map1` <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that `map2` <a href="#dfn-contains-map-entry">contains</a>, then return `FALSE`.</li>
+            <li>Let `err` be a boolean-typed variable that is initialized with the value `FALSE`.</li>
+            <li>For every <a>map entry</a> (|k|,|v|) that `map1` <a href="#dfn-contains-map-entry">contains</a>:
+              <ol>
+                <li>If |k| is not in the domain of `map2`, return `FALSE`.</li>
+                <li>If |v| is <a>null</a> or `map2`(|k|) is <a>null</a>, set the value of `err` to `TRUE`.</li>
+                <li>If neither |v| nor `map2`(|k|) is <a>null</a> (i.e., |v| and `map2`(|k|) are RDF terms), then:
+                  <ol>
+                    <li>Let |v|' be the RDF term `map2`(|k|).</li>
+                    <li>If evaluating the SPARQL expression |v|` = `|v|' results in an error, set the value of `err` to `TRUE`.</li>
+                    <li>If evaluating the SPARQL expression |v|` = `|v|' results in `FALSE`, return `FALSE`.</li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+            <li>If the value of `err` is `TRUE`, produce an error.</li>
+            <li>Return `TRUE`.</li>
+          </ol>
+        </div>
+
+        <p>
+          If `term1` or `term2` is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
+        </p>
+
       </section>
 
     </section>
 
     <section id="sameTerm">
-      <h2>sameTerm</h2>
+      <h2>TODO (any existing functions that we want to extend?)</h2>
         
       <p>TODO</p>
     </section>
