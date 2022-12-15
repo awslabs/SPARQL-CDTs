@@ -43,16 +43,6 @@
 		:contains-08
 		:contains-09
 
-		:contains_term-01
-		:contains_term-02
-		:contains_term-03
-		:contains_term-04
-		:contains_term-05
-		:contains_term-06
-		:contains_term-07
-		:contains_term-08
-		:contains_term-09
-
 		:get-01
 		:get-02
 		:get-03
@@ -123,7 +113,6 @@
 		:list-constructor-null-02
 		:concat-null-01
 		:contains-null-01
-		:contains_term-null-01
 		:get-null-01
 		:get-null-02
 		:head-null-01
@@ -140,7 +129,6 @@
 		:subseq-error-02 # non-integer index
 		:concat-error-01 # non-list argument
 		:contains-error-01 # non-list argument
-		:contains_term-error-01 # non-list argument
 		:head-error-01 # non-list argument
 		:tail-error-01 # non-list argument
 		:reverse-error-01 # non-list argument
@@ -465,96 +453,6 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains-09.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-01" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-02" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-02.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-03 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-03" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-03.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-04 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-04" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-04.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-05 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-05" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-05.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-06 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-06" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-06.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-07 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-07" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-07.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-08 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-08" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-08.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-09 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-09" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-09.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -1182,17 +1080,6 @@
     mf:result  <true.srx> ;
 	.
 
-:contains_term-null-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-null-01" ;
-    rdfs:comment    "containsTerm over list containing null" ;
-    mf:feature cdt:containsTerm ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-null-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
 :get-null-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "get-null-01" ;
     rdfs:comment    "get returning null" ;
@@ -1343,17 +1230,6 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains-error-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:contains_term-error-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "contains_term-error-01" ;
-    rdfs:comment    "contains_term with non-list argument" ;
-    mf:feature cdt:contains_term ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <contains_term-error-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.

@@ -1,8 +1,0 @@
-PREFIX cdt:    <http://example.org/cdt/>
-
-# contains IRI
-ASK {
-	BIND("[<http://example.org/test>,1]"^^cdt:List AS ?list)
-
-	FILTER(cdt:containsTerm(?list, <http://example.org/test>))
-}

@@ -1,8 +1,0 @@
-PREFIX cdt:    <http://example.org/cdt/>
-PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
-
-ASK {
-	BIND("[1]" AS ?list)
-	BIND(cdt:containsTerm(?list, 1) AS ?result)
-	FILTER(!BOUND(?result))
-}

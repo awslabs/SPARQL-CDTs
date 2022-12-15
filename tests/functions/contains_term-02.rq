@@ -1,8 +1,0 @@
-PREFIX cdt:    <http://example.org/cdt/>
-PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
-# contains integer
-ASK {
-	BIND("[1]"^^cdt:List AS ?list)
-	FILTER(cdt:containsTerm(?list, 1))
-	FILTER(!cdt:containsTerm(?list, 2))
-}

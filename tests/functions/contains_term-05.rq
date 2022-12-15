@@ -1,8 +1,0 @@
-PREFIX cdt:    <http://example.org/cdt/>
-
-# contains blank nodes
-ASK {
-	BIND("[_:b,null,'_:b']"^^cdt:List AS ?list)
-
-	FILTER(!cdt:containsTerm(?list, BNODE("_:b")))
-}
