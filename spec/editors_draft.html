@@ -618,10 +618,10 @@
           <li>
             If |E|<sub>|i|</sub> is recognized by the <a href="TURTLE#cdt-grammar-production-IRIREF">`IRIREF`</a> production, then the |i|-th element in |tm| is the IRI constructed from the substring |E|<sub>|i|</sub> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
 <br/><strong>TODO:</strong> <em>`IRIREF` also recognizes relative IRIs and the table in the Turtle spec says that they are resolved based on a base IRI. How do we handle this here?</em>
-			<p class="issue">
-			Using the definition in the §7.2 table makes this IRI subject to \u unescaping, on top of the \u escaping that will have been done prior to parsing the SPARQL query.
-			I assume that's not what we want. Maybe we should pull in the relevant bits from that table into this document and make relevant adjustments.
-			This applies also to the handling of datatyped literals below.
+			<p class="note">
+			The procedure described in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]] involves unescaping Turtle's <a href="https://www.w3.org/TR/turtle/#numeric">numeric escape sequences</a>.
+			When an IRI appears in the lexical form of a <a>cdt:List datatype</a>d literal in a SPARQL query, it will be subject to <em>both</em> Turtle's numeric escaping <em>and</em> SPARQL's <a href="https://www.w3.org/TR/sparql11-query/#codepointEscape">Codepoint Escape Sequences</a> [[SPARQL11-QUERY]].
+			For example, including <code>BIND("[&lt;http://example.org/\u005cu0041>]"^^cdt:List AS ?list)</code> in a SPARQL query will result in a list with a single IRI element with value `http://example.org/A`.
 			</p>
           </li>
           <li>
@@ -931,10 +931,6 @@
     <h2>FOLD</h2>
 
     <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)<p>
-    <p class="issue" title="Describing UNFOLD as an aggregate set function">
-    I don't think we FOLD as we envision it can be implemented using the existing SPARQL aggregation semantics.
-    The need to handle null values will require either updating the definition of Aggregation or handling FOLD in some other way.
-    </p>
 
   </section>
 
