@@ -805,30 +805,30 @@
           <code>xsd:boolean </code>
           <code style="color:black;font-weight:bold">cdt:list-equal</code>
           (
-             <code><a>cdt:List literal</a> term1</code>,
-             <code><a>cdt:List literal</a> term2</code>
+             <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
+             <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
           )
         </p>
 
         <p>
-          If both <var>term1</var> and <var>term2</var> are <a>well-formed cdt:List literals</a>, then the result of this function is determined by the following algorithm.
+          If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:List literals</a>, then the result of this function is determined by the following algorithm.
         </p>
         <div class="algorithm">
           <ol>
-            <li>Let <var>list1</var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term1</var> (i.e., <var>list1</var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term1</var>).</li>
-            <li>Let <var>list2</var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term2</var> (i.e., <var>list2</var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term2</var>).</li>
-            <li>If both <var>list1</var> and <var>list2</var> are the <a>empty term list</a>, then return `TRUE`.</li>
-            <li>If the length of <var>list1</var> is different from the length of <var>list2</var>, then return `FALSE`.</li>
+            <li>Let <var>list<sub>1</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>list<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
+            <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
+            <li>If both <var>list<sub>1</sub></var> and <var>list<sub>2</sub></var> are the <a>empty term list</a>, then return `TRUE`.</li>
+            <li>If the length of <var>list<sub>1</sub></var> is different from the length of <var>list<sub>2</sub></var>, then return `FALSE`.</li>
             <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `FALSE`.</li>
-            <li>For every integer |i| from 1 to |n|, where |n| is the length of <var>list1</var>:
+            <li>For every integer |i| from 1 to |n|, where |n| is the length of <var>list<sub>1</sub></var>:
               <ol>
-                <li>Let <var>elmt1</var> be the |i|-th element in <var>list1</var>.</li>
-                <li>Let <var>elmt2</var> be the |i|-th element in <var>list2</var>.</li>
-                <li>If <var>elmt1</var> or <var>elmt2</var> is <a>null</a>, set the value of <var>err</var> to `TRUE`.</li>
-                <li>If neither <var>elmt1</var> nor <var>elmt2</var> is <a>null</a> (i.e., <var>elmt1</var> and <var>elmt2</var> are RDF terms), then:
+                <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
+                <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
+                <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, set the value of <var>err</var> to `TRUE`.</li>
+                <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
                   <ol>
-                    <li>If evaluating the SPARQL expression |elmt1| = |elmt2| results in an error, set the value of <var>err</var> to `TRUE`.</li>
-                    <li>If evaluating the SPARQL expression |elmt1| = |elmt2| results in `FALSE`, return `FALSE`.</li>
+                    <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, set the value of <var>err</var> to `TRUE`.</li>
+                    <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `FALSE`, return `FALSE`.</li>
                   </ol>
                 </li>
               </ol>
@@ -839,7 +839,7 @@
         </div>
 
         <p>
-          If <var>term1</var> or <var>term2</var> is an <a>ill-formed cdt:List literal</a>, then this function produces an error.
+          If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:List literal</a>, then this function produces an error.
         </p>
 
       </section>
@@ -851,28 +851,28 @@
           <code>xsd:boolean </code>
           <code style="color:black;font-weight:bold">cdt:map-equal</code>
           (
-             <code><a>cdt:Map literal</a> term1</code>,
-             <code><a>cdt:Map literal</a> term2</code>
+             <code><a>cdt:Map literal</a> <var>term<sub>1</sub></var></code>,
+             <code><a>cdt:Map literal</a> <var>term<sub>2</sub></var></code>
           )
         </p>
 
         <p>
-          If both <var>term1</var> and <var>term2</var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
+          If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
         </p>
         <div class="algorithm">
           <ol>
-            <li>Let <var>map1</var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term1</var> (i.e., <var>map1</var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term1</var>).</li>
-            <li>Let <var>map2</var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term2</var> (i.e., <var>map2</var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term2</var>).</li>
-            <li>If both <var>map1</var> and <var>map2</var> are the <a>empty term map</a>, then return `TRUE`.</li>
-            <li>If the number of <a>map entries</a> that <var>map1</var> <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that <var>map2</var> <a href="#dfn-contains-map-entry">contains</a>, then return `FALSE`.</li>
+            <li>Let <var>map<sub>1</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>map<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
+            <li>Let <var>map<sub>2</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
+            <li>If both <var>map<sub>1</sub></var> and <var>map<sub>2</sub></var> are the <a>empty term map</a>, then return `TRUE`.</li>
+            <li>If the number of <a>map entries</a> that <var>map<sub>1</sub></var> <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that <var>map<sub>2</sub></var> <a href="#dfn-contains-map-entry">contains</a>, then return `FALSE`.</li>
             <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `FALSE`.</li>
-            <li>For every <a>map entry</a> (|k|,|v|) <a href="#dfn-contains-map-entry">contained</a> in <var>map1</var>:
+            <li>For every <a>map entry</a> (|k|,|v|) <a href="#dfn-contains-map-entry">contained</a> in <var><sub>1</sub></var>:
               <ol>
-                <li>If |k| is not in the domain of <var>map2</var>, return `FALSE`.</li>
-                <li>If |v| is <a>null</a> or <var>map2</var>(|k|) is <a>null</a>, set the value of <var>err</var> to `TRUE`.</li>
-                <li>If neither |v| nor <var>map2</var>(|k|) is <a>null</a> (i.e., |v| and <var>map2</var>(|k|) are RDF terms), then:
+                <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `FALSE`.</li>
+                <li>If |v| is <a>null</a> or <var><sub>2</sub></var>(|k|) is <a>null</a>, set the value of <var>err</var> to `TRUE`.</li>
+                <li>If neither |v| nor <var>map<sub>2</sub></var>(|k|) is <a>null</a> (i.e., |v| and <var>map<sub>2</sub></var>(|k|) are RDF terms), then:
                   <ol>
-                    <li>Let <var>v'</var> be the RDF term <var>map2</var>(|k|).</li>
+                    <li>Let <var>v'</var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
                     <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in an error, set the value of <var>err</var> to `TRUE`.</li>
                     <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in `FALSE`, return `FALSE`.</li>
                   </ol>
@@ -885,7 +885,7 @@
         </div>
 
         <p>
-          If <var>term1</var> or <var>term2</var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
+          If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
         </p>
 
       </section>
