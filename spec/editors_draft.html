@@ -433,16 +433,25 @@
       <h2>Lexical Space</h2>
         
       <p>
-        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:List datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the following grammar (the <a data-cite="XML#sec-notation"><abbr title="Extended Backus-Naur Form">EBNF</abbr> notation</a> used here is defined in XML 1.0 [[EBNF-NOTATION]]). The grammar uses productions from the grammar of the Turtle serialization format for RDF data [[TURTLE]]. In particular, the terminal and nonterminal symbols for which no production rule is provided below (i.e.,
-        <a data-cite="TURTLE#grammar-production-IRIREF">IRIREF</a>,
-        <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">BLANK_NODE_LABEL</a>,
-        <a data-cite="TURTLE#grammar-production-NumericLiteral">NumericLiteral</a>,
-        <a data-cite="TURTLE#grammar-production-BooleanLiteral">BooleanLiteral</a>,
-        <a data-cite="TURTLE#grammar-production-String">String</a>,
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:List datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the following grammar (the <a data-cite="XML#sec-notation"><abbr title="Extended Backus-Naur Form">EBNF</abbr> notation</a> used here is defined in XML 1.0 [[EBNF-NOTATION]]).
+      </p>
+      <p>
+        The grammar uses productions from the grammar of the Turtle serialization format for RDF data [[TURTLE]]. In particular, the terminal and nonterminal symbols for which no production rule is provided below (i.e.,
+        <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a>,
+        <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a>,
+        <a data-cite="TURTLE#grammar-production-NumericLiteral">`NumericLiteral`</a>,
+        <a data-cite="TURTLE#grammar-production-BooleanLiteral">`BooleanLiteral`</a>,
+        <a data-cite="TURTLE#grammar-production-String">`String`</a>,
         and
         <a data-cite="TURTLE#grammar-production-LANGTAG">LANGTAG</a>)
-        are defined in the Turtle grammar. The <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production is special as the Turtle grammar also contains a very similar production for the same symbol (see <a data-cite="TURTLE#grammar-production-RDFLiteral">RDFLiteral</a> in [[TURTLE]]). The difference is that the version of the rule in the Turtle grammar permits the <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> of a <a data-cite="RDF11-CONCEPTS#literal">literal</a> to be written as a <a data-cite="TURTLE#prefixed-name">prefixed name</a>, whereas the version of the rule as defined below does not permit datatype IRIs written as prefixed names (but only as absolute IRIs and as <a data-cite="TURTLE#relative-iri">relative IRIs</a>).
+        are defined in the Turtle grammar.
+      </p>
       <p>
+        The <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production in the given grammar is special as the Turtle grammar also contains a very similar production for the same symbol (see <a data-cite="TURTLE#grammar-production-RDFLiteral">`RDFLiteral`</a> in [[TURTLE]]). The difference is that the version of the rule in the Turtle grammar permits the <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> of a <a data-cite="RDF11-CONCEPTS#literal">literal</a> to be written as a <a data-cite="TURTLE#prefixed-name">prefixed name</a>, whereas the version of the rule as defined below does not permit datatype IRIs written as prefixed names (but only as absolute IRIs and as <a data-cite="TURTLE#relative-iri">relative IRIs</a>).
+      </p>
+      <p>
+        An additional restriction that is not explicitly captured in the given grammar, but that MUST be ensured by parsers for <a>cdt:List literals</a> (and <a>cdt:Map literals</a>), is that any occurrence of the <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a> production MUST also match the (more restrictive) `absolute-IRI` production of [[RFC3987]]. Hence, IRI references in the lexical form of <a>cdt:List literals</a> and <a>cdt:Map literals</a> MUST be absolute; they cannot be written as <a data-cite="TURTLE#prefixed-name">prefixed names</a> (see the previous paragraph about the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production) nor as <a data-cite="TURTLE#relative-iri">relative IRI references</a>.
+      </p>
 
       <table class="grammar">
 
@@ -617,7 +626,6 @@
         <ul>
           <li>
             If |E|<sub>|i|</sub> is recognized by the <a href="TURTLE#cdt-grammar-production-IRIREF">`IRIREF`</a> production, then the |i|-th element in |tm| is the IRI constructed from the substring |E|<sub>|i|</sub> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
-<br/><strong>TODO:</strong> <em>`IRIREF` also recognizes relative IRIs and the table in the Turtle spec says that they are resolved based on a base IRI. How do we handle this here?</em>
 			<p class="note">
 			The procedure described in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]] involves unescaping Turtle's <a href="https://www.w3.org/TR/turtle/#numeric">numeric escape sequences</a>.
 			If an IRI appears in the lexical form of a <a>cdt:List literal</a> in a SPARQL query, it will be subject to <em>both</em> Turtle's numeric escaping <em>and</em> SPARQL's <a href="https://www.w3.org/TR/sparql11-query/#codepointEscape">Codepoint Escape Sequences</a> [[SPARQL11-QUERY]].
