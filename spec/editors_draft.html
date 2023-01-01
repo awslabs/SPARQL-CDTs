@@ -836,173 +836,161 @@
   </section>
 
 
-  <section id="extension-of-sparql">
-    <h2>Extensions of Existing SPARQL Operators and Functions</h2>
+  <section id="extension-of-sparql-operators">
+    <h2>Extensions of Existing SPARQL Operators</h2>
 
     <p>
-      This section defines extensions of some of the existing operators and functions of SPARQL. Implementations of SPARQL that recognize the datatypes defined above MUST implement these operators and functions with the extensions defined in this section.
-<!--       It should be noted that these extensions focus only on cases in which the operators and functions as defined in the SPARQL specification return an error. Such extensions are conformant with the SPARQL specification, as explicitly stated in <a data-cite="SPARQL11-QUERY#extensionFunctions">Section&nbsp;17.6</a> of [[SPARQL11-QUERY]]. -->
+      This section defines extensions of some of the existing operators of SPARQL. In particular, the `=` operator and the `!=` operator are extended both for <a>cdt:List literals</a> and for <a>cdt:Map literals</a>. Implementations of SPARQL that recognize the datatypes defined above MUST implement these operators with the extensions defined in this section.
     </p>
 
-    <section id="operator-mapping">
-      <h2>Operator Mapping</h2>
-        
+    <p>
+      To define the extensions formally, the operator mapping table for binary operators in <a data-cite="SPARQL11-QUERY#OperatorMapping">Section&nbsp;17.3</a> of [[SPARQL11-QUERY]] is extended with the following four rows.
+    </p>
+
+    <table class="operator">
+      <thead>
+        <tr>
+          <th>Operator</th>
+          <th>Type(A)</th>
+          <th>Type(B)</th>
+          <th>Function</th>
+          <th>Result type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:bold">
+          <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
+          <td>cdt:List</td>
+          <td>cdt:List</td>
+          <td><a href="#func_list-equal">cdt:list-equal</a>(A, B)</td>
+          <td>xsd:boolean</td>
+        </tr>
+        <tr>
+          <td style="font-weight:bold">
+          <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
+          <td>cdt:Map</td>
+          <td>cdt:Map</td>
+          <td><a href="#func_map-equal">cdt:map-equal</a>(A, B)</td>
+          <td>xsd:boolean</td>
+        </tr>
+        <tr>
+          <td style="font-weight:bold">
+          <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
+          <td>cdt:List</td>
+          <td>cdt:List</td>
+          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_list-equal">cdt:list-equal</a>(A, B))</td>
+          <td>xsd:boolean</td>
+        </tr>
+        <tr>
+          <td style="font-weight:bold">
+          <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
+          <td>cdt:Map</td>
+          <td>cdt:Map</td>
+          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_map-equal">cdt:map-equal</a>(A, B))</td>
+          <td>xsd:boolean</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The two new functions used in these table rows are defined in Subsections&nbsp;<a href="#func_list-equal" class="sectionRef"></a> and <a href="#func_map-equal" class="sectionRef"></a> below.
+    </p>
+
+    <p class="note">
+      It should be noted that extending the operator mapping table with these four rows changes the behavior of the corresponding operators (`=` and `!=`) only for cases in which these operators would otherwise (i.e., without the extension) yield a type error. Therefore, this extension is conformant with the SPARQL specification, as explicitly stated in <a data-cite="SPARQL11-QUERY#operatorExtensibility">Section&nbsp;17.3.1</a> of [[SPARQL11-QUERY]].
+    </p>
+
+    <section id="func_list-equal">
+      <h2>cdt:list-equal</h2>
+
       <p>
-        The definitions of the `=` operator and the `!=` operator are extended both for <a>cdt:List literals</a> and for <a>cdt:Map literals</a>. To capture this extension formally, the operator mapping table for binary operators in <a data-cite="SPARQL11-QUERY#OperatorMapping">Section&nbsp;17.3</a> of [[SPARQL11-QUERY]] is extended with the following four rows.
+        <code>xsd:boolean </code>
+        <code style="color:black;font-weight:bold">cdt:list-equal</code>
+        (
+           <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
+           <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
+        )
       </p>
-
-      <table class="operator">
-        <thead>
-          <tr>
-            <th>Operator</th>
-            <th>Type(A)</th>
-            <th>Type(B)</th>
-            <th>Function</th>
-            <th>Result type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="font-weight:bold">
-            <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
-            <td>cdt:List</td>
-            <td>cdt:List</td>
-            <td><a href="#func_list-equal">cdt:list-equal</a>(A, B)</td>
-            <td>xsd:boolean</td>
-          </tr>
-          <tr>
-            <td style="font-weight:bold">
-            <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
-            <td>cdt:Map</td>
-            <td>cdt:Map</td>
-            <td><a href="#func_map-equal">cdt:map-equal</a>(A, B)</td>
-            <td>xsd:boolean</td>
-          </tr>
-          <tr>
-            <td style="font-weight:bold">
-            <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
-            <td>cdt:List</td>
-            <td>cdt:List</td>
-            <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_list-equal">cdt:list-equal</a>(A, B))</td>
-            <td>xsd:boolean</td>
-          </tr>
-          <tr>
-            <td style="font-weight:bold">
-            <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
-            <td>cdt:Map</td>
-            <td>cdt:Map</td>
-            <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_map-equal">cdt:map-equal</a>(A, B))</td>
-            <td>xsd:boolean</td>
-          </tr>
-        </tbody>
-      </table>
 
       <p>
-        The two new functions used in these table rows are defined in Subsections&nbsp;<a href="#func_list-equal" class="sectionRef"></a> and <a href="#func_map-equal" class="sectionRef"></a> below.
+        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:List literals</a>, then the result of this function is determined by the following algorithm.
       </p>
+      <div class="algorithm">
+        <ol>
+          <li>Let <var>list<sub>1</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>list<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
+          <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
+          <li>If both <var>list<sub>1</sub></var> and <var>list<sub>2</sub></var> are the <a>empty term list</a>, then return `true`.</li>
+          <li>If the length of <var>list<sub>1</sub></var> is different from the length of <var>list<sub>2</sub></var>, then return `false`.</li>
+          <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `false`.</li>
+          <li>For every integer |i| from 1 to |n|, where |n| is the length of <var>list<sub>1</sub></var>:
+            <ol>
+              <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
+              <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
+              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, set the value of <var>err</var> to `true`.</li>
+              <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
+                <ol>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, set the value of <var>err</var> to `true`.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li>If the value of <var>err</var> is `true`, produce an error.</li>
+          <li>Return `true`.</li>
+        </ol>
+      </div>
 
-      <p class="note">
-        It should be noted that extending the operator mapping table with these four rows changes the behavior of the corresponding operators (`=` and `!=`) only for cases in which these operators would otherwise (i.e., without the extension) yield a type error. Therefore, this extension is conformant with the SPARQL specification, as explicitly stated in <a data-cite="SPARQL11-QUERY#operatorExtensibility">Section&nbsp;17.3.1</a> of [[SPARQL11-QUERY]].
+      <p>
+        If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:List literal</a>, then this function produces an error.
       </p>
-
-      <section id="func_list-equal">
-        <h2>cdt:list-equal</h2>
-
-        <p>
-          <code>xsd:boolean </code>
-          <code style="color:black;font-weight:bold">cdt:list-equal</code>
-          (
-             <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
-             <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
-          )
-        </p>
-
-        <p>
-          If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:List literals</a>, then the result of this function is determined by the following algorithm.
-        </p>
-        <div class="algorithm">
-          <ol>
-            <li>Let <var>list<sub>1</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>list<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
-            <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
-            <li>If both <var>list<sub>1</sub></var> and <var>list<sub>2</sub></var> are the <a>empty term list</a>, then return `true`.</li>
-            <li>If the length of <var>list<sub>1</sub></var> is different from the length of <var>list<sub>2</sub></var>, then return `false`.</li>
-            <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `false`.</li>
-            <li>For every integer |i| from 1 to |n|, where |n| is the length of <var>list<sub>1</sub></var>:
-              <ol>
-                <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
-                <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-                <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, set the value of <var>err</var> to `true`.</li>
-                <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
-                  <ol>
-                    <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, set the value of <var>err</var> to `true`.</li>
-                    <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
-                  </ol>
-                </li>
-              </ol>
-            </li>
-            <li>If the value of <var>err</var> is `true`, produce an error.</li>
-            <li>Return `true`.</li>
-          </ol>
-        </div>
-
-        <p>
-          If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:List literal</a>, then this function produces an error.
-        </p>
-
-      </section>
-
-      <section id="func_map-equal">
-        <h2>cdt:map-equal</h2>
-
-        <p>
-          <code>xsd:boolean </code>
-          <code style="color:black;font-weight:bold">cdt:map-equal</code>
-          (
-             <code><a>cdt:Map literal</a> <var>term<sub>1</sub></var></code>,
-             <code><a>cdt:Map literal</a> <var>term<sub>2</sub></var></code>
-          )
-        </p>
-
-        <p>
-          If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
-        </p>
-        <div class="algorithm">
-          <ol>
-            <li>Let <var>map<sub>1</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>map<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
-            <li>Let <var>map<sub>2</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
-            <li>If both <var>map<sub>1</sub></var> and <var>map<sub>2</sub></var> are the <a>empty term map</a>, then return `true`.</li>
-            <li>If the number of <a>map entries</a> that <var>map<sub>1</sub></var> <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that <var>map<sub>2</sub></var> <a href="#dfn-contains-map-entry">contains</a>, then return `false`.</li>
-            <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `false`.</li>
-            <li>For every <a>map entry</a> (|k|,|v|) <a href="#dfn-contains-map-entry">contained</a> in <var><sub>1</sub></var>:
-              <ol>
-                <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
-                <li>If |v| is <a>null</a> or <var><sub>2</sub></var>(|k|) is <a>null</a>, set the value of <var>err</var> to `true`.</li>
-                <li>If neither |v| nor <var>map<sub>2</sub></var>(|k|) is <a>null</a> (i.e., |v| and <var>map<sub>2</sub></var>(|k|) are RDF terms), then:
-                  <ol>
-                    <li>Let <var>v'</var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
-                    <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in an error, set the value of <var>err</var> to `true`.</li>
-                    <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in `false`, return `false`.</li>
-                  </ol>
-                </li>
-              </ol>
-            </li>
-            <li>If the value of <var>err</var> is `true`, produce an error.</li>
-            <li>Return `true`.</li>
-          </ol>
-        </div>
-
-        <p>
-          If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
-        </p>
-
-      </section>
 
     </section>
 
-    <section id="sameTerm">
-      <h2>TODO (any existing functions that we want to extend?)</h2>
-        
-      <p>TODO</p>
+    <section id="func_map-equal">
+      <h2>cdt:map-equal</h2>
+
+      <p>
+        <code>xsd:boolean </code>
+        <code style="color:black;font-weight:bold">cdt:map-equal</code>
+        (
+           <code><a>cdt:Map literal</a> <var>term<sub>1</sub></var></code>,
+           <code><a>cdt:Map literal</a> <var>term<sub>2</sub></var></code>
+        )
+      </p>
+
+      <p>
+        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
+      </p>
+      <div class="algorithm">
+        <ol>
+          <li>Let <var>map<sub>1</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>map<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
+          <li>Let <var>map<sub>2</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
+          <li>If both <var>map<sub>1</sub></var> and <var>map<sub>2</sub></var> are the <a>empty term map</a>, then return `true`.</li>
+          <li>If the number of <a>map entries</a> that <var>map<sub>1</sub></var> <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that <var>map<sub>2</sub></var> <a href="#dfn-contains-map-entry">contains</a>, then return `false`.</li>
+          <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `false`.</li>
+          <li>For every <a>map entry</a> (|k|,|v|) <a href="#dfn-contains-map-entry">contained</a> in <var><sub>1</sub></var>:
+            <ol>
+              <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
+              <li>If |v| is <a>null</a> or <var><sub>2</sub></var>(|k|) is <a>null</a>, set the value of <var>err</var> to `true`.</li>
+              <li>If neither |v| nor <var>map<sub>2</sub></var>(|k|) is <a>null</a> (i.e., |v| and <var>map<sub>2</sub></var>(|k|) are RDF terms), then:
+                <ol>
+                  <li>Let <var>v'</var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
+                  <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in an error, set the value of <var>err</var> to `true`.</li>
+                  <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in `false`, return `false`.</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li>If the value of <var>err</var> is `true`, produce an error.</li>
+          <li>Return `true`.</li>
+        </ol>
+      </div>
+
+      <p>
+        If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
+      </p>
+
     </section>
 
   </section>
