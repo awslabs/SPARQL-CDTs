@@ -999,11 +999,46 @@
   <section id="list-functions">
     <h2>Functions on Lists</h2>
 
-    <p>TODO</p>
+    <p>
+      This section defines <a data-cite="SPARQL11-QUERY#extensionFunctions">SPARQL extension functions</a> specifically for <a>cdt:List literals</a>. These functions can be used in SPARQL expressions for testing values in FILTER clauses and for assigning values in, e.g., BIND clauses and SELECT expressions.
+    </p>
+
+    <p>
+      Except for <a href="#func_list">cdt:List</a>, these extension functions are evaluated as defined in <a data-cite="SPARQL11-QUERY#invocation">Section&nbsp;17.2.1</a> of [[SPARQL11-QUERY]]. In contrast, <a href="#func_list">cdt:List</a> is a so-called <a data-cite="SPARQL11-QUERY#func-forms">functional form</a> which has specific evaluation rules (as defined in Section&nbsp;<a href="#func_list" class="sectionRef"></a>).
+    </p>
+
+    <section id="func_list">
+      <h2>cdt:List</h2>
+      <p>TODO</p>
+    </section>
 
     <section id="func_concat">
       <h2>cdt:concat</h2>
-      <p>TODO</p>
+
+      <p>
+        <code><a>cdt:List literal</a> </code>
+        <code style="color:black;font-weight:bold">cdt:concat</code>
+        (
+           <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
+           <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
+        )
+      </p>
+
+      <p>
+        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:List literals</a>, then the result of this function is a <a>cdt:List literal</a> that represents a <a>term map</a> that is the concatenation of the term maps represented by <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var>. An error is raised if <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+      <p>
+        This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-join">array:join</a> function (with two arguments).
+      </p>
+      <p class="issue">
+        We should make clear why we mention the correspondence to that XPath function (what exactly is the point of mentioning it?).
+      </p>
+      <p class="issue">
+        Should we define the notion of "represents" as used in this definition?
+      </p>
+      <p class="issue">
+        The definition is ambiguous because there may be multiple (syntactically) different cdt:List literals for every term map. Which of these literals should be returned? (note that the definitions of the SPARQL build-in functions for numerics and for date and time have the same ambiguity; in fact, the SPARQL spec seems to contain contradictions in terms of the types of function arguments)
+      </p>
     </section>
 
     <section id="func_size">
