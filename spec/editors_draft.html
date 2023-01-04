@@ -1020,24 +1020,22 @@
         <code style="color:black;font-weight:bold">cdt:concat</code>
         (
            <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
-           <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
+           ...,
+           <code><a>cdt:List literal</a> <var>term<sub>n</sub></var></code>
         )
       </p>
 
       <p>
-        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:List literals</a>, then the result of this function is a <a>cdt:List literal</a> that represents a <a>term map</a> that is the concatenation of the term maps represented by <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var>. An error is raised if <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is not a <a>well-formed cdt:List literal</a>.
+        If all arguments (i.e., <var>term<sub>1</sub></var>, ..., <var>term<sub>n</sub></var>) are <a>well-formed cdt:List literals</a>, then the result of this function is a <a>cdt:List literal</a> that represents the <a>term map</a> that is the concatenation of the term maps represented by <var>term<sub>1</sub></var> to <var>term<sub>n</sub></var> (in the order in which these arguments are given).
       </p>
       <p>
-        This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-join">array:join</a> function (with two arguments).
+        An error is raised if any of the arguments is not a <a>well-formed cdt:List literal</a>.
+      </p>
+      <p>
+        This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-join">array:join</a> function.
       </p>
       <p class="issue">
-        We should make clear why we mention the correspondence to that XPath function (what exactly is the point of mentioning it?).
-      </p>
-      <p class="issue">
-        Should we define the notion of "represents" as used in this definition?
-      </p>
-      <p class="issue">
-        The definition is ambiguous because there may be multiple (syntactically) different cdt:List literals for every term map. Which of these literals should be returned? (note that the definitions of the SPARQL build-in functions for numerics and for date and time have the same ambiguity; in fact, the SPARQL spec seems to contain contradictions in terms of the types of function arguments)
+        We should define the notion of "represents" as used in this definition!
       </p>
     </section>
 
