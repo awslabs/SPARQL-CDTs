@@ -2,7 +2,6 @@ PREFIX cdt:    <http://example.org/cdt/>
 
 ASK {
 	BIND("[]" AS ?noListLiteral)
-	BIND("[1]"^^cdt:List AS ?one)
-	BIND(cdt:concat(?noListLiteral, ?one) AS ?result)
+	BIND(cdt:concat(?noListLiteral) AS ?result)
 	FILTER(!BOUND(?result))
 }

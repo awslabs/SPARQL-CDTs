@@ -132,6 +132,7 @@
 		:subseq-error-02 # non-integer index
 		:concat-error-01 # non-list argument
 		:contains-error-01 # non-list argument
+		:contains-error-02 # non-list argument
 		:head-error-01 # non-list argument
 		:tail-error-01 # non-list argument
 		:reverse-error-01 # non-list argument
@@ -1263,6 +1264,17 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-error-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-error-02" ;
+    rdfs:comment    "contains with non-list argument" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-error-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
