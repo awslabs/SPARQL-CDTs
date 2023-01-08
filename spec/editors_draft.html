@@ -908,8 +908,8 @@
         <code>xsd:boolean </code>
         <code style="color:black;font-weight:bold">cdt:list-equal</code>
         (
-           <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
-           <code><a>cdt:List literal</a> <var>term<sub>2</sub></var></code>
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>1</sub></var></code>,
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>2</sub></var></code>
         )
       </p>
 
@@ -954,8 +954,8 @@
         <code>xsd:boolean </code>
         <code style="color:black;font-weight:bold">cdt:map-equal</code>
         (
-           <code><a>cdt:Map literal</a> <var>term<sub>1</sub></var></code>,
-           <code><a>cdt:Map literal</a> <var>term<sub>2</sub></var></code>
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>2</sub></var></code>
         )
       </p>
 
@@ -1009,19 +1009,29 @@
 
     <section id="func_list">
       <h2>cdt:List</h2>
-      <p>TODO</p>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:concat</code>
+        (
+           <code><a>SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
+           ...,
+           <code><a>SPARQL expression</a> <var>expr<sub>n</sub></var></code>
+        )
+      </p>
+      <p class="issue">TODO</p>
     </section>
 
     <section id="func_concat">
       <h2>cdt:concat</h2>
 
       <p>
-        <code><a>cdt:List literal</a> </code>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
         <code style="color:black;font-weight:bold">cdt:concat</code>
         (
-           <code><a>cdt:List literal</a> <var>term<sub>1</sub></var></code>,
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>1</sub></var></code>,
            ...,
-           <code><a>cdt:List literal</a> <var>term<sub>n</sub></var></code>
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>n</sub></var></code>
         )
       </p>
 
@@ -1034,14 +1044,341 @@
       <p>
         This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-join">array:join</a> function.
       </p>
+
       <p class="issue">
         We should define the notion of "represents" as used in this definition!
       </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:concat( "[1,2,3]"^^cdt:List, "['a',null,'a',2,3]"^^cdt:List )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[1,2,3,'a',null,'a',2,3]"^^cdt:List
+        </pre>
+      </aside>
+
+    </section>
+
+    <section id="func_contains">
+      <h2>cdt:contains</h2>
+
+      <p>
+        <code>xsd:boolean </code>
+        <code style="color:black;font-weight:bold">cdt:contains</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>1</sub></var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:List literal</a>, then the result of this function is determined as follows. If the <a>term list</a> represented by <var>term<sub>1</sub></var> contains an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term'</var> such that evaluating the SPARQL expression <var>term'</var> = <var>term<sub>2</sub></var> results in `true`, then the result of this function is `true`. If the term map does not contain such an RDF term, then the result of this function is `false`.
+      </p>
+      <p>
+        An error is raised if <var>term<sub>1</sub></var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+
+<!--       <div class="issue" data-number="17"></div> -->
+      <p class="issue">
+        What about bnodes? <br/>
+        SELECT * WHERE {
+          BIND("[_:b,2]"^^cdt:List AS ?list)
+          BIND( cdt:head(?list) AS ?elmt)
+          BIND( cdt:contains(?list,?elmt) AS ?result)
+        } <br/>
+        See <a href="https://github.com/hartig/SPARQL-CDTs/issues/17">#17</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:contains( "[1,2,3]"^^cdt:List, "02"^^xsd:integer )
+        </pre>
+        <p>
+          results in `true`, whereas the expression
+        </p>
+        <pre class="nohighlight">
+          cdt:contains( "[1,2,3]"^^cdt:List, "2" )
+        </pre>
+        <p>
+          results in `false`.
+      </aside>
+
+    </section>
+
+    <section id="func_get">
+      <h2>cdt:get</h2>
+
+      <p>
+        <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> </code>
+        <code style="color:black;font-weight:bold">cdt:get</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>,
+           <code>xsd:integer <var>idx</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, the value of <var>idx</var> is greater than 0 (zero) and smaller or equal than the number of elements of the <a>term list</a> represented by <var>term</var>, and the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is that RDF term at the <var>idx</var>-th position of the term list represented by <var>term</var>. In all other cases an error is raised.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:get( "[&lt;http://example.org/a>, &lt;http://example.org/b>]"^^cdt:List, 2 )
+        </pre>
+        <p>
+          results in the IRI `http://example.org/b`.
+      </aside>
+
+      <div class="note">
+        By its definition as given above, <code>cdt:get</code> raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
+        <ul>
+          <li>if <var>term</var> is a well-formed cdt:List literal that represents the <a>empty term list</a>,</li>
+          <li>if the value of <var>idx</var> is out of the bounds of the term list represented by <var>term</var>, and</li>
+          <li>if the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is <a>null</a>.</li>
+        </ul>
+      </div>
+      <p class="issue">
+        TODO: add note about the 1-based index
+      </p>
+    </section>
+
+    <section id="func_head">
+      <h2>cdt:head</h2>
+
+      <p>
+        <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> </code>
+        <code style="color:black;font-weight:bold">cdt:head</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, the <a>term list</a> represented by <var>term</var> contains at least one element, and the element at the first position of this term list is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is that RDF term. In all other cases an error is raised.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:head( "[&lt;http://example.org/a>, &lt;http://example.org/b>]"^^cdt:List )
+        </pre>
+        <p>
+          results in the IRI `http://example.org/a`.
+      </aside>
+
+      <div class="note">
+        By its definition as given above, <code>cdt:head</code> raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
+        <ul>
+          <li>if <var>term</var> is a well-formed cdt:List literal that represents the <a>empty term list</a>, and</li>
+          <li>if the element at the first position of the term list represented by <var>term</var> is <a>null</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="func_reverse">
+      <h2>cdt:reverse</h2>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:reverse</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, then the result of this function is a <a>cdt:List literal</a> that represents the <a>term list</a> that contains all elements of the term list represented by <var>term</var>, in the reverse order (e.g., the first element of the term list of <var>term</var> becomes the last element of the term list represented by the resulting cdt:List literal). This definition implies that
+      </p>
+      <ul>
+        <li>if the term list of <var>term</var> consists of a single element, then the resulting cdt:List literal represents the same term list (with the same element), and</li>
+        <li>if <var>term</var> represents the <a>empty term list</a>, then the resulting cdt:List literal also represents the empty term list.</li>
+      </ul>
+      <p>
+        An error is raised if <var>term</var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:reverse( "['a',2,null,4]"^^cdt:List )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[4,null,2,'a']"^^cdt:List
+        </pre>
+      </aside>
+
     </section>
 
     <section id="func_size">
       <h2>cdt:size</h2>
-      <p>TODO</p>
+
+      <p>
+        <code>xsd:integer </code>
+        <code style="color:black;font-weight:bold">cdt:size</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, then the result of this function is the number of elements that the <a>term list</a> represented by <var>term</var> contains.
+      </p>
+      <p>
+        An error is raised if <var>term</var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:size( "[1,'a','a',4]"^^cdt:List )
+        </pre>
+        <p>
+          results in a literal with the datatype IRI `xsd:integer` and the value 4.
+        </p>
+      </aside>
+
+    </section>
+
+    <section id="func_subseq">
+      <h2>cdt:subseq</h2>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:subseq</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>,
+           <code>xsd:integer <var>idx</var></code>
+        )
+      </p>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:subseq</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>,
+           <code>xsd:integer <var>idx</var></code>,
+           <code>xsd:integer <var>length</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, then the result of this function is determined as follows. Let |tm| be the <a>term list</a> represented by <var>term</var> and let |n| be the number of elements contained in |tm|.
+      </p>
+      <ul>
+        <li>If the value of <var>idx</var> is greater than 0 (zero) and smaller than |n|+1, and <var>length</var> is not given, then the result of this function is a <a>cdt:List literal</a> that represents the term list that is the sub-sequence of |tm|, starting with the element at the |idx|-th position of |tm| and ending with the last element of |tm|.</li>
+        <li>If the value of <var>idx</var> is greater than 0 (zero) and smaller than |n|+1, and the value of <var>length</var> is greater than 0 (zero) and smaller than |n|&minus;|idx|+1, then the result of this function is a <a>cdt:List literal</a> that represents the term list that is the sub-sequence of |tm|, starting with the element at the |idx|-th position of |tm| and ending with the element at position |idx|+|length|&minus;1 of |tm|.</li>
+        <li>If the value of <var>idx</var> is greater than 0 (zero) and smaller than |n|+1, and the value of <var>length</var> is 0 (zero), then the result of this function is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.</li>
+        <li>If the value of <var>idx</var> is equal to |n|+1, and either <var>length</var> is not given or the value of <var>length</var> is 0 (zero), then the result of this function is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.</li>
+      </ul>
+      <p>
+        In all other cases an error is raised, including the case that <var>term</var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:subseq( "['a',2,null,4]"^^cdt:List, 2 )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[2,null,4]"^^cdt:List
+        </pre>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:subseq( "['a',2,null,4]"^^cdt:List, 2, 2 )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[2,null]"^^cdt:List
+        </pre>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:subseq( "['a',2,null,4]"^^cdt:List, 2, 0 )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[]"^^cdt:List
+        </pre>
+      </aside>
+
+      <p class="issue">
+        TODO: add note about the 1-based index, as well as about the special case of |n|>0 and <var>idx</var> equal to |n|+1
+      </p>
+    </section>
+
+    <section id="func_tail">
+      <h2>cdt:tail</h2>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:tail</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a> and the <a>term list</a> represented by <var>term</var> contains at least one element, then the result of this function is a <a>cdt:List literal</a> that represents the <a>term list</a> that contains all but the first element of the term list represented by <var>term</var>, where the remaining elements are kept in the same order. This definition implies that, if the term list of <var>term</var> consists of a single element, the resulting cdt:List literal must represent the <a>empty term list</a>.
+      </p>
+      <p>
+        An error is raised if <var>term</var> is not a well-formed cdt:List literal or if it is a well-formed cdt:List literal that represents the empty term list.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:tail( "['a',2,null,4]"^^cdt:List )
+        </pre>
+        <p>
+          results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "[2,null,4]"^^cdt:List
+        </pre>
+      </aside>
+
     </section>
 
   </section>
