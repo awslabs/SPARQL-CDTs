@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# 1 arg overrun
+ASK {
+	BIND("[1,2,3]"^^cdt:List AS ?list)
+	BIND(cdt:subseq(?list, 5) AS ?result)
+	FILTER(!BOUND(?result))
+}

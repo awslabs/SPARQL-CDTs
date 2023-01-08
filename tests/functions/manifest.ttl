@@ -109,6 +109,12 @@
 		:subseq-05
 		:subseq-06
 		:subseq-07
+		:subseq-08
+		:subseq-09
+		:subseq-10
+		:subseq-11
+		:subseq-12
+		:subseq-13
     	
 		# Null-values
 		
@@ -1066,6 +1072,66 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <subseq-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-08" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-09" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-10" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-11" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-12" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-12.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:subseq-13 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "subseq-13" ;
+    mf:feature cdt:subseq ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <subseq-13.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.

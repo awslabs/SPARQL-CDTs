@@ -1,7 +1,8 @@
 PREFIX cdt:    <http://example.org/cdt/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
-# subseq 2-3
+# subseq overrun 10-2
 ASK {
 	BIND("[1,2,3,4,5,6,7,8,9,10]"^^cdt:List AS ?list)
-	FILTER(cdt:subseq(?list, 2, 3) = "[2, 3, 4]"^^cdt:List)
+	BIND(cdt:subseq(?list, 10, 2) AS ?result)
+	FILTER(!BOUND(?result))
 }
