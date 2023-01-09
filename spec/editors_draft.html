@@ -1012,14 +1012,36 @@
 
       <p>
         <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
-        <code style="color:black;font-weight:bold">cdt:concat</code>
+        <code style="color:black;font-weight:bold">cdt:List</code>
         (
-           <code><a>SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
            ...,
-           <code><a>SPARQL expression</a> <var>expr<sub>n</sub></var></code>
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>|n|</sub></var></code>
         )
       </p>
-      <p class="issue">TODO</p>
+
+      <p>
+        The result of this function is a <a>cdt:List literal</a> that represents a <a>term list</a>&nbsp;|tm| that contains |n| elements where, for every |i| in {1, ..., |n|}, the element at the |i|-th position of |tm| is constructed as follows. Evaluate the |i|-th expression, <var>expr<sub>|i|</sub></var>, as defined in [[SPARQL11-QUERY]]. If evaluating <var>expr<sub>|i|</sub></var> raises an error, then the element at the |i|-th position of |tm| is <a>null</a>. Otherwise, the element at the |i|-th position of |tm| is the RDF term resulting from the evaluation of <var>expr<sub>|i|</sub></var>.
+      </p>
+      <p>
+        If the function is called without arguments, then the result is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:List( 'hello', ?x, ?x+1, ?y, &lt;http://example.org/a> )
+        </pre>
+        <p>
+          for the solution mapping <var>&mu;</var>&nbsp;=&nbsp;{?x &rarr; "2"^^xsd:integer} results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "['hello', 2, 3, null, &lt;http://example.org/a>]"^^cdt:List
+        </pre>
+      </aside>
+
     </section>
 
     <section id="func_concat">
@@ -1040,9 +1062,6 @@
       </p>
       <p>
         An error is raised if any of the arguments is not a <a>well-formed cdt:List literal</a>.
-      </p>
-      <p>
-        This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-join">array:join</a> function.
       </p>
 
       <p class="issue">
@@ -1085,17 +1104,6 @@
         An error is raised if <var>term<sub>1</sub></var> is not a <a>well-formed cdt:List literal</a>.
       </p>
 
-<!--       <div class="issue" data-number="17"></div> -->
-      <p class="issue">
-        What about bnodes? <br/>
-        SELECT * WHERE {
-          BIND("[_:b,2]"^^cdt:List AS ?list)
-          BIND( cdt:head(?list) AS ?elmt)
-          BIND( cdt:contains(?list,?elmt) AS ?result)
-        } <br/>
-        See <a href="https://github.com/hartig/SPARQL-CDTs/issues/17">#17</a>.
-      </p>
-
       <aside class="example">
         <p>
           Evaluating the SPARQL expression
@@ -1112,6 +1120,18 @@
         <p>
           results in `false`.
       </aside>
+
+<!--       <div class="issue" data-number="17"></div> -->
+      <div class="issue">
+        What about bnodes? See <a href="https://github.com/hartig/SPARQL-CDTs/issues/17">#17</a>.
+        <pre class="nohighlight">
+        SELECT * WHERE {
+          BIND("[_:b,2]"^^cdt:List AS ?list)
+          BIND( cdt:head(?list) AS ?elmt)
+          BIND( cdt:contains(?list,?elmt) AS ?result)
+        }
+        </pre>
+      </div>
 
     </section>
 
@@ -1150,9 +1170,11 @@
           <li>if the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is <a>null</a>.</li>
         </ul>
       </div>
-      <p class="issue">
-        TODO: add note about the 1-based index
+
+      <p class="note">
+        This function uses a 1-based numbering scheme to address the elements in term maps (i.e., the first element of a term map is addressed by an |idx| value of 1), in contrast to a 0-based numbering scheme which is common for addressing elements of arrays in many programming languages. The reason for using 1-based numbering for this function is to remain consistent with existing build-in functions of SPARQL, which are also 1-based (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a> for string literals). Moreover, the 1-based numbering scheme is also used by functions of other W3C languages such as XPath (see, e.g., the XPath <a data-cite="XPATH-FUNCTIONS#func-array-get">array:get</a> function which is similar to cdt:get).
       </p>
+
     </section>
 
     <section id="func_head">
@@ -1341,9 +1363,14 @@
         </pre>
       </aside>
 
-      <p class="issue">
-        TODO: add note about the 1-based index, as well as about the special case of |n|>0 and <var>idx</var> equal to |n|+1
+      <p class="note">
+        As the <a href="#func_get">`cdt:get`</a> function, this function uses a 1-based numbering scheme to address the elements in term maps (i.e., the first element of a term map is addressed by an |idx| value of 1) in order to be consistent with existing build-in functions of SPARQL (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a>) and with functions in other W3C languages such as XPath (e.g., <a data-cite="XPATH-FUNCTIONS#func-array-subarray">array:subarray</a>).
       </p>
+
+      <p class="note">
+        This function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-array-subarray">array:subarray</a> function and, for the sake of consistency, is defined using the same rules and error conditions. As a consequence, the following special case of arguments is permitted for this function. For term maps with a size |n|>0, it is permitted to call the function with an <var>idx</var> value equal to |n|+1 as long as the value of <var>length</var> is 0 or <var>length</var> is omitted. When doing so, the result is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
+      </p>
+
     </section>
 
     <section id="func_tail">
