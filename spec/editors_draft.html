@@ -1740,8 +1740,9 @@ The result is G.
             If <var>var<sub>1</sub></var>&nbsp;&notin;&nbsp;dom(<var>&mu;</var>), <var>var<sub>2</sub></var>&nbsp;&notin;&nbsp;dom(<var>&mu;</var>), and |expr|(<var>&mu;</var>) is a <a>well-formed cdt:Map literal</a>, then
             <ul>
               <li>
-                Unfold2(<var>&mu;</var>, <var>var<sub>1</sub></var>, <var>var<sub>2</sub></var>, |expr|) = { <var>&mu;</var> &cup; (<var>var<sub>1</sub></var>, |k|) &cup; (<var>var<sub>2</sub></var>, |v|) | (|k|,|v|) is a <a>map entry</a> in |M| },
-                where |M| is the <a>term map</a> represented by the cdt:Map literal |expr|(<var>&mu;</var>),
+                Unfold2(<var>&mu;</var>, <var>var<sub>1</sub></var>, <var>var<sub>2</sub></var>, |expr|) = { <var>&mu;</var> &cup; (<var>var<sub>1</sub></var>, |k|) &cup; <var>&mu;<sub>|v|</sub></var> | (|k|,|v|) is a <a>map entry</a> in |M| }, where
+                <br/>&nbsp; &nbsp; <var>&mu;<sub>|v|</sub></var> is the empty solution mapping if |v| is <a>null</a>, otherwise, <var>&mu;<sub>|v|</sub></var> = (<var>var<sub>2</sub></var>, |v|), and
+                <br/>&nbsp; &nbsp; |M| is the <a>term map</a> represented by the cdt:Map literal |expr|(<var>&mu;</var>),
               </li>
               <li>
                 card[Unfold2(<var>&mu;</var>, <var>var<sub>1</sub></var>, <var>var<sub>2</sub></var>, |expr|)](<var>&mu;'</var>) = 1 for every <var>&mu;'</var>&nbsp;&isin;&nbsp;Unfold2(<var>&mu;</var>, <var>var<sub>1</sub></var>, <var>var<sub>2</sub></var>, |expr|),
