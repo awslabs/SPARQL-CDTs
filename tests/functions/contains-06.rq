@@ -1,11 +1,9 @@
 PREFIX cdt:    <http://example.org/cdt/>
 
-# nested lists
+# contains blank nodes
 ASK {
-	BIND("[1,[2]]"^^cdt:List AS ?list)
-	BIND("[2]"^^cdt:List AS ?list2)
-
-	FILTER(cdt:contains(?list, 1))
-	FILTER(!cdt:contains(?list, 2))
-	FILTER(cdt:contains(?list, ?list2))
+SELECT * WHERE {
+	BIND("[_:b,2]"^^cdt:List AS ?list)
+	BIND( cdt:head(?list) AS ?elmt)
+	FILTER( cdt:contains(?list,?elmt) )
 }

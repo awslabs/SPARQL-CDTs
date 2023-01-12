@@ -45,6 +45,7 @@
 		:contains-07
 		:contains-08
 		:contains-09
+		:contains-10
 
 		:get-01
 		:get-02
@@ -492,6 +493,16 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <contains-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:contains-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "contains-10" ;
+    mf:feature cdt:contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <contains-10.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.

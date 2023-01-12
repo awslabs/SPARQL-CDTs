@@ -1,8 +1,8 @@
 PREFIX cdt:    <http://example.org/cdt/>
 
-# nested lists
+# nested lists given as literals
 ASK {
-	BIND("[1,{2:3}]"^^cdt:List AS ?list)
+	BIND("[1,'{2:3}'^^<http://example.org/cdt/Map>]"^^cdt:List AS ?list)
 	BIND("{2:3}"^^cdt:Map AS ?map)
 
 	FILTER(cdt:contains(?list, 1))
