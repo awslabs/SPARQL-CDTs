@@ -731,11 +731,11 @@
       </p>
 
       <p class="note">
-        A <a>term map</a> MAY <a>contain</a> multiple map entries that all have the same <a>value</a>, but they MUST have different <a>keys</a>.
+        The <a>empty term map</a> does not <a>contain</a> any map entries.
       </p>
 
       <p class="note">
-        The <a>empty term map</a> does not <a>contain</a> any map entries.
+        A <a>term map</a> MAY <a>contain</a> multiple map entries that all have the same <a>value</a>, but they MUST have different <a>keys</a>. It is possible, however, that multiple map entries of a term map MAY have literals with the same <a data-cite="RDF11-CONCEPTS#dfn-literal-value">literal value</a> as their respective keys, as long as all these literals have a different lexical form. For instance, a term map MAY contain two map entries, (|k|,|v|) and (<var>k'</var>,<var>v'</var>), such that |k| is the literal `"0042"^^xsd:integer` and <var>k'</var> is the literal `"42"^^xsd:integer` (using a Turtle representation of these literals for the sake of readability). Clearly, these are two different literals and, thus, two different map keys, but their literal value is the same (the integer&nbsp;42).
       </p>
 
     </section>
@@ -744,12 +744,20 @@
       <h2>Lexical Space</h2>
 
       <p>
-        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:Map datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:Map datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a> and in which all substrings that matched the <a href="#cdt-grammar-production-MapKey">`MapKey`</a> production are different from one another.
       </p>
 
-      <p class="issue">
-        We may have to be more restrictive here because the grammar does not require uniqueness of the <a>map keys</a>.
-      </p>
+      <div class="issue">
+        <p>
+          The constraint about the substrings is not restrictive enough because the <a href="#cdt-grammar-production-MapKey">`MapKey`</a> production recognizes both the generic way of serializing literals in Turtle and the Turtle shorthand notations for some datatypes. For instance, consider the following string:
+        </p>
+        <pre class="nohighlight">
+          "{ 42 : 'value1',  '42'^^&lt;http://www.w3.org/2001/XMLSchema#integer> : 'value2' }"
+        </pre>
+        <p>
+          This string satisfies the definition given above (including the constraint about the substrings) and, thus, would be a valid lexical form for cdt:Map literals. Yet, the keys of the two map entries represented in this string are the exact same literal, which is illegal according to the definition of <a>term maps</a>.
+        </p>
+      </div>
 
     </section>
 
