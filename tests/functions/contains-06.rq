@@ -2,7 +2,6 @@ PREFIX cdt:    <http://example.org/cdt/>
 
 # contains blank nodes
 ASK {
-SELECT * WHERE {
 	BIND("[_:b,2]"^^cdt:List AS ?list)
 	BIND( cdt:head(?list) AS ?elmt)
 	FILTER( cdt:contains(?list,?elmt) )
