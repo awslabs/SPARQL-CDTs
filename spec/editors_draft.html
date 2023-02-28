@@ -1471,6 +1471,12 @@
     </p>
 
     <p>
+      In particular, recall from Section&nbsp;<a href="#description-of-unfold" class="sectionRef"></a> that there are two variations of this operator: one that assigns a single new query variable (i.e., `UNFOLD(expr AS ?v1)`) and another one that assigns two new query variables (i.e., `UNFOLD(expr AS ?v1, ?v2)`).
+      When applied to <a>cdt:List literals</a>, the one-variable version binds the new variable to each of the RDF terms in the corresponding <a>term list</a> (or leaves it unbound for <a>null</a> values) and the two-variables version binds the first new variable to each RDF term in the term list (or leaves it unbound for null values) and the second variable to the corresponding position of the term/null in the list.
+      When applied to <a>cdt:Map literals</a>, the one-variable version binds the variable to each of the keys in the <a>term map</a> and the two-variables version binds the first variable to each key in the term map and the second variable to the corresponding value (or leaves it unbound for null values).
+    </p>
+
+    <p>
       Adding this new operator to the language requires an extension to the grammar of SPARQL, an extension of the SPARQL algebra, and corresponding extensions both of the process of converting SPARQL graph patterns into SPARQL algebra expressions and of the evaluation semantics.
     </p>
 
