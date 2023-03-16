@@ -1476,8 +1476,14 @@
       When applied to <a>cdt:Map literals</a>, the one-variable version binds the variable to each of the keys in the <a>term map</a> and the two-variables version binds the first variable to each key in the term map and the second variable to the corresponding value (or leaves it unbound for null values).
     </p>
 
+    <p class="note">
+      Note that there is an asymmetry between the two-variables version of UNFOLD for cdt:List literals and the two-variables version for cdt:Map literals. In the case of maps, the values are assigned to the second variable whereas, for lists, the values (the list elements) are assigned to the first variable.
+      <br/><br/>
+      While it would be possible to eliminate this asymmetry by changing the two-variables version of UNFOLD for cdt:List literals such that the list elements are assigned to the second variable (and the positions to the first variable), doing so would introduce another asymmetry: This asymmetry would then be between the so-changed two-variables version and the one-variable version of UNFOLD for cdt:List literals, because the latter binds the first (and, in this case, only) variable to the values. A follow-up change to eliminate this asymmetry as well may be to define the one-variable version such that it assigns the (single) variable to the positions and not to the list elements. However, this definition would have a very limited practical value and, thus, the initially mentioned asymmetry is considered as the best possible compromise.
+    </p>
+
     <p>
-      Adding this new operator to the language requires an extension to the grammar of SPARQL, an extension of the SPARQL algebra, and corresponding extensions both of the process of converting SPARQL graph patterns into SPARQL algebra expressions and of the evaluation semantics.
+      Adding this new UNFOLD operator to the language requires an extension to the grammar of SPARQL, an extension of the SPARQL algebra, and corresponding extensions both of the process of converting SPARQL graph patterns into SPARQL algebra expressions and of the evaluation semantics. The following sections define these extensions.
     </p>
 
     <section id="unfold-grammar">
