@@ -1132,10 +1132,13 @@
               <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, produce an error.</li>
               <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in `true`, return `true`.</li>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in `false` and evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in `false` and evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, then:
+                    <ol>
+                      <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
+                      <li>Return the result of evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var>.</li>
+                    </ol>
+                  </li>
                 </ol>
               </li>
             </ol>
@@ -1183,21 +1186,23 @@
               <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th element in <var>&Psi;<sub>2</sub></var>.</li>
               <li>Let <var>k<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>1</sub></var>).</li>
               <li>Let <var>k<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in `true`, return `true`.</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>2</sub></var> `&lt;` <var>k<sub>1</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>2</sub></var> `&lt;` <var>k<sub>1</sub></var> results in `true`, return `false`.</li>
               <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in `false`, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in `false`, then:
+                <ol>
+                  <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
+                  <li>Return the result of evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var>.</li>
+                </ol>
+              </li>
               <li>If <var>var<sub>v</sub></var> is unbound in <var>&mu;<sub>1</sub></var> or in <var>&mu;<sub>2</sub></var>, produce an error.</li>
               <li>Let <var>v<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>1</sub></var>).</li>
               <li>Let <var>v<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in `true`, return `true`.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> `&lt;` <var>v<sub>1</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> `&lt;` <var>v<sub>1</sub></var> results in `true`, return `false`.</li>
               <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in `false`, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in `false`, then:
+                <ol>
+                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
+                  <li>Return the result of evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var>.</li>
+                </ol>
+              </li>
             </ol>
           </li>
           <li>If the length of <var>&Psi;<sub>1</sub></var> is smaller than the length of <var>&Psi;<sub>2</sub></var>, return `true`.</li>
