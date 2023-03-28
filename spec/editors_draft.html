@@ -899,7 +899,7 @@
           <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
           <td>cdt:List</td>
           <td>cdt:List</td>
-          <td><a href="#func_list-equal">cdt:list-equal</a>(A, B)</td>
+          <td><a href="#func_list-equal">list-equal</a>(A, B)</td>
           <td>xsd:boolean</td>
         </tr>
         <tr>
@@ -907,7 +907,7 @@
           <a data-cite="SPARQL11-QUERY#rRelationalExpression">A = B</a></td>
           <td>cdt:Map</td>
           <td>cdt:Map</td>
-          <td><a href="#func_map-equal">cdt:map-equal</a>(A, B)</td>
+          <td><a href="#func_map-equal">map-equal</a>(A, B)</td>
           <td>xsd:boolean</td>
         </tr>
         <tr>
@@ -915,7 +915,7 @@
           <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
           <td>cdt:List</td>
           <td>cdt:List</td>
-          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_list-equal">cdt:list-equal</a>(A, B))</td>
+          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_list-equal">list-equal</a>(A, B))</td>
           <td>xsd:boolean</td>
         </tr>
         <tr>
@@ -923,7 +923,7 @@
           <a data-cite="SPARQL11-QUERY#rRelationalExpression">A != B</a></td>
           <td>cdt:Map</td>
           <td>cdt:Map</td>
-          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_map-equal">cdt:map-equal</a>(A, B))</td>
+          <td><a href="http://www.w3.org/TR/xpath-functions/#func-not">fn:not</a>(<a href="#func_map-equal">map-equal</a>(A, B))</td>
           <td>xsd:boolean</td>
         </tr>
       </tbody>
@@ -938,15 +938,19 @@
     </p>
 
     <section id="func_list-equal">
-      <h2>cdt:list-equal</h2>
+      <h2>list-equal</h2>
 
       <p>
         <code>xsd:boolean </code>
-        <code style="color:black;font-weight:bold">cdt:list-equal</code>
+        <code style="color:black;font-weight:bold">list-equal</code>
         (
            <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>1</sub></var></code>,
            <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term<sub>2</sub></var></code>
         )
+      </p>
+
+      <p>
+        This function cannot be used directly in expressions. Instead, the purpose of this function is to define the semantics of the `=` operator when applied to two <a>cdt:List literals</a>.
       </p>
 
       <p>
@@ -984,15 +988,19 @@
     </section>
 
     <section id="func_map-equal">
-      <h2>cdt:map-equal</h2>
+      <h2>map-equal</h2>
 
       <p>
         <code>xsd:boolean </code>
-        <code style="color:black;font-weight:bold">cdt:map-equal</code>
+        <code style="color:black;font-weight:bold">map-equal</code>
         (
            <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
            <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>2</sub></var></code>
         )
+      </p>
+
+      <p>
+        This function cannot be used directly in expressions. Instead, the purpose of this function is to define the semantics of the `=` operator when applied to two <a>cdt:Map literals</a>.
       </p>
 
       <p>
