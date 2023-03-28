@@ -1168,11 +1168,40 @@
       </p>
 
       <p>
-        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm.
+        If both <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var> are <a>well-formed cdt:Map literals</a>, then the result of this function is determined by the following algorithm, where <var>&mu;<sub>0</sub></var> is the empty <a data-cite="SPARQL11-QUERY#defn_sparqlSolutionMapping">solution mapping</a> (i.e., dom(<var>&mu;<sub>0</sub></var>) is the empty set), and <var>var<sub>k</sub></var> and <var>var<sub>v</sub></var> are two different <a data-cite="SPARQL11-QUERY#defn_QueryVariable">variables</a>.
       </p>
       <div class="algorithm">
         <ol>
-          <li>TODO</li>
+          <li>Let <var>&Omega;<sub>1</sub></var> be the set of solution mappings returned by <a>Unfold2</a>(<var>&mu;<sub>0</sub></var>, <var>var<sub>k</sub></var>, <var>var<sub>v</sub></var>, <var>term<sub>1</sub></var>).</li>
+          <li>Let <var>&Omega;<sub>2</sub></var> be the set of solution mappings returned by <a>Unfold2</a>(<var>&mu;<sub>0</sub></var>, <var>var<sub>k</sub></var>, <var>var<sub>v</sub></var>, <var>term<sub>2</sub></var>).</li>
+          <li>If both <var>&Omega;<sub>1</sub></var> and <var>&Omega;<sub>2</sub></var> are the empty set, then return `false`.</li>
+          <li>Let <var>&Psi;<sub>1</sub></var> be the sequence of solution mappings returned by <a data-cite="SPARQL11-QUERY#defn_algOrdered">OrderBy</a>(<a data-cite="SPARQL11-QUERY#defn_algToList">ToList</a>(<var>&Omega;<sub>1</sub></var>), <var>var<sub>k</sub></var>).</li>
+          <li>Let <var>&Psi;<sub>2</sub></var> be the sequence of solution mappings returned by <a data-cite="SPARQL11-QUERY#defn_algOrdered">OrderBy</a>(<a data-cite="SPARQL11-QUERY#defn_algToList">ToList</a>(<var>&Omega;<sub>2</sub></var>), <var>var<sub>k</sub></var>).</li>
+          <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the respective length of <var>&Psi;<sub>1</sub></var> and of <var>&Psi;<sub>2</sub></var>:
+            <ol>
+              <li>Let <var>&mu;<sub>1</sub></var> be the |i|-th element in <var>&Psi;<sub>1</sub></var>.</li>
+              <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th element in <var>&Psi;<sub>2</sub></var>.</li>
+              <li>Let <var>k<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>1</sub></var>).</li>
+              <li>Let <var>k<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>2</sub></var>).</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in `true`, return `true`.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>2</sub></var> `&lt;` <var>k<sub>1</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>2</sub></var> `&lt;` <var>k<sub>1</sub></var> results in `true`, return `false`.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in `false`, produce an error.</li>
+              <li>If <var>var<sub>v</sub></var> is unbound in <var>&mu;<sub>1</sub></var> or in <var>&mu;<sub>2</sub></var>, produce an error.</li>
+              <li>Let <var>v<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>1</sub></var>).</li>
+              <li>Let <var>v<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>2</sub></var>).</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in `true`, return `true`.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> `&lt;` <var>v<sub>1</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> `&lt;` <var>v<sub>1</sub></var> results in `true`, return `false`.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in `false`, produce an error.</li>
+            </ol>
+          </li>
+          <li>If the length of <var>&Psi;<sub>1</sub></var> is smaller than the length of <var>&Psi;<sub>2</sub></var>, return `true`.</li>
+          <li>Return `false`.</li>
         </ol>
       </div>
 
