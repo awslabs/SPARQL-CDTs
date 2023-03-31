@@ -1166,8 +1166,8 @@
           <li>Let <var>&Psi;<sub>2</sub></var> be the sequence of solution mappings returned by <a data-cite="SPARQL11-QUERY#defn_algOrdered">OrderBy</a>(<a data-cite="SPARQL11-QUERY#defn_algToList">ToList</a>(<var>&Omega;<sub>2</sub></var>), <var>var<sub>k</sub></var>).</li>
           <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the respective length of <var>&Psi;<sub>1</sub></var> and of <var>&Psi;<sub>2</sub></var>:
             <ol>
-              <li>Let <var>&mu;<sub>1</sub></var> be the |i|-th element in <var>&Psi;<sub>1</sub></var>.</li>
-              <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th element in <var>&Psi;<sub>2</sub></var>.</li>
+              <li>Let <var>&mu;<sub>1</sub></var> be the |i|-th solution mapping in <var>&Psi;<sub>1</sub></var>.</li>
+              <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th solution mapping in <var>&Psi;<sub>2</sub></var>.</li>
               <li>Let <var>k<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>1</sub></var>).</li>
               <li>Let <var>k<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>2</sub></var>).</li>
               <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, terminate with an error.</li>
