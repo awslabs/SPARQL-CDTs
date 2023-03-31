@@ -1026,21 +1026,15 @@
           <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
           <li>If both <var>list<sub>1</sub></var> and <var>list<sub>2</sub></var> are the <a>empty term list</a>, then return `true`.</li>
           <li>If the length of <var>list<sub>1</sub></var> is different from the length of <var>list<sub>2</sub></var>, then return `false`.</li>
-          <li>Let <var>err</var> be a boolean-typed variable that is initialized with the value `false`.</li>
           <li>For every integer |i| from 1 to |n|, where |n| is the length of <var>list<sub>1</sub></var>:
             <ol>
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, set the value of <var>err</var> to `true`.</li>
-              <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
-                <ol>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, set the value of <var>err</var> to `true`.</li>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
-                </ol>
-              </li>
+              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
             </ol>
           </li>
-          <li>If the value of <var>err</var> is `true`, produce an error.</li>
           <li>Return `true`.</li>
         </ol>
       </div>
@@ -1123,16 +1117,12 @@
             <ol>
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, produce an error.</li>
-              <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a> (i.e., <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms), then:
+              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, then:
-                    <ol>
-                      <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in an error, produce an error.</li>
-                      <li>Return the result of evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var>.</li>
-                    </ol>
-                  </li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
+                  <li>Return the result of evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var>.</li>
                 </ol>
               </li>
             </ol>
@@ -1180,20 +1170,20 @@
               <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th element in <var>&Psi;<sub>2</sub></var>.</li>
               <li>Let <var>k<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>1</sub></var>).</li>
               <li>Let <var>k<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in `false`, then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, produce an error.</li>
+                  <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, terminate with an error.</li>
                   <li>Return the result of evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var>.</li>
                 </ol>
               </li>
-              <li>If <var>var<sub>v</sub></var> is unbound in <var>&mu;<sub>1</sub></var> or in <var>&mu;<sub>2</sub></var>, produce an error.</li>
+              <li>If <var>var<sub>v</sub></var> is unbound in <var>&mu;<sub>1</sub></var> or in <var>&mu;<sub>2</sub></var>, terminate with an error.</li>
               <li>Let <var>v<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>1</sub></var>).</li>
               <li>Let <var>v<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in `false`, then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, produce an error.</li>
+                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
                   <li>Return the result of evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var>.</li>
                 </ol>
               </li>
