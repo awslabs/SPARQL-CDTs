@@ -1070,13 +1070,13 @@
           <li>Let <var>map<sub>2</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
           <li>If both <var>map<sub>1</sub></var> and <var>map<sub>2</sub></var> are the <a>empty term map</a>, then return `true`.</li>
           <li>If the number of <a>map entries</a> that <var>map<sub>1</sub></var> <a href="#dfn-contains-map-entry">contains</a> is different from the number of <a>map entries</a> that <var>map<sub>2</sub></var> <a href="#dfn-contains-map-entry">contains</a>, then return `false`.</li>
-          <li>For every <a>map entry</a> (|k|,|v|) <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>1</sub></var>:
+          <li>For every <a>map entry</a> (|k|, <var>v<sub>1</sub></var>) <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>1</sub></var>:
             <ol>
               <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
-              <li>If |v| is <a>null</a> or <var>map<sub>2</sub></var>(|k|) is <a>null</a>, terminate with an error.</li>
-              <li>Let <var>v'</var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
-              <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>v'</var> = |v| results in `false`, return `false`.</li>
+              <li>If <var>v<sub>1</sub></var> is <a>null</a> or <var>map<sub>2</sub></var>(|k|) is <a>null</a>, terminate with an error.</li>
+              <li>Let <var>v<sub>2</sub></var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in an error, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in `false`, return `false`.</li>
             </ol>
           </li>
           <li>Return `true`.</li>
