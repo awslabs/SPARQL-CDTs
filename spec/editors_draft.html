@@ -1637,7 +1637,46 @@
   <section id="extension-of-order-by">
     <h2>Extension of ORDER BY (TODO)</h2>
 
-    <p>TODO<p>
+    <p>
+      This section extends the definition of the <a data-cite="SPARQL11-QUERY#modOrderBy">`ORDER BY` clause of SPARQL</a> to explicitly define the relative order of two RDF terms for cases in which at least one of the two RDF terms is a <a>cdt:List literal</a> or a <a>cdt:Map literal</a>.
+    </p>
+
+    <p>
+      According to the definition in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], <a>cdt:List literals</a> and <a>cdt:Map literals</a> are ordered higher than any blank node and any IRI (because they are RDF literals).
+    </p>
+
+    <p>
+      <a>cdt:List literals</a> and <a>cdt:Map literals</a> are ordered higher than any other RDF literal (i.e., any literal with a <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> that is neither the IRI of the <a>cdt:List datatype</a> nor the IRI of the <a>cdt:Map datatype</a>).
+    </p>
+
+    <p>
+      <a>cdt:Map literals</a> are ordered higher than <a>cdt:List literals</a>.
+    </p>
+
+    <p>
+      The relative order of two <a>cdt:List literals</a> <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is determined by the following algorithm.
+    </p>
+    <div class="algorithm">
+      <ol>
+        <li>If one of the two literals, <var>lit<sub>1</sub></var> or <var>lit<sub>2</sub></var>, is <a href="#dfn-ill-formed-cdt-list-literal">ill-formed</a> and the other one is <a href="#dfn-well-formed-cdt-list-literal">well-formed</a>, then the ill-formed one is ordered higher.</li>
+        <li>If both literals, <var>lit<sub>1</sub></var> or <var>lit<sub>2</sub></var>, are <a href="#dfn-well-formed-cdt-list-literal">well-formed</a>, then:
+          <ol>
+            <li>Let <var>list<sub>1</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>lit<sub>1</sub></var> (i.e., <var>list<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>lit<sub>1</sub></var>).</li>
+            <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>lit<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>lit<sub>2</sub></var>).</li>
+            <li>TODO ...</li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+
+    <p>
+      The relative order of two <a>cdt:Map literals</a> <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is determined by the following algorithm.
+    </p>
+    <div class="algorithm">
+      <ol>
+        <li>TODO ...</li>
+      </ol>
+    </div>
 
   </section>
 
@@ -1645,7 +1684,7 @@
   <section id="fold">
     <h2>FOLD (TODO)</h2>
 
-    <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)<p>
+    <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)</p>
 
   </section>
 
