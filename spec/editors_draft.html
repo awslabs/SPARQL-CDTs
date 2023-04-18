@@ -1663,11 +1663,32 @@
           <ol>
             <li>Let <var>list<sub>1</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>lit<sub>1</sub></var> (i.e., <var>list<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>lit<sub>1</sub></var>).</li>
             <li>Let <var>list<sub>2</sub></var> be the <a>term list</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>lit<sub>2</sub></var> (i.e., <var>list<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>lit<sub>2</sub></var>).</li>
-            <li>TODO ...</li>
+
+            <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the length of <var>list<sub>1</sub></var> and the length of <var>list<sub>2</sub></var>:
+              <ol>
+                <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
+                <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
+                <li>If <var>elmt<sub>1</sub></var> is an RDF term and <var>elmt<sub>2</sub></var> is <a>null</a>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+                <li>If <var>elmt<sub>2</sub></var> is an RDF term and <var>elmt<sub>1</sub></var> is <a>null</a>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+                <li>If both <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms, and <var>elmt<sub>1</sub></var> is ordered higher than <var>elmt<sub>2</sub></var>&nbsp;(according to the definition in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], and also considering the extension of this definition as provided in this section), then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+                <li>If both <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms, and <var>elmt<sub>2</sub></var> is ordered higher than <var>elmt<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+              </ol>
+            </li>
+            <li>If the length of <var>list<sub>1</sub></var> is greater than the length of <var>list<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+            <li>If the length of <var>list<sub>2</sub></var> is greater than the length of <var>list<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
           </ol>
         </li>
+        <li>Let <var>str<sub>1</sub></var> be the literal that has the same lexical form as <var>lit<sub>1</sub></var> and the datatype IRI `xsd:string`.</li>
+        <li>Let <var>str<sub>2</sub></var> be the literal that has the same lexical form as <var>lit<sub>2</sub></var> and the datatype IRI `xsd:string`.</li>
+        <li>If <var>str<sub>1</sub></var> is ordered higher than <var>str<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+        <li>If <var>str<sub>2</sub></var> is ordered higher than <var>str<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+        <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
       </ol>
     </div>
+
+    <p class="note">
+      If the two <a>cdt:List literals</a> are <a href="#dfn-well-formed-cdt-list-literal">well-formed</a>, the algorithm iterates over the <a>term lists</a> of both literals and compares their elements pairwise. For every pair for which the relative order is undefined or both elements are <a>null</a>, the algorithm advances to the next pair. Once the algorithm finds a pair for which one of the two elements is ordered higher than the other element, the corresponding cdt:List literal from which this higher-ordered element originates is defined as ordered higher than the other cdt:List literal. If the algorithm reaches the end of at least one of the two term lists without finding such a pair and the other term lists contains further elements, then the cdt:List literal with the larger term list is ordered higher. If no decision can be made based on any of the aforementioned conditions (or both of the literals are <a>ill-formed cdt:List literals</a>), then the relative order of the two literals is determined based on their lexical forms.
+    </p>
 
     <p>
       The relative order of two <a>cdt:Map literals</a> <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is determined by the following algorithm.
