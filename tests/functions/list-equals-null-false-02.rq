@@ -2,6 +2,7 @@ PREFIX cdt:    <http://example.org/cdt/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
-	BIND("[1,null,2]"^^cdt:List = "[1,44,3]"^^cdt:List AS ?result)
+        BIND( cdt:List(1, ?x, 2) AS ?list1 )
+	BIND( ?list1 = "[1,44,3]"^^cdt:List AS ?result)
 	FILTER(?result = false)
 }

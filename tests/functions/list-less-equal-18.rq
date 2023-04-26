@@ -2,6 +2,8 @@ PREFIX cdt:    <http://example.org/cdt/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
-	BIND( ( "[1]"^^cdt:List <= "[false]"^^cdt:List ) AS ?result )
+	BIND( cdt:List(1) AS ?list1 )
+	BIND( cdt:List(false) AS ?list2 )
+	BIND( ( ?list1 <= ?list2 ) AS ?result )
 	FILTER( ! BOUND(?result) )
 }
