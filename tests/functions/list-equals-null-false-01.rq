@@ -3,5 +3,5 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
 	BIND("[1,null,2]"^^cdt:List = "[1,null,2]"^^cdt:List AS ?result)
-	FILTER(?result = false)
+	FILTER( ! BOUND(?result) )
 }
