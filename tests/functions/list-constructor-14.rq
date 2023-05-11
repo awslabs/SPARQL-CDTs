@@ -4,5 +4,5 @@ PREFIX cdt:    <http://example.org/cdt/>
 # STRDT constructor
 ASK {
 	BIND(STRDT("[1]", cdt:List) AS ?list)
-	FILTER(?list = "[1]"^^cdt:List)
+	FILTER(?list = "[  1  ]"^^cdt:List)
 }
