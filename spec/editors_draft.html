@@ -1166,37 +1166,42 @@
       </p>
       <div class="algorithm">
         <ol>
-          <li>Let <var>&Omega;<sub>1</sub></var> be the set of solution mappings returned by <a>Unfold2</a>(<var>&mu;<sub>0</sub></var>, <var>var<sub>k</sub></var>, <var>var<sub>v</sub></var>, <var>term<sub>1</sub></var>).</li>
-          <li>Let <var>&Omega;<sub>2</sub></var> be the set of solution mappings returned by <a>Unfold2</a>(<var>&mu;<sub>0</sub></var>, <var>var<sub>k</sub></var>, <var>var<sub>v</sub></var>, <var>term<sub>2</sub></var>).</li>
-          <li>If both <var>&Omega;<sub>1</sub></var> and <var>&Omega;<sub>2</sub></var> are the empty set, then return `false`.</li>
-          <li>Let <var>&Psi;<sub>1</sub></var> be the sequence of solution mappings returned by <a data-cite="SPARQL11-QUERY#defn_algOrdered">OrderBy</a>(<a data-cite="SPARQL11-QUERY#defn_algToList">ToList</a>(<var>&Omega;<sub>1</sub></var>), <var>var<sub>k</sub></var>).</li>
-          <li>Let <var>&Psi;<sub>2</sub></var> be the sequence of solution mappings returned by <a data-cite="SPARQL11-QUERY#defn_algOrdered">OrderBy</a>(<a data-cite="SPARQL11-QUERY#defn_algToList">ToList</a>(<var>&Omega;<sub>2</sub></var>), <var>var<sub>k</sub></var>).</li>
-          <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the respective length of <var>&Psi;<sub>1</sub></var> and of <var>&Psi;<sub>2</sub></var>:
+          <li>Let <var>map<sub>1</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>1</sub></var> (i.e., <var>map<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>1</sub></var>).</li>
+          <li>Let <var>map<sub>2</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>term<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>term<sub>2</sub></var>).</li>
+          <li>If both <var>map<sub>1</sub></var> and <var>map<sub>2</sub></var> are the <a>empty term map</a>, then return `false`.</li>
+          <li>Let <var>entryset<sub>1</sub></var> be the set of all <a>map entries</a> that are <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>1</sub></var>.</li>
+          <li>Let <var>entryset<sub>2</sub></var> be the set of all <a>map entries</a> that are <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>2</sub></var>.</li>
+          <li>Let <var>entrylist<sub>1</sub></var> be a list of all map entries in <var>entryset<sub>1</sub></var>, ordered based on their respective <a>map keys</a> by using the following order:
+            <ul>
+              <li>Map entries with map keys that are IRIs are listed first, ordered based on comparing the string representation of these IRIs using the `&lt;` operator (i.e., the IRIs are used as the lexical form of literals with the datatype `xsd:string` and the order is then determined by comparing these literals using the `&lt;` operator)</li>
+              <li>The remaining map entries have map keys that are literals. They are primarily ordered based on the string representation of their datatype IRIs (i.e., using these datatype IRIs as the lexical form of literals with the datatype `xsd:string` and, then, determining the order by comparing these string literals using the `&lt;` operator). Literals of the same datatype are ordered based on their lexical form (i.e., replacing their datatype IRI by `xsd:string` and, then, using the `&lt;` operator for the resulting string literals). Finally, literals with datatype `rdf:langString` that have the same lexical form are sorted based on the string representation of their language tags.
+              </li>
+            </ul>
+          </li>
+          <li>Let <var>entrylist<sub>2</sub></var> be a list of all map entries in <var>entryset<sub>2</sub></var>, ordered in the same way as <var>entrylist<sub>1</sub></var>.</li>
+          <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the respective length of <var>entrylist<sub>1</sub></var> and of <var>entrylist<sub>2</sub></var>:
             <ol>
-              <li>Let <var>&mu;<sub>1</sub></var> be the |i|-th solution mapping in <var>&Psi;<sub>1</sub></var>.</li>
-              <li>Let <var>&mu;<sub>2</sub></var> be the |i|-th solution mapping in <var>&Psi;<sub>2</sub></var>.</li>
-              <li>Let <var>k<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>1</sub></var>).</li>
-              <li>Let <var>k<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>k</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>k</sub></var>) = <var>k<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `=` <var>k<sub>2</sub></var> results in `false`, then:
+              <li>Let (<var>k<sub>1</sub></var>, <var>v<sub>1</sub></var>) be the |i|-th <a>map entry</a> in <var>entrylist<sub>1</sub></var>.</li>
+              <li>Let (<var>k<sub>2</sub></var>, <var>v<sub>2</sub></var>) be the |i|-th <a>map entry</a> in <var>entrylist<sub>2</sub></var>.</li>
+              <li>If evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>k<sub>1</sub></var>, <var>k<sub>2</sub></var>) results in `false`, then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var> results in an error, terminate with an error.</li>
-                  <li>Return the result of evaluating the SPARQL expression <var>k<sub>1</sub></var> `&lt;` <var>k<sub>2</sub></var>.</li>
+                  <li>Return `true` if <var>k<sub>1</sub></var> is ordered before <var>k<sub>2</sub></var> according to the ordering of map keys as defined above for creating <var>entrylist<sub>1</sub></var>.</li>
+                  <li>Return `false`.</li>
                 </ol>
               </li>
-              <li>If <var>var<sub>v</sub></var> is unbound in <var>&mu;<sub>1</sub></var> or in <var>&mu;<sub>2</sub></var>, terminate with an error.</li>
-              <li>Let <var>v<sub>1</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>1</sub></var> (i.e, <var>&mu;<sub>1</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>1</sub></var>).</li>
-              <li>Let <var>v<sub>2</sub></var> be the RDF term that is mapped to <var>var<sub>v</sub></var> in <var>&mu;<sub>2</sub></var> (i.e, <var>&mu;<sub>2</sub></var>(<var>var<sub>v</sub></var>) = <var>v<sub>2</sub></var>).</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `=` <var>v<sub>2</sub></var> results in `false`, then:
+              <li>If <var>v<sub>1</sub></var> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, terminate with an error.</li>
+              <li>If <var>v<sub>1</sub></var> is a blank node, return `true`.</li>
+              <li>If <var>v<sub>2</sub></var> is a blank node, return `false`.</li>
+              <li>If evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>) results in `false`, then:
                 <ol>
-                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-                  <li>Return the result of evaluating the SPARQL expression <var>v<sub>1</sub></var> `&lt;` <var>v<sub>2</sub></var>.</li>
+                  <li>Return `true` if <var>v<sub>1</sub></var> is ordered before <var>v<sub>2</sub></var> according to the ordering of map keys as defined above for creating <var>entrylist<sub>1</sub></var> (notice that, at this point, <var>v<sub>1</sub></var> is an IRI or a literal, and so is <var>v<sub>2</sub></var>).</li>
+                  <li>Return `false`.</li>
                 </ol>
               </li>
             </ol>
           </li>
-          <li>If the length of <var>&Psi;<sub>1</sub></var> is smaller than the length of <var>&Psi;<sub>2</sub></var>, return `true`.</li>
+          <li>Return `true` if the length of <var>entrylist<sub>1</sub></var> is smaller than the length of <var>entrylist<sub>2</sub></var>.</li>
           <li>Return `false`.</li>
         </ol>
       </div>
