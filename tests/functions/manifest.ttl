@@ -173,8 +173,6 @@
 		:list-less-than-14
 		:list-less-than-15
 		:list-less-than-16
-		:list-less-than-17
-		:list-less-than-18
 		:list-less-than-19
 		:list-less-than-20
 		:list-less-than-21
@@ -214,8 +212,6 @@
 		:list-less-equal-14
 		:list-less-equal-15
 		:list-less-equal-16
-		:list-less-equal-17
-		:list-less-equal-18
 		:list-less-equal-19
 		:list-less-equal-20
 		:list-less-equal-21
@@ -255,8 +251,6 @@
 		:list-greater-than-14
 		:list-greater-than-15
 		:list-greater-than-16
-		:list-greater-than-17
-		:list-greater-than-18
 		:list-greater-than-19
 		:list-greater-than-20
 		:list-greater-than-21
@@ -296,8 +290,6 @@
 		:list-greater-equal-14
 		:list-greater-equal-15
 		:list-greater-equal-16
-		:list-greater-equal-17
-		:list-greater-equal-18
 		:list-greater-equal-19
 		:list-greater-equal-20
 		:list-greater-equal-21
@@ -1815,26 +1807,6 @@
     mf:result  <true.srx> ;
 	.
 
-:list-less-than-17 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-less-than-17" ;
-    rdfs:comment    "less-than test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-less-than-17.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-less-than-18 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-less-than-18" ;
-    rdfs:comment    "less-than test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-less-than-18.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
 :list-less-than-19 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-less-than-19" ;
     rdfs:comment    "less-than test with mixed types" ;
@@ -2221,26 +2193,6 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-less-equal-16.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-less-equal-17 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-less-equal-17" ;
-    rdfs:comment    "less-equal test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-less-equal-17.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-less-equal-18 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-less-equal-18" ;
-    rdfs:comment    "less-equal test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-less-equal-18.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -2635,26 +2587,6 @@
     mf:result  <true.srx> ;
 	.
 
-:list-greater-than-17 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-greater-than-17" ;
-    rdfs:comment    "greater-than test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-greater-than-17.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-greater-than-18 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-greater-than-18" ;
-    rdfs:comment    "greater-than test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-greater-than-18.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
 :list-greater-than-19 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-greater-than-19" ;
     rdfs:comment    "greater-than test with mixed types" ;
@@ -3041,26 +2973,6 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-greater-equal-16.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-greater-equal-17 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-greater-equal-17" ;
-    rdfs:comment    "greater-equal test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-greater-equal-17.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-greater-equal-18 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-greater-equal-18" ;
-    rdfs:comment    "greater-equal test with mixed types" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-greater-equal-18.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
