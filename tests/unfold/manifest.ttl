@@ -22,6 +22,11 @@
 		:unfold-list-1var-09
 		:unfold-list-1var-10
 
+		:unfold-get-list-1var-01
+		:unfold-get-list-1var-02
+		:unfold-get-list-1var-03
+		:unfold-get-list-1var-04
+
 		:unfold-list-2vars-01
 		:unfold-list-2vars-02
 		:unfold-list-2vars-03
@@ -32,6 +37,13 @@
 		:unfold-list-2vars-08
 		:unfold-list-2vars-09
 		:unfold-list-2vars-10
+
+		:unfold-get-list-2vars-01
+		:unfold-get-list-2vars-02
+		:unfold-get-list-2vars-03
+		:unfold-get-list-2vars-04
+		:unfold-get-list-2vars-05
+		:unfold-get-list-2vars-06
 
 		:unfold-map-1var-01
 		:unfold-map-1var-02
@@ -150,6 +162,44 @@
 
 
 
+:unfold-get-list-1var-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-1var-01" ;
+    rdfs:comment    "list literal with one blank node" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-1var-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-1var-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-1var-02" ;
+    rdfs:comment    "list literal with the same blank node twice" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-1var-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-1var-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-1var-03" ;
+    rdfs:comment    "construct list with one blank node" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-1var-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-1var-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-1var-04" ;
+    rdfs:comment    "construct list with the same blank node twice" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-1var-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+
+
 :unfold-list-2vars-01  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "unfold-list-2vars-01" ;
     rdfs:comment    "two list elements" ;
@@ -249,6 +299,62 @@
          [ qt:query  <unfold-list-2vars-10.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <unfold-list-2vars-10.srj> .
+
+
+
+:unfold-get-list-2vars-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-01" ;
+    rdfs:comment    "list literal with one blank node" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-2vars-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-02" ;
+    rdfs:comment    "list literal with the same blank node twice" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-2vars-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-03" ;
+    rdfs:comment    "construct list with one blank node" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-2vars-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-04" ;
+    rdfs:comment    "construct list with the same blank node twice" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-2vars-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-05" ;
+    rdfs:comment    "list literal with the two blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:unfold-get-list-2vars-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "unfold-get-list-2vars-06" ;
+    rdfs:comment    "construct list with the two blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <unfold-get-list-2vars-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
 
 
 

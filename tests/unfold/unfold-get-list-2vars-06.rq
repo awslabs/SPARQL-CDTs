@@ -1,0 +1,10 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+ASK {
+	BIND ( BNODE() AS ?b1 )
+	BIND ( BNODE() AS ?b2 )
+	BIND( cdt:List(?b1, ?b2) AS ?list )
+
+	UNFOLD( ?list AS ?elmt, ?idx )
+	FILTER( SAMETERM(?elmt, cdt:get(?list,?idx)) )
+}
