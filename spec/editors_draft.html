@@ -1176,6 +1176,14 @@
               <li>Map entries with map keys that are IRIs are listed first, ordered based on comparing the string representation of these IRIs using the `&lt;` operator (i.e., the IRIs are used as the lexical form of literals with the datatype `xsd:string` and the order is then determined by comparing these literals using the `&lt;` operator)</li>
               <li>The remaining map entries have map keys that are literals. They are primarily ordered based on the string representation of their datatype IRIs (i.e., using these datatype IRIs as the lexical form of literals with the datatype `xsd:string` and, then, determining the order by comparing these string literals using the `&lt;` operator). Literals of the same datatype are ordered based on their lexical form (i.e., replacing their datatype IRI by `xsd:string` and, then, using the `&lt;` operator for the resulting string literals). Finally, literals with datatype `rdf:langString` that have the same lexical form are sorted based on the string representation of their language tags.
               </li>
+              <div class="note">The process of ordering the map entries is equivalent to performing the following query (in which `term1` is <var>term<sub>1</sub></var>).
+                <pre data-content-type="application/sparql-query" class="nohighlight">
+                  SELECT ?k ?v WHERE {
+                    UNFOLD( term1 AS ?k, ?v )
+                  }
+                  ORDER BY  ISLITERAL(?k)  STR(DATATYPE(?k))  STR(?k)  LANG(?k)
+                </pre>
+              </div>
             </ul>
           </li>
           <li>Let <var>entrylist<sub>2</sub></var> be a list of all map entries in <var>entryset<sub>2</sub></var>, ordered in the same way as <var>entrylist<sub>1</sub></var>.</li>
