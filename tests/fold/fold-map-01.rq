@@ -1,0 +1,6 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+SELECT (FOLD(?k, ?v) AS ?map)
+WHERE {
+	FILTER(false)
+}

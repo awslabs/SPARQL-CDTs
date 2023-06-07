@@ -1,0 +1,96 @@
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <manifest#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mf:     <http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#> .
+@prefix qt:     <http://www.w3.org/2001/sw/DataAccess/tests/test-query#> .
+@prefix dawgt:   <http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#> .
+@prefix sparql:  <http://www.w3.org/ns/sparql#> .
+@prefix cdt:     <http://example.org/cdt/> .
+
+<>  rdf:type mf:Manifest ;
+    rdfs:label "SPARQL FOLD operator" ;
+    mf:entries
+    (
+		:fold-list-01
+		:fold-list-02
+		:fold-list-03
+		:fold-list-04
+		:fold-list-05
+
+		:fold-map-01
+		:fold-map-02
+    ) .
+
+:fold-list-01  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-01" ;
+    rdfs:comment    "FOLD a single value list" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-list-01.srj> .
+
+
+### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
+:fold-list-02  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-02" ;
+    rdfs:comment    "FOLD with ordering on the list member values" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-list-02.srj> .
+
+### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
+:fold-list-03  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-03" ;
+    rdfs:comment    "FOLD with ordering on correlated values" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-list-03.srj> .
+
+### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
+:fold-list-04  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-04" ;
+    rdfs:comment    "FOLD with descending ordering on correlated values" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-list-04.srj> .
+
+:fold-list-05  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-05" ;
+    rdfs:comment    "FOLD on empty group" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-list-05.srj> .
+
+:fold-map-01  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-01" ;
+    rdfs:comment    "FOLD on empty group" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-map-01.srj> .
+
+:fold-map-02  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-02" ;
+    rdfs:comment    "FOLD on empty group" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <fold-map-02.srj> .

@@ -1,0 +1,10 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+SELECT (FOLD(?v ; ORDER BY DESC(?sort)) AS ?list)
+WHERE {
+	VALUES (?sort ?v) {
+		(1 "one")
+		(2 "two")
+		(3 "three")
+	}
+}

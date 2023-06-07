@@ -1,0 +1,10 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+SELECT (FOLD(?k, ?v) AS ?map)
+WHERE {
+	VALUES (?k ?v) {
+		(2 "two")
+		(1 "one")
+		("hello"@en "there"@en)
+	}
+}

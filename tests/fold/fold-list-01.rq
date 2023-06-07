@@ -1,0 +1,6 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+SELECT (FOLD(?v) AS ?list)
+WHERE {
+	VALUES ?v { 1 }
+}
