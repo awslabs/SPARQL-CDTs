@@ -87,7 +87,7 @@
 
 :fold-map-02  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "fold-map-02" ;
-    rdfs:comment    "FOLD on empty group" ;
+    rdfs:comment    "FOLD pairs into map" ;
     mf:feature      cdt:fold ;
     dawgt:approval  dawgt:Proposed ;
     mf:action
