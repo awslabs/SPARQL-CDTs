@@ -1083,6 +1083,7 @@
               <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
               <li>If <var>v<sub>1</sub></var> is <a>null</a> or <var>map<sub>2</sub></var>(|k|) is <a>null</a>, terminate with an error.</li>
               <li>Let <var>v<sub>2</sub></var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
+              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in an error, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in `false`, return `false`.</li>
             </ol>
@@ -1200,7 +1201,7 @@
                 </ol>
               </li>
               <li>If <var>v<sub>1</sub></var> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
-              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, but <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are <em>not</em> the same blank node, then terminate with an error.</li>
+              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, terminate with an error.</li>
               <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is not a blank node, return `true`.</li>
               <li>If <var>v<sub>2</sub></var> is a blank node and <var>v<sub>1</sub></var> is not a blank node, return `false`.</li>
               <li>If evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>) results in `false`, then:
