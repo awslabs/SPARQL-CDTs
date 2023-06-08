@@ -183,6 +183,7 @@
 		:list-less-than-26
 		:list-less-than-27
 		:list-less-than-28
+		:list-less-than-29
 		:list-less-than-31
 		:list-less-than-null-01
 		:list-less-than-null-02
@@ -218,6 +219,7 @@
 		:list-less-equal-26
 		:list-less-equal-27
 		:list-less-equal-28
+		:list-less-equal-29
 		:list-less-equal-31
 		:list-less-equal-null-01
 		:list-less-equal-null-02
@@ -253,6 +255,7 @@
 		:list-greater-than-26
 		:list-greater-than-27
 		:list-greater-than-28
+		:list-greater-than-29
 		:list-greater-than-31
 		:list-greater-than-null-01
 		:list-greater-than-null-02
@@ -288,6 +291,7 @@
 		:list-greater-equal-26
 		:list-greater-equal-27
 		:list-greater-equal-28
+		:list-greater-equal-29
 		:list-greater-equal-31
 		:list-greater-equal-null-01
 		:list-greater-equal-null-02
@@ -1891,6 +1895,16 @@
     mf:result  <true.srx> ;
 	.
 
+:list-less-than-29 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-less-than-29" ;
+    rdfs:comment    "less-than test with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-less-than-29.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
 :list-less-than-31 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-less-than-31" ;
     rdfs:comment    "less-than test with IRIs" ;
@@ -2237,6 +2251,16 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-less-equal-28.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-less-equal-29 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-less-equal-29" ;
+    rdfs:comment    "less-equal test with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-less-equal-29.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -2591,6 +2615,16 @@
     mf:result  <true.srx> ;
 	.
 
+:list-greater-than-29 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-greater-than-29" ;
+    rdfs:comment    "greater-than test with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-greater-than-29.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
 :list-greater-than-31 rdf:type mf:QueryEvaluationTest ;
     mf:name    "list-greater-than-31" ;
     rdfs:comment    "greater-than test with IRIs" ;
@@ -2937,6 +2971,16 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-greater-equal-28.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-greater-equal-29 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-greater-equal-29" ;
+    rdfs:comment    "greater-equal test with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-greater-equal-29.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
