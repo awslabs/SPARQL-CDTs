@@ -1125,6 +1125,7 @@
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
               <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, then:
                 <ol>
