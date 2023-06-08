@@ -3,6 +3,9 @@ PREFIX cdt:    <http://example.org/cdt/>
 # contains blank nodes
 ASK {
 	BIND("[_:b,null,'_:b']"^^cdt:List AS ?list)
+	BIND( BNODE("_:b") AS ?b )
+	BIND( cdt:contains(?list, ?b) AS ?result )
 
-	FILTER(!cdt:contains(?list, BNODE("_:b")))
+	FILTER( BOUND(?result) )
+	FILTER( ?result = false )
 }

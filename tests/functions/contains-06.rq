@@ -4,5 +4,8 @@ PREFIX cdt:    <http://example.org/cdt/>
 ASK {
 	BIND("[_:b,2]"^^cdt:List AS ?list)
 	BIND( cdt:head(?list) AS ?elmt)
-	FILTER( cdt:contains(?list,?elmt) )
+	BIND( cdt:contains(?list,?elmt) AS ?result )
+
+	FILTER( BOUND(?result) )
+	FILTER( ?result = false )
 }
