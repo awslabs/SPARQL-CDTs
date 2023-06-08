@@ -150,6 +150,11 @@
 		:list-equals-02 # single-element
 		:list-equals-03 # multiple-element
 		:list-equals-04 # multiple-element, value-space comparison
+		:list-equals-05 # same IRI
+		:list-equals-06 # blank nodes
+		:list-equals-07 # blank nodes
+		:list-equals-08 # blank nodes
+		:list-equals-09 # blank nodes
 		:list-equals-null-error-01 # cannot test equality of lists with null
 		:list-equals-null-error-02 # cannot test equality of lists with null
 		:list-equals-null-false-01 # ... unless other parts of the compared lists are clearly different
@@ -1581,6 +1586,56 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-equals-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-05" ;
+    rdfs:comment    "equals test on lists with same IRI" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-06" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-07" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-08" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-equals-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-09" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-equals-09.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
