@@ -29,7 +29,7 @@
     mf:action
          [ qt:query  <fold-list-01.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-list-01.srj> .
+    mf:result  <true.srx> .
 
 
 ### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
@@ -41,7 +41,7 @@
     mf:action
          [ qt:query  <fold-list-02.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-list-02.srj> .
+    mf:result  <true.srx> .
 
 ### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
 :fold-list-03  rdf:type  mf:QueryEvaluationTest ;
@@ -52,7 +52,7 @@
     mf:action
          [ qt:query  <fold-list-03.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-list-03.srj> .
+    mf:result  <true.srx> .
 
 ### TODO: This one is problematic. You need ordering on the FOLD to ensure the values are in the list in the expected order
 :fold-list-04  rdf:type  mf:QueryEvaluationTest ;
@@ -63,7 +63,7 @@
     mf:action
          [ qt:query  <fold-list-04.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-list-04.srj> .
+    mf:result  <true.srx> .
 
 :fold-list-05  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "fold-list-05" ;
@@ -73,7 +73,7 @@
     mf:action
          [ qt:query  <fold-list-05.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-list-05.srj> .
+    mf:result  <true.srx> .
 
 :fold-map-01  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "fold-map-01" ;
@@ -83,7 +83,7 @@
     mf:action
          [ qt:query  <fold-map-01.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-map-01.srj> .
+    mf:result  <true.srx> .
 
 :fold-map-02  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "fold-map-02" ;
@@ -93,4 +93,4 @@
     mf:action
          [ qt:query  <fold-map-02.rq> ;
            qt:data   <empty.ttl> ] ;
-    mf:result  <fold-map-02.srj> .
+    mf:result  <true.srx> .

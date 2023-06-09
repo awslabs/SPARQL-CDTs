@@ -1,6 +1,11 @@
 PREFIX cdt:    <http://example.org/cdt/>
 
-SELECT (FOLD(?v) AS ?list)
-WHERE {
-	FILTER(false)
+ASK {
+	{
+		SELECT (FOLD(?v) AS ?list)
+		WHERE {
+			FILTER(false)
+		}
+	}
+	FILTER(?list = "[]"^^cdt:List)
 }
