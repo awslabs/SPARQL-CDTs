@@ -16,9 +16,12 @@
 		:fold-list-03
 		:fold-list-04
 		:fold-list-05
+		:fold-list-06
 
 		:fold-map-01
 		:fold-map-02
+		:fold-map-03
+		:fold-map-04
     ) .
 
 :fold-list-01  rdf:type  mf:QueryEvaluationTest ;
@@ -75,6 +78,16 @@
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
+:fold-list-06  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-06" ;
+    rdfs:comment    "FOLD with unbound elements" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
 :fold-map-01  rdf:type  mf:QueryEvaluationTest ;
     mf:name         "fold-map-01" ;
     rdfs:comment    "FOLD on empty group" ;
@@ -92,5 +105,25 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-map-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-map-03  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-03" ;
+    rdfs:comment    "FOLD into map with unbound values" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-map-04  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-04" ;
+    rdfs:comment    "FOLD into map with unbound keys" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
