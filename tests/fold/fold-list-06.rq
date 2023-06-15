@@ -2,13 +2,17 @@ PREFIX cdt:    <http://example.org/cdt/>
 
 ASK {
 	{
-		SELECT (FOLD(?v) AS ?list)
+		SELECT (FOLD(?v ; ORDER BY DESC(?sort)) AS ?list)
 		WHERE {
-			VALUES ?v { 1 UNDEF 2 }
+			VALUES (?sort ?v) {
+				(1 1)
+				(2 UNDEF)
+				(3 3)
+			}
 		}
 	}
 	FILTER(cdt:get(?list, 1) = 1)
-	FILTER(cdt:get(?list, 3) = 2)
+	FILTER(cdt:get(?list, 3) = 3)
 	BIND(cdt:get(?list, 2) AS ?null)
 	FILTER(!BOUND(?null))
 }
