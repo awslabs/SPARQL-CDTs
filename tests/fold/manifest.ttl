@@ -24,6 +24,7 @@
 		:fold-map-03
 		:fold-map-04
 		:fold-map-05
+		:fold-map-06
     ) .
 
 :fold-list-01  rdf:type  mf:QueryEvaluationTest ;
@@ -147,5 +148,15 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-map-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-map-06  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-06" ;
+    rdfs:comment    "FOLD into map with duplicate keys" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-06.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
