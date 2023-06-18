@@ -90,18 +90,18 @@
 		:reverse-09
 		:reverse-10
 
-		:size-01
-		:size-02
-		:size-03
-		:size-04
-		:size-05
-		:size-06
-		:size-07
-		:size-08
-		:size-09
-		:size-10
-		:size-11
-		:size-12
+		:list-size-01
+		:list-size-02
+		:list-size-03
+		:list-size-04
+		:list-size-05
+		:list-size-06
+		:list-size-07
+		:list-size-08
+		:list-size-09
+		:list-size-10
+		:list-size-11
+		:list-size-12
 
 		:subseq-01
 		:subseq-02
@@ -143,7 +143,7 @@
 		:head-error-01 # non-list argument
 		:tail-error-01 # non-list argument
 		:reverse-error-01 # non-list argument
-		:size-error-01 # non-list argument
+		:list-size-error-01 # non-list argument
 
 		# Equality Tests for Lists
 		:list-equals-01 # empty list
@@ -1048,122 +1048,122 @@
     mf:result  <true.srx> ;
 	.
 
-:size-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-01" ;
+:list-size-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-01" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-01.rq> ;
+         [ qt:query  <list-size-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-02" ;
+:list-size-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-02" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-02.rq> ;
+         [ qt:query  <list-size-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-03 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-03" ;
+:list-size-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-03" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-03.rq> ;
+         [ qt:query  <list-size-03.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-04 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-04" ;
+:list-size-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-04" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-04.rq> ;
+         [ qt:query  <list-size-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-05 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-05" ;
+:list-size-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-05" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-05.rq> ;
+         [ qt:query  <list-size-05.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-06 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-06" ;
+:list-size-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-06" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-06.rq> ;
+         [ qt:query  <list-size-06.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-07 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-07" ;
+:list-size-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-07" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-07.rq> ;
+         [ qt:query  <list-size-07.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-08 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-08" ;
+:list-size-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-08" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-08.rq> ;
+         [ qt:query  <list-size-08.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-09 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-09" ;
+:list-size-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-09" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-09.rq> ;
+         [ qt:query  <list-size-09.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-10 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-10" ;
+:list-size-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-10" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-10.rq> ;
+         [ qt:query  <list-size-10.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-11 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-11" ;
+:list-size-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-11" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-11.rq> ;
+         [ qt:query  <list-size-11.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:size-12 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-12" ;
+:list-size-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-12" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-12.rq> ;
+         [ qt:query  <list-size-12.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -1539,13 +1539,13 @@
     mf:result  <true.srx> ;
 	.
 
-:size-error-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "size-error-01" ;
+:list-size-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-size-error-01" ;
     rdfs:comment    "size with non-list argument" ;
     mf:feature cdt:size ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <size-error-01.rq> ;
+         [ qt:query  <list-size-error-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
