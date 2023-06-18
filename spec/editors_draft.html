@@ -1226,6 +1226,145 @@
   </section>
 
 
+  <section id="combined-functions">
+    <h2>Functions on Lists and Maps</h2>
+
+    <p>
+      This section defines <a data-cite="SPARQL11-QUERY#extensionFunctions">SPARQL extension functions</a> which operate over both <a>cdt:List literals</a> and <a>cdt:Map literals</a>. These functions can be used in SPARQL expressions for testing values in FILTER clauses and for assigning values in, e.g., BIND clauses and SELECT expressions.
+    </p>
+
+    <p>
+      These extension functions are evaluated as defined in <a data-cite="SPARQL11-QUERY#invocation">Section&nbsp;17.2.1</a> of [[SPARQL11-QUERY]].
+    </p>
+
+    <section id="func_get">
+      <h2>cdt:get</h2>
+
+      <p>
+        <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> </code>
+        <code style="color:black;font-weight:bold">cdt:get</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>,
+           <code>xsd:integer <var>idx</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, the value of <var>idx</var> is greater than 0 (zero) and smaller or equal than the number of elements of the <a>term list</a> represented by <var>term</var>, and the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is that RDF term at the <var>idx</var>-th position of the term list represented by <var>term</var>. In all other cases an error is raised.
+      </p>
+
+      <p>
+        <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> </code>
+        <code style="color:black;font-weight:bold">cdt:get</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term</var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>key</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, and there exists a map entry <code>(<var>k</var>, <var>value</var>)</code> in the term map represented by <var>term</var> where <var>k</var> is the same term as <var>key</var> and <var>value</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is <var>value</var>. In all other cases an error is raised.
+      </p>
+
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:get( "[&lt;http://example.org/a>, &lt;http://example.org/b>]"^^cdt:List, 2 )
+        </pre>
+        <p>
+          results in the IRI `http://example.org/b`.
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:get( "{2: &lt;http://example.org/a>, 1: &lt;http://example.org/b>}"^^cdt:Map, 2 )
+        </pre>
+        <p>
+          results in the IRI `http://example.org/a`.
+      </aside>
+
+      <div class="note">
+        By its definition as given above, <code>cdt:get</code> raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
+        <ul>
+          <li>if <var>term</var> is a well-formed cdt:List literal that represents the <a>empty term list</a>,</li>
+          <li>if the value of <var>idx</var> is out of the bounds of the term list represented by <var>term</var>, and</li>
+          <li>if the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is <a>null</a>.</li>
+        </ul>
+      </div>
+
+      <p class="note">
+        This list function uses a 1-based numbering scheme to address the elements in term maps (i.e., the first element of a term map is addressed by an |idx| value of 1), in contrast to a 0-based numbering scheme which is common for addressing elements of arrays in many programming languages. The reason for using 1-based numbering for this function is to remain consistent with existing build-in functions of SPARQL, which are also 1-based (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a> for string literals). Moreover, the 1-based numbering scheme is also used by functions of other W3C languages such as XPath (see, e.g., the XPath <a data-cite="XPATH-FUNCTIONS#func-array-get">array:get</a> function which is similar to cdt:get).
+      </p>
+
+    </section>
+
+    <section id="func_size">
+      <h2>cdt:size</h2>
+
+      <p>
+        <code>xsd:integer </code>
+        <code style="color:black;font-weight:bold">cdt:size</code>
+        (
+           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:List literal</a>, then the result of this function is the number of elements that the <a>term list</a> represented by <var>term</var> contains.
+      </p>
+      <p>
+        An error is raised if <var>term</var> is not a <a>well-formed cdt:List literal</a>.
+      </p>
+
+      <p>
+        <code>xsd:integer </code>
+        <code style="color:black;font-weight:bold">cdt:size</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, then the result of this function is the number of map entries in the <a>term map</a> represented by <var>term</var>.
+      </p>
+      <p>
+        An error is raised if <var>term</var> is not a <a>well-formed cdt:Map literal</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:size( "[1,'a','a',4]"^^cdt:List )
+        </pre>
+        <p>
+          results in a literal with the datatype IRI `xsd:integer` and the value 4.
+        </p>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:size( "{1:'a','a':4}"^^cdt:Map )
+        </pre>
+        <p>
+          results in a literal with the datatype IRI `xsd:integer` and the value 2.
+        </p>
+      </aside>
+
+    </section>
+
+  </section>
+
   <section id="list-functions">
     <h2>Functions on Lists</h2>
 
@@ -1361,48 +1500,6 @@
 
     </section>
 
-    <section id="func_get">
-      <h2>cdt:get</h2>
-
-      <p>
-        <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> </code>
-        <code style="color:black;font-weight:bold">cdt:get</code>
-        (
-           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>,
-           <code>xsd:integer <var>idx</var></code>
-        )
-      </p>
-
-      <p>
-        If <var>term</var> is a <a>well-formed cdt:List literal</a>, the value of <var>idx</var> is greater than 0 (zero) and smaller or equal than the number of elements of the <a>term list</a> represented by <var>term</var>, and the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is that RDF term at the <var>idx</var>-th position of the term list represented by <var>term</var>. In all other cases an error is raised.
-      </p>
-
-      <aside class="example">
-        <p>
-          Evaluating the SPARQL expression
-        </p>
-        <pre class="nohighlight">
-          cdt:get( "[&lt;http://example.org/a>, &lt;http://example.org/b>]"^^cdt:List, 2 )
-        </pre>
-        <p>
-          results in the IRI `http://example.org/b`.
-      </aside>
-
-      <div class="note">
-        By its definition as given above, <code>cdt:get</code> raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
-        <ul>
-          <li>if <var>term</var> is a well-formed cdt:List literal that represents the <a>empty term list</a>,</li>
-          <li>if the value of <var>idx</var> is out of the bounds of the term list represented by <var>term</var>, and</li>
-          <li>if the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is <a>null</a>.</li>
-        </ul>
-      </div>
-
-      <p class="note">
-        This function uses a 1-based numbering scheme to address the elements in term maps (i.e., the first element of a term map is addressed by an |idx| value of 1), in contrast to a 0-based numbering scheme which is common for addressing elements of arrays in many programming languages. The reason for using 1-based numbering for this function is to remain consistent with existing build-in functions of SPARQL, which are also 1-based (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a> for string literals). Moreover, the 1-based numbering scheme is also used by functions of other W3C languages such as XPath (see, e.g., the XPath <a data-cite="XPATH-FUNCTIONS#func-array-get">array:get</a> function which is similar to cdt:get).
-      </p>
-
-    </section>
-
     <section id="func_head">
       <h2>cdt:head</h2>
 
@@ -1473,38 +1570,6 @@
         <pre class="nohighlight">
           "[4,null,2,'a']"^^cdt:List
         </pre>
-      </aside>
-
-    </section>
-
-    <section id="func_size">
-      <h2>cdt:size</h2>
-
-      <p>
-        <code>xsd:integer </code>
-        <code style="color:black;font-weight:bold">cdt:size</code>
-        (
-           <code><a href="#dfn-cdt-list-literal">cdt:List</a> <var>term</var></code>
-        )
-      </p>
-
-      <p>
-        If <var>term</var> is a <a>well-formed cdt:List literal</a>, then the result of this function is the number of elements that the <a>term list</a> represented by <var>term</var> contains.
-      </p>
-      <p>
-        An error is raised if <var>term</var> is not a <a>well-formed cdt:List literal</a>.
-      </p>
-
-      <aside class="example">
-        <p>
-          Evaluating the SPARQL expression
-        </p>
-        <pre class="nohighlight">
-          cdt:size( "[1,'a','a',4]"^^cdt:List )
-        </pre>
-        <p>
-          results in a literal with the datatype IRI `xsd:integer` and the value 4.
-        </p>
       </aside>
 
     </section>
