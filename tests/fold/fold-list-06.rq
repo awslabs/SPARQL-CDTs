@@ -2,7 +2,7 @@ PREFIX cdt:    <http://example.org/cdt/>
 
 ASK {
 	{
-		SELECT (FOLD(?v ; ORDER BY DESC(?sort)) AS ?list)
+		SELECT (FOLD(?v ; ORDER BY ASC(?sort)) AS ?list)
 		WHERE {
 			VALUES (?sort ?v) {
 				(1 1)
