@@ -1762,17 +1762,125 @@
 
     <section id="fold-translation">
       <h2>Translation to the Algebra</h2>
-      <p>TODO</p>
+
+      <p>
+        Based on the SPARQL grammar, the SPARQL specification <q>defines the process of converting graph patterns and solution modifiers in a SPARQL query string into a SPARQL algebra expression</q> (see <a data-cite="SPARQL11-QUERY#sparqlQuery">Section&nbsp;18.2</a> of [[SPARQL11-QUERY]]).
+        This process must be adapted to consider FOLD clauses as added by the extended grammar introduced above.
+        In particular, the step of translating grouping and aggregation during this process needs to be extended.
+        The original algorithm that defines this translation is given in <a data-cite="SPARQL11-QUERY#sparqlGroupAggregate">Section&nbsp;18.2.4.1</a> of [[SPARQL11-QUERY]].
+        The extended version of the algorithm is given as follows, where the parts that are modified or added to cover the FOLD operator are marked in bold font.
+      </p>
+      <div style="width: 100%; border: 1px solid; padding: 5px">
+        <pre class="nohighlight" style="margin: 0px">
+Let A := the empty sequence
+Let Q := the query level being evaluated
+Let P := the algebra translation of the GroupGraphPattern of the query level
+Let E := [], a list of pairs of the form (variable, expression)
+
+If Q contains GROUP BY exprlist
+   Let G := Group(exprlist, P)
+Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
+   Let G := Group((1), P)
+Else
+   skip the rest of the aggregate step
+   End
+
+Global i := 1   # Initially 1 for each query processed
+
+For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
+  For each unaggregated variable V in X
+      Replace V with Sample(V)
+      End
+        </pre>
+        <pre class="nohighlight" style="margin: 0px;
+								font-weight: bold;
+								padding-left: 4ch;
+								padding-top: 3ex;
+								padding-bottom: 3ex;">
+  For each aggregate R(args ORDER BY orderconditions; scalarvals) now in X
+      # note order clause may be omitted
+      # note scalarvals may be omitted, then it's equivalent to the empty set
+      If aggregate contains ORDER BY orderconditions
+          G := OrderGroups(G, orderconditions)
+          End
+      If R = Fold
+          If |args| = 1
+              setfunc = Fold1
+          Else
+              setfunc = Fold2
+              End
+      Else
+          setfunc = R
+          End
+      Ai := Aggregation(args, setfunc, scalarvals, G)
+        </pre>
+        <pre class="nohighlight" style="margin: 0px">
+      Replace R(...) with aggi in Q
+      i := i + 1
+      End
+  End
+
+For each variable V appearing outside of an aggregate
+   Ai := Aggregation(V, Sample, {}, G)
+   E := E append (V, aggi)
+   i := i + 1
+   End
+
+A := Ai, ..., Ai-1
+P := AggregateJoin(A)
+        </pre>
+      </div>
+
+      <p>
+        Notice that the extended algorithm uses the new algebra symbol `OrderGroups`. Hence, to use this algorithm, the list of symbols in the SPARQL algebra (as given in the second table of <a data-cite="SPARQL11-QUERY#sparqlQuery">Section&nbsp;18.2</a> [[SPARQL11-QUERY]]) needs to be extended by adding this symbol. The evaluation semantics of algebra expressions that contain this symbol is defined in the following.
+      </p>
+
     </section>
 
-    <section id="unfold-algebra">
+    <section id="ordergroups-algebra">
       <h2>Algebra</h2>
-      <p>TODO</p>
+      <div class="defn">
+        <p><b>Definition: <span id="defn_algOrderGroups">OrderGroups</span></b></p>
+        <p>Let Ω be a set of partial functions from keys to solution sequences. We define:</p>
+        OrderBy(Ω, condition) = { key<sub>1</sub>→Ψ<sup>'</sup><sub>1</sub>, ..., key<sub>m</sub>→Ψ<sup>'</sup><sub>m</sub> | <var>key<sub>i</sub>→Ψ<sub>i</sub></var> &isin; <var>&Omega;</var>, Ψ<sup>'</sup><sub>i</sub> = OrderBy(Ψ<sub>i</sub>, condition) }
+      </div>
+
+      <section id="aggregateAlgebra">
+        <h3>Aggregate Algebra<h3>
+        <p>Two new set functions are introduced to support the FOLD aggregate:</p>
+        <section id="aggFold1">
+          <h4>Fold1</h4>
+          <p>Fold1 is a SPARQL set function which combines the values in the aggregate group into <a>cdt:List literals</a>.</p>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_aggFold1">Fold1</span></b></p>
+            <pre class="code nohighlight">cdt:List Fold1(sequence M)</pre>
+            <p>N = Flatten(M)</p>
+            <p>Fold1(M) = cdt:List(N)</p>
+          </div>
+        </section>
+        <section id="aggFold2">
+          <h4>Fold2</h4>
+          <p>Fold2 is a SPARQL set function which combines the values in the aggregate group into <a>cdt:Map literals</a>.</p>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_aggFold1">Fold2</span></b></p>
+            <pre class="code nohighlight">cdt:Map Fold2(sequence M)</pre>
+            <p>N = Flatten(M)</p>
+            <p>Fold2(M) = cdt:Map(N)</p>
+          </div>
+        </section>
+	    <p class="issue">The use of CT constructor functions here isn't totally correct? Technically they are defined over expressions, and do the expression evaluation themselves. Here, we essentially want to pass in the results of that evaluation (including errors), but it seems wasteful to define essentially the same operation twice.
+	    <p class="issue">We use Flatten(M) above, but really we need to define an equivalent to operate over sequences – take a sequence of lists, and return the ordered sequence of all of the list elements.</p>
+	    </p>
+      </section>
     </section>
 
-    <section id="fold-semantics">
+    <section id="ordergroups-semantics">
       <h2>Evaluation Semantics</h2>
-      <p>TODO</p>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderGroups</span></b></p>
+            <pre class="code nohighlight">eval(D(G), OrderGroups(L, condition)) = OrderGroups(eval(D(G), L), condition)
+            </pre>
+          </div>
     </section>
   </section>
 
