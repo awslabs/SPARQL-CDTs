@@ -1715,11 +1715,67 @@
 
 
   <section id="fold">
-    <h2>FOLD (TODO)</h2>
+    <h2>FOLD</h2>
 
-    <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)</p>
+    <p>
+      This section defines a new SPARQL <a data-cite="SPARQL11-QUERY#setFunctions">Set Function</a>, `FOLD`, used to construct composite values.
+      As illustrated in Section&nbsp;<a href="#description-of-fold" class="sectionRef"></a>, this function can be used to transform individual values into <a>cdt:List literals</a> and <a>cdt:Map literals</a>.
+    </p>
 
+    <section id="fold-grammar">
+      <h2>Grammar</h2>
+
+      <p>
+        Adding the FOLD aggregate to SPARQL requires the following extension of the <a data-cite="SPARQL11-QUERY#rAggregate">`Aggregate`</a> production of the <a data-cite="SPARQL11-QUERY#sparqlGrammar">SPARQL grammar</a>. The part in which the extended production differs from the corresponding production in the original grammar is marked in bold font. The given production rules use several symbols for which no production rule is provided below (e.g., <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>, <a data-cite="SPARQL11-QUERY#rOrderCondition">OrderCondition</a>); the production rules for these symbols are defined as given in the original SPARQL grammar.
+      </p>
+
+      <table class="grammar">
+
+        <tr id="rAggregate">
+          <td>[127+]</td>
+          <td>`Aggregate`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <code>&nbsp;&nbsp;<span class="token">'COUNT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? ( <span class="token">'*'</span> | <a href="#rExpression">Expression</a> ) <span class="token">')'</span><br>
+            `|`
+            <span class="token">'SUM'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
+            `|`
+            <span class="token">'MIN'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
+            `|`
+            <span class="token">'MAX'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
+            `|`
+            <span class="token">'AVG'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
+            `|`
+            <span class="token">'SAMPLE'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
+            `|`
+            <span class="token">'GROUP_CONCAT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> ( <span class="token">';'</span> <span class="token">'SEPARATOR'</span> <span class="token">'='</span> <a href="#rString">String</a> )? <span class="token">')'</span></code><br>
+            <strong>
+            `|`
+            <span class="token">'FOLD'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> ( <span class="token">','</span> <a href="#rExpression">Expression</a> )? ( <span class="token">'ORDER'</span> <span class="token">'BY'</span> <a href="#rOrderCondition">OrderCondition</a>+ )? <span class="token">')'</span></code>
+            </strong>
+          </td>
+        </tr>
+
+      </table>
+
+    </section>
+
+    <section id="fold-translation">
+      <h2>Translation to the Algebra</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="unfold-algebra">
+      <h2>Algebra</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="fold-semantics">
+      <h2>Evaluation Semantics</h2>
+      <p>TODO</p>
+    </section>
   </section>
+
 
 
   <section id="unfold">
