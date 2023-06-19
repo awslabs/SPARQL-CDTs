@@ -325,6 +325,9 @@
 		:map-keys-02
 		:map-keys-03
 
+		:map-contains-01
+		:map-contains-02
+		:map-contains-03
     ) .
 
 :list-constructor-01 rdf:type mf:QueryEvaluationTest ;
@@ -3268,6 +3271,36 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-keys-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-contains-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-contains-01" ;
+    mf:feature cdt:map-contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-contains-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-contains-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-contains-02" ;
+    mf:feature cdt:map-contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-contains-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-contains-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-contains-03" ;
+    mf:feature cdt:map-contains ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-contains-03.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
