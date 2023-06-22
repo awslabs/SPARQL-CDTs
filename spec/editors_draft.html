@@ -1744,9 +1744,98 @@
 
 
   <section id="map-functions">
-    <h2>Functions on Maps (TODO)</h2>
+    <h2>Functions on Maps</h2>
 
-    <p>TODO</p>
+    <p>
+      This section defines <a data-cite="SPARQL11-QUERY#extensionFunctions">SPARQL extension functions</a> specifically for <a>cdt:Map literals</a>. These functions can be used in SPARQL expressions for testing values in FILTER clauses and for assigning values in, e.g., BIND clauses and SELECT expressions.
+    </p>
+
+    <section id="func_map">
+      <h2>cdt:Map</h2>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:Map</a> </code>
+        <code style="color:black;font-weight:bold">cdt:List</code>
+        (
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
+           ...,
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>|2n|</sub></var></code>
+        )
+      </p>
+
+      <p>
+        The result of this function is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n| elements, produced by the following algorithm.
+      </p>
+      <div class="algorithm">
+        <ol>
+          <li>Let <var>tm</var> be an empty <a>term map</a>.</li>
+          <li>For every |i| in {1, ..., |n|}
+          <ol>
+          	<li>Evaluate the 2<var>i</var>-1-th and 2<var>i</var>-th expressions, <var>expr<sub>2<var>i</var>-1</sub></var> and <var>expr<sub>2<var>i</var></sub></var>, as defined in [[SPARQL11-QUERY]], resulting in <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var>, respectively.</li>
+          	<li>If evaluating <var>expr<sub>|2i-1|</sub></var> raised an error, or if <var>term<sub>1</sub></var> is not a valid <a>map key</a>, then continue to the next |i|.</li>
+          	<li>Otherwise:
+          	  <ol>
+          	    <li>If evaluating <var>expr<sub>|2i|</sub></var> raised an error, add the <a>map entry</a> (<var>term<sub>1</sub></var>, <a>null</a>) to |tm|.</li>
+          	    <li>Otherwise, add the <a>map entry</a> (<var>term<sub>1</sub></var>, <var>term<sub>2</sub></var>) to |tm|.</li>
+          	  </ol></li>
+          </ol></li>
+        </ol>
+      </div>
+        
+      <p>
+        If the function is called without arguments, then the result is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:Map( 'hello', ?x, ?x+1, ?y )
+        </pre>
+        <p>
+          for the solution mapping <var>&mu;</var>&nbsp;=&nbsp;{?x &rarr; "2"^^xsd:integer} results in the following cdt:List literal.
+        </p>
+        <pre class="nohighlight">
+          "{'hello': 2, 3: null}"^^cdt:Map
+        </pre>
+      </aside>
+
+    </section>
+
+    <section id="func_keys">
+      <h2>cdt:keys</h2>
+
+      <p>
+        <code><a href="#dfn-cdt-list-literal">cdt:List</a> </code>
+        <code style="color:black;font-weight:bold">cdt:keys</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term</var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, then the result of this function is a new <a href="#dfn-cdt-list-literal">cdt:List</a> value whose elements are the set of <a>keys</a> of the <a>term map</a> represented by <var>term</var>.
+        The order of elements in the new list is undefined.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:keys( "{"02"^^&lt;http://www.w3.org/2001/XMLSchema#integer>: 'two', 2: 'also two'}"^^cdt:Map )
+        </pre>
+        <p>
+          results in one of the following cdt:List literal (either ordering of keys is acceptable).
+        </p>
+        <pre class="nohighlight">
+          "['02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
+          "['2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
+        </pre>
+      </aside>
+
+    </section>
 
   </section>
 
