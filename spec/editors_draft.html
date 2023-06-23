@@ -1263,7 +1263,7 @@
       </p>
 
       <p>
-        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, and there exists a map entry <code>(<var>k</var>, <var>value</var>)</code> in the term map represented by <var>term</var> where <var>k</var> is the same term as <var>key</var> and <var>value</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is <var>value</var>. In all other cases an error is raised.
+        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, and there exists a <a>map entry</a> (<var>k</var>,<var>v</var>) in the <a>term map</a> represented by <var>term</var> where <var>k</var> is the same term as <var>key</var> and <var>v</var> is an <a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> (i.e., not <a>null</a>), then the result of this function is <var>v</var>. In all other cases an error is raised.
       </p>
 
 
@@ -1290,16 +1290,22 @@
       </aside>
 
       <div class="note">
-        By its definition as given above, <code>cdt:get</code> raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
+        By its definition as given above, <code>cdt:get</code> for cdt:List literals raises an error not only if the given cdt:List literal is not well-formed but also in the following cases:
         <ul>
           <li>if <var>term</var> is a well-formed cdt:List literal that represents the <a>empty term list</a>,</li>
           <li>if the value of <var>idx</var> is out of the bounds of the term list represented by <var>term</var>, and</li>
           <li>if the element at the <var>idx</var>-th position of the term list represented by <var>term</var> is <a>null</a>.</li>
         </ul>
+        Similarly, <code>cdt:get</code> for cdt:Map literals raises an error not only if the given cdt:Map literal is not well-formed but also in the following cases:
+        <ul>
+          <li>if <var>term</var> is a well-formed cdt:Map literal that represents the <a>empty term map</a>,</li>
+          <li>if <var>key</var> is not a map key in the term map represented by <var>term</var>, and</li>
+          <li>if the value associated with <var>key</var> in the term map represented by <var>term</var> is <a>null</a>.</li>
+        </ul>
       </div>
 
       <p class="note">
-        This list function uses a 1-based numbering scheme to address the elements in term maps (i.e., the first element of a term map is addressed by an |idx| value of 1), in contrast to a 0-based numbering scheme which is common for addressing elements of arrays in many programming languages. The reason for using 1-based numbering for this function is to remain consistent with existing build-in functions of SPARQL, which are also 1-based (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a> for string literals). Moreover, the 1-based numbering scheme is also used by functions of other W3C languages such as XPath (see, e.g., the XPath <a data-cite="XPATH-FUNCTIONS#func-array-get">array:get</a> function which is similar to cdt:get).
+        The list version of the function uses a 1-based numbering scheme to address the elements in term list (i.e., the first element of a term list is addressed by an |idx| value of 1), in contrast to a 0-based numbering scheme which is common for addressing elements of arrays in many programming languages. The reason for using 1-based numbering for this function is to remain consistent with existing build-in functions of SPARQL, which are also 1-based (e.g., <a data-cite="SPARQL11-QUERY#func-substr">substr</a> for string literals). Moreover, the 1-based numbering scheme is also used by functions of other W3C languages such as XPath (see, e.g., the XPath <a data-cite="XPATH-FUNCTIONS#func-array-get">array:get</a> function which is similar to cdt:get).
       </p>
 
     </section>
@@ -1404,7 +1410,7 @@
       </p>
       <div class="algorithm">
         <ol>
-          <li>If the <a>term map</a> represented by <var>term<sub>1</sub></var> contains <var>term<sub>2</sub></var> as a <a>key</a>, return `true`.</li>
+          <li>If the <a>term map</a> represented by <var>term<sub>1</sub></var> contains a <a>map entry</a> (<var>k</var>,<var>v</var>) such that <var>k</var> is the same term as <var>term<sub>2</sub></var>, return `true`.</li>
           <li>Return `false`.</li>
         </ol>
       </div>
