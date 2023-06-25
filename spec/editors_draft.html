@@ -1836,8 +1836,12 @@
       </p>
 
       <p>
-        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, then the result of this function is a new <a href="#dfn-cdt-list-literal">cdt:List</a> value whose elements are the set of <a>keys</a> of the <a>term map</a> represented by <var>term</var>.
-        The order of elements in the new list is undefined.
+        If <var>term</var> is a <a>well-formed cdt:Map literal</a>, then the result of this function is a <a href="#dfn-cdt-list-literal">cdt:List literal</a> that represents a <a>term list</a> that consists of all <a>map keys</a> of the <a>map entries</a> contained in the <a>term map</a> represented by <var>term</var>.
+        The order of the elements in this term list is undefined.
+      </p>
+
+      <p>
+        If <var>term</var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
       </p>
 
       <aside class="example">
@@ -1848,13 +1852,17 @@
           cdt:keys( "{"02"^^&lt;http://www.w3.org/2001/XMLSchema#integer>: 'two', 2: 'also two'}"^^cdt:Map )
         </pre>
         <p>
-          results in one of the following cdt:List literal (either ordering of keys is acceptable).
+          results in one of the following two cdt:List literals (either ordering of keys is acceptable).
         </p>
         <pre class="nohighlight">
           "['02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
           "['2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
         </pre>
       </aside>
+
+      <p class="note">
+        If the <a>term map</a> represented by <var>term</var> is the <a>empty term map</a>, then the resulting <a href="#dfn-cdt-list-literal">cdt:List literal</a> represents the <a>empty term list</a>.
+      </p>
 
     </section>
 
