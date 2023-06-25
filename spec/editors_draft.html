@@ -1756,6 +1756,10 @@
       This section defines <a data-cite="SPARQL11-QUERY#extensionFunctions">SPARQL extension functions</a> specifically for <a>cdt:Map literals</a>. These functions can be used in SPARQL expressions for testing values in FILTER clauses and for assigning values in, e.g., BIND clauses and SELECT expressions.
     </p>
 
+    <p>
+      Except for <a href="#func_map">cdt:Map</a>, these extension functions are evaluated as defined in <a data-cite="SPARQL11-QUERY#invocation">Section&nbsp;17.2.1</a> of [[SPARQL11-QUERY]]. In contrast, <a href="#func_map">cdt:Map</a> is a so-called <a data-cite="SPARQL11-QUERY#func-forms">functional form</a> which has specific evaluation rules (as defined in Section&nbsp;<a href="#func_list" class="sectionRef"></a>).
+    </p>
+
     <section id="func_map">
       <h2>cdt:Map</h2>
 
@@ -1765,31 +1769,38 @@
         (
            <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
            ...,
-           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>|2n|</sub></var></code>
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>|n|</sub></var></code>
         )
       </p>
 
       <p>
-        The result of this function is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n| elements, produced by the following algorithm.
+        If |n| is an even number, then the result of this function is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n|/2 map entries, produced by the following algorithm.
       </p>
       <div class="algorithm">
         <ol>
           <li>Let <var>tm</var> be an empty <a>term map</a>.</li>
-          <li>For every |i| in {1, ..., |n|}
-          <ol>
-          	<li>Evaluate the 2<var>i</var>-1-th and 2<var>i</var>-th expressions, <var>expr<sub>2<var>i</var>-1</sub></var> and <var>expr<sub>2<var>i</var></sub></var>, as defined in [[SPARQL11-QUERY]], resulting in <var>term<sub>1</sub></var> and <var>term<sub>2</sub></var>, respectively.</li>
-          	<li>If evaluating <var>expr<sub>|2i-1|</sub></var> raised an error, or if <var>term<sub>1</sub></var> is not a valid <a>map key</a>, then continue to the next |i|.</li>
-          	<li>Otherwise:
-          	  <ol>
-          	    <li>If evaluating <var>expr<sub>|2i|</sub></var> raised an error, add the <a>map entry</a> (<var>term<sub>1</sub></var>, <a>null</a>) to |tm|.</li>
-          	    <li>Otherwise, add the <a>map entry</a> (<var>term<sub>1</sub></var>, <var>term<sub>2</sub></var>) to |tm|.</li>
-          	  </ol></li>
-          </ol></li>
+          <li>For every |i| in {1, ..., |n|/2}:
+            <ol>
+              <li>Evaluate the 2<var>i</var>-1-th expression, <var>expr<sub>2<var>i</var>-1</sub></var>, as defined in [[SPARQL11-QUERY]].</li>
+              <li>If evaluating <var>expr<sub>2<var>i</var>-1</sub></var> did not raise an error and the RDF term resulting from this evaluation is a <a>map key</a>, then:
+                <ol>
+                  <li>Let |k| be the RDF term resulting from the evaluation of <var>expr<sub>2<var>i</var>-1</sub></var>.</li>
+                  <li>Evaluate the 2<var>i</var>-th expression, <var>expr<sub>2<var>i</var></sub></var>, as defined in [[SPARQL11-QUERY]].</li>
+                  <li>If evaluating <var>expr<sub>2<var>i</var></sub></var> did not raise an error, then add the <a>map entry</a>&nbsp;(|k|, |v|) to |tm|, where |v| is the RDF term resulting from the evaluation of <var>expr<sub>2<var>i</var></sub></var>.</li>
+                  <li>If evaluating <var>expr<sub>2<var>i</var></sub></var> raised an error, then add the <a>map entry</a>&nbsp;(|k|, <a>null</a>) to |tm|.</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
         </ol>
       </div>
         
       <p>
-        If the function is called without arguments, then the result is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+        If |n| is an odd number, an error is raised.
+      </p>
+
+      <p class="note">
+        By the given definition, every argument to this function that is meant to produce the <a>map key</a> of a <a>map entry</a> for the constructed <a>term map</a> but that evaluates to an error or to an RDF term that is not a map key is ignored, and so is the directly following argument (i.e., the expression that is meant to produce the corresponding <a>map value</a>).
       </p>
 
       <aside class="example">
@@ -1806,6 +1817,10 @@
           "{'hello': 2, 3: null}"^^cdt:Map
         </pre>
       </aside>
+
+      <p class="note">
+        If the `cdt:Map` function is called without arguments (i.e., |n|=0), then the result is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+      </p>
 
     </section>
 
