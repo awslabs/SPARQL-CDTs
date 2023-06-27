@@ -4,6 +4,6 @@ PREFIX cdt:    <http://example.org/cdt/>
 # 1-entry map
 ASK {
 	BIND("{1: 'one'}"^^cdt:Map AS ?map)
-	FILTER(cdt:contains(?map, 1))
-	FILTER(!cdt:contains(?map, "02"^^xsd:integer))
+	FILTER(cdt:containsKey(?map, 1))
+	FILTER(!cdt:containsKey(?map, "02"^^xsd:integer))
 }
