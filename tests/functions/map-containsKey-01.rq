@@ -3,5 +3,7 @@ PREFIX cdt:    <http://example.org/cdt/>
 # empty map
 ASK {
 	BIND("{}"^^cdt:Map AS ?map)
-	FILTER(!cdt:containsKey(?map, 1))
+	BIND(cdt:containsKey(?map, 1) AS ?result)
+	FILTER( BOUND(?result) )
+	FILTER( ?result = false )
 }
