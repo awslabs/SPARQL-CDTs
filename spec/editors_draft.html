@@ -1863,6 +1863,12 @@
           "['02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
           "['2'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, '02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>]"^^cdt:List
         </pre>
+        <p>
+          Note that, beyond the ordering variations, the lexical forms of the literals within the resulting lists may also vary as long as the resulting cdt:list literal is equal to any of the two aforementioned cdt:List literals. For instance, the following cdt:List literal is also a valid result.
+        </p>
+        <pre class="nohighlight">
+          "['02'^^&lt;http://www.w3.org/2001/XMLSchema#integer>, 2]"^^cdt:List
+        </pre>
       </aside>
 
       <p class="note">
