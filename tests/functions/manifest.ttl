@@ -58,6 +58,7 @@
 		:get-09
 
 		:map-get-01
+		:map-get-02
 		:map-get-null-01
 		:map-get-error-01
 
@@ -773,6 +774,15 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-get-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+
+:map-get-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-get-02" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-get-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
