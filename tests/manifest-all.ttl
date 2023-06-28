@@ -8,5 +8,6 @@
 	mf:include (
 		<unfold/manifest.ttl>
 		<functions/manifest.ttl>
+		<map-functions/manifest.ttl>
 	) ;
 .
