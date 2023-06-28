@@ -39,6 +39,7 @@
          [ qt:query  <get-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
+    .
 
 :get-02 rdf:type mf:QueryEvaluationTest ;
     mf:name    "get-02" ;
