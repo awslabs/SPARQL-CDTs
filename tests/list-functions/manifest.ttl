@@ -8,7 +8,7 @@
 @prefix cdt:     <http://example.org/cdt/> .
 
 <>  rdf:type mf:Manifest ;
-    rdfs:label "SPARQL Composite Type Functions" ;
+    rdfs:label "Functions for cdt:List Literals" ;
     mf:entries
     (
 		:list-constructor-01
@@ -308,11 +308,11 @@
 		:list-greater-equal-error-04
 
 		# sameTerm Tests for Lists
-		:list-sameterm-01 # empty list
-		:list-sameterm-02 # single-element
-		:list-sameterm-03 # multiple-element
-		:list-sameterm-04 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
-		:list-sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
+		:sameterm-01 # empty list
+		:sameterm-02 # single-element
+		:sameterm-03 # multiple-element
+		:sameterm-04 # multiple-element, different lexical-space, same value-space elements (!sameTerm)
+		:sameterm-null-01 # list with null (allowed since the test is on the list lexical, not the elements)
     ) .
 
 :list-constructor-01 rdf:type mf:QueryEvaluationTest ;
@@ -3130,52 +3130,52 @@
     mf:result  <true.srx> ;
 	.
 
-:list-sameterm-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-sameterm-01" ;
+:sameterm-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-01" ;
     rdfs:comment    "sameterm test on empty list" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-sameterm-01.rq> ;
+         [ qt:query  <sameterm-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:list-sameterm-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-sameterm-02" ;
+:sameterm-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-02" ;
     rdfs:comment    "sameterm test on single-element" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-sameterm-02.rq> ;
+         [ qt:query  <sameterm-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:list-sameterm-03 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-sameterm-03" ;
+:sameterm-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-03" ;
     rdfs:comment    "sameterm test on multiple-element" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-sameterm-03.rq> ;
+         [ qt:query  <sameterm-03.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:list-sameterm-04 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-sameterm-04" ;
+:sameterm-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-04" ;
     rdfs:comment    "sameterm test on multiple-element, lexical-space comparison" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-sameterm-04.rq> ;
+         [ qt:query  <sameterm-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:list-sameterm-null-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-sameterm-null-01" ;
+:sameterm-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-null-01" ;
     rdfs:comment    "sameterm test on list with null (allowed since the test is on the list lexical, not the elements)" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-sameterm-null-01.rq> ;
+         [ qt:query  <sameterm-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
