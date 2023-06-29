@@ -1884,19 +1884,11 @@
     <h2>Extension of ORDER BY</h2>
 
     <p>
-      This section extends the definition of the <a data-cite="SPARQL11-QUERY#modOrderBy">`ORDER BY` clause of SPARQL</a> to explicitly define the relative order of two RDF terms for cases in which at least one of the two RDF terms is a <a>cdt:List literal</a> or a <a>cdt:Map literal</a>.
+      This section extends the definition of the <a data-cite="SPARQL11-QUERY#modOrderBy">`ORDER BY` clause of SPARQL</a> to explicitly define the relative order of two RDF terms that both are <a>cdt:List literals</a> or <a>cdt:Map literals</a>.
     </p>
 
     <p>
       According to the definition of `ORDER BY` ordering in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], <a>cdt:List literals</a> and <a>cdt:Map literals</a> are ordered higher than any blank node and any IRI (because they are RDF literals).
-    </p>
-
-    <p>
-      <a>cdt:List literals</a> and <a>cdt:Map literals</a> are ordered higher than any other RDF literal (i.e., any literal with a <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> that is neither the IRI of the <a>cdt:List datatype</a> nor the IRI of the <a>cdt:Map datatype</a>).
-    </p>
-
-    <p>
-      <a>cdt:Map literals</a> are ordered higher than <a>cdt:List literals</a>.
     </p>
 
     <p>
