@@ -1926,7 +1926,6 @@ P := AggregateJoin(A)
         </section>
 
 	    <p class="issue">The use of CT constructor functions here isn't totally correct? Technically they are defined over expressions, and do the expression evaluation themselves. Here, we essentially want to pass in the results of that evaluation (including errors), but it seems wasteful to define essentially the same operation twice.
-	    <p class="issue">We use Flatten(M) above, but really we need to define an equivalent to operate over sequences – take a sequence of lists, and return the ordered sequence of all of the list elements.</p>
 	    </p>
       </section>
     </section>
