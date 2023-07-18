@@ -1908,7 +1908,10 @@ P := AggregateJoin(A)
             <p><b>Definition: <span id="defn_aggFold1">Fold1</span></b></p>
             <pre class="code nohighlight"><a href="#dfn-cdt-list-literal">cdt:List</a> Fold1(sequence <var>S</var>)</pre>
             <p>|L| = Flatten(|S|)</p>
-            <p>Fold1(|S|) = <a href="#func_list">cdt:List</a>(|L|)</p>
+            <p>|n| = ||L||</p>
+            <p>
+              Fold1(|S|) is a <a>cdt:List literal</a> that represents a <a>term list</a>&nbsp;|tm| that contains |n| elements where, for every |i| in {1, ..., |n|}, the element at the |i|-th position of |tm| is determined as follows: If the element at the |i|-th position of |L| is an error, then the element at the |i|-th position of |tm| is <a>null</a>. Otherwise, the element at the |i|-th position of |tm| is the element at the |i|-th position of |L|.
+            </p>
           </div>
         </section>
 
@@ -1921,13 +1924,32 @@ P := AggregateJoin(A)
             <p><b>Definition: <span id="defn_aggFold2">Fold2</span></b></p>
             <pre class="code nohighlight"><a href="#dfn-cdt-map-literal">cdt:Map</a> Fold2(sequence <var>S</var>)</pre>
             <p>|L| = Flatten(|S|)</p>
-            <p>Fold2(|S|) = <a href="#func_map">cdt:Map</a>(|L|)</p>
+            <p>
+              |n| = ||L||
+              <br/>
+              Note that |n| is an even number, which is due to
+              i)&nbsp;the <a href="#fold-grammar">grammar of the FOLD aggregate</a>,
+              ii)&nbsp;the corresponding <a href="#fold-translation">translation to the algebra</a>, and
+              iii)&nbsp;the definition of the <a data-cite="SPARQL11-QUERY#defn_algAggregation ">Aggregation</a> operator.
+            </p>
+            <p>
+              Fold2(|S|) is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n|/2 map entries where, for every |i| in {1, ..., |n|/2}, ... (TODO) ...
+            </p>
+          </div>
+          <div class="issue">
+            How exactly can we define Fold2(|S|)? 
+            <br/>
+            Issues related to the definition are:
+            <ol>
+              <li>What happens if the element at the (|i|*2-1)-th position of |L| is an error? (Remember that we do not support <a>null</a> as a <a>map key</a>.)</li>
+              <li>What happens if the element at the (|i|*2-1)-th position of |L| is a blank node? (Remember that a blank node cannot be a <a>map key</a>.)</li>
+              <li>What happens if the elements at the (|i|*2-1)-th and at the (|j|*2-1)-th position are the same (for some |j| in {1, ..., |n|/2}, with |j|&ne;|i|)? (Remember that all <a>map entries</a> of a <a>term map</a> must have different map keys.)</li>
+            </ol>
           </div>
         </section>
 
-	    <p class="issue">The use of CT constructor functions here isn't totally correct? Technically they are defined over expressions, and do the expression evaluation themselves. Here, we essentially want to pass in the results of that evaluation (including errors), but it seems wasteful to define essentially the same operation twice.
-	    </p>
       </section>
+
     </section>
 
     <section id="ordergroups-semantics">
