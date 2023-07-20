@@ -1933,18 +1933,22 @@ P := AggregateJoin(A)
               iii)&nbsp;the definition of the <a data-cite="SPARQL11-QUERY#defn_algAggregation ">Aggregation</a> operator.
             </p>
             <p>
-              Fold2(|S|) is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n|/2 map entries where, for every |i| in {1, ..., |n|/2}, ... (TODO) ...
+              Fold2(|S|) is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that is constructed by the following algorithm.
             </p>
-          </div>
-          <div class="issue">
-            How exactly can we define Fold2(|S|)? 
-            <br/>
-            Issues related to the definition are:
-            <ol>
-              <li>What happens if the element at the (|i|*2-1)-th position of |L| is an error? (Remember that we do not support <a>null</a> as a <a>map key</a>.)</li>
-              <li>What happens if the element at the (|i|*2-1)-th position of |L| is a blank node? (Remember that a blank node cannot be a <a>map key</a>.)</li>
-              <li>What happens if the elements at the (|i|*2-1)-th and at the (|j|*2-1)-th position are the same (for some |j| in {1, ..., |n|/2}, with |j|&ne;|i|)? (Remember that all <a>map entries</a> of a <a>term map</a> must have different map keys.)</li>
-            </ol>
+            <div class="algorithm">
+              <ol>
+                <li>Initialize |tm| as the <a>empty term map</a>.</li>
+                <li>For every integer |i| from 1 to |n|/2:</li>
+                <ol>
+                  <li>Let |k| be the element at the (|i|*2-1)-th position of |L|.</li>
+                  <li>Let |v| be the element at the (|i|*2)-th position of |L|.</li>
+                  <li>If |k| is neither an error nor a blank node, and |tm| does not contain a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then:</li>
+                  <ol>
+                    <li>Add the map entry (|k|,|v|) to |tm|.</li>
+                  </ol>
+                </ol>
+              </ol>
+            </div>
           </div>
         </section>
 
