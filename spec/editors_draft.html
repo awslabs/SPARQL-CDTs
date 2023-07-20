@@ -1948,9 +1948,9 @@ P := AggregateJoin(A)
                 <ol>
                   <li>Let |k| be the element at the (|i|*2-1)-th position of |L|.</li>
                   <li>Let |v| be the element at the (|i|*2)-th position of |L|.</li>
-                  <li>If |k| is neither an error nor a blank node, and |tm| does not contain a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then:</li>
+                  <li>If |k| is neither an error nor a blank node, then:</li>
                   <ol>
-                    <li>Add the map entry (|k|,|v|) to |tm|.</li>
+                    <li>If |tm| contains a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then replace this map entry (<var>k'</var>,<var>v'</var>) by the map entry (|k|,|v|). Otherwise, add the map entry (|k|,|v|) to |tm|.</li>
                   </ol>
                 </ol>
               </ol>
