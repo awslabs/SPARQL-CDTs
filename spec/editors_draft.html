@@ -1913,6 +1913,12 @@ P := AggregateJoin(A)
               Fold1(|S|) is a <a>cdt:List literal</a> that represents a <a>term list</a>&nbsp;|tm| that contains |n| elements where, for every |i| in {1, ..., |n|}, the element at the |i|-th position of |tm| is determined as follows: If the element at the |i|-th position of |L| is an error, then the element at the |i|-th position of |tm| is <a>null</a>. Otherwise, the element at the |i|-th position of |tm| is the element at the |i|-th position of |L|.
             </p>
           </div>
+          <p class="note">
+            By its definition, Fold1 behaves in the same way as the <a href="#func_list">cdt:List</a> function if that function is invoked by passing each element of |L| as a separate argument.
+          </p>
+          <p class="note">
+            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold1(|S|) is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
+          </p>
         </section>
 
         <section id="aggFold2">
@@ -1950,6 +1956,9 @@ P := AggregateJoin(A)
               </ol>
             </div>
           </div>
+          <p class="note">
+            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold2(|S|) is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+          </p>
         </section>
 
       </section>
