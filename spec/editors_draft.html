@@ -1725,7 +1725,7 @@
 
       <p>
         <code><a href="#dfn-cdt-list-literal">cdt:Map</a> </code>
-        <code style="color:black;font-weight:bold">cdt:List</code>
+        <code style="color:black;font-weight:bold">cdt:Map</code>
         (
            <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
            ...,
@@ -1734,20 +1734,20 @@
       </p>
 
       <p>
-        If |n| is an even number, then the result of this function is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains |n|/2 map entries, produced by the following algorithm.
+        If |n| is an even number, then the result of this function is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that contains up to |n|/2 map entries, produced by the following algorithm.
       </p>
       <div class="algorithm">
         <ol>
-          <li>Let <var>tm</var> be an empty <a>term map</a>.</li>
-          <li>For every |i| in {1, ..., |n|/2}:
+          <li>Initialize |tm| as the <a>empty term map</a>.</li>
+          <li>For every integer |i| from 1 to |n|/2:
             <ol>
-              <li>Evaluate the 2<var>i</var>-1-th expression, <var>expr<sub>2<var>i</var>-1</sub></var>, as defined in [[SPARQL11-QUERY]].</li>
+              <li>Evaluate the (2<var>i</var>-1)-th expression, <var>expr<sub>2<var>i</var>-1</sub></var>, as defined in [[SPARQL11-QUERY]].</li>
               <li>If evaluating <var>expr<sub>2<var>i</var>-1</sub></var> did not raise an error and the RDF term resulting from this evaluation is a <a>map key</a>, then:
                 <ol>
                   <li>Let |k| be the RDF term resulting from the evaluation of <var>expr<sub>2<var>i</var>-1</sub></var>.</li>
                   <li>Evaluate the 2<var>i</var>-th expression, <var>expr<sub>2<var>i</var></sub></var>, as defined in [[SPARQL11-QUERY]].</li>
-                  <li>If evaluating <var>expr<sub>2<var>i</var></sub></var> did not raise an error, then add the <a>map entry</a>&nbsp;(|k|, |v|) to |tm|, where |v| is the RDF term resulting from the evaluation of <var>expr<sub>2<var>i</var></sub></var>.</li>
-                  <li>If evaluating <var>expr<sub>2<var>i</var></sub></var> raised an error, then add the <a>map entry</a>&nbsp;(|k|, <a>null</a>) to |tm|.</li>
+                  <li>Let |v| be the RDF term resulting from the evaluation of <var>expr<sub>2<var>i</var></sub></var> if this evaluation did not raise and error; otherwise, let |v| be <a>null</a>.</li>
+                  <li>If |tm| contains a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then replace this map entry (<var>k'</var>,<var>v'</var>) by the map entry (|k|,|v|). Otherwise, add the map entry (|k|,|v|) to |tm|.</li>
                 </ol>
               </li>
             </ol>
@@ -2167,10 +2167,10 @@ P := AggregateJoin(A)
             </p>
           </div>
           <p class="note">
-            By its definition, Fold1 behaves in the same way as the <a href="#func_list">cdt:List</a> function if that function is invoked by passing each element of |L| as a separate argument.
+            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold1(|S|) is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
           </p>
           <p class="note">
-            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold1(|S|) is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
+            By its definition, Fold1 behaves in the same way as the <a href="#func_list">cdt:List</a> function if that function is invoked by passing each element of |L| as a separate argument.
           </p>
         </section>
 
@@ -2197,20 +2197,25 @@ P := AggregateJoin(A)
             <div class="algorithm">
               <ol>
                 <li>Initialize |tm| as the <a>empty term map</a>.</li>
-                <li>For every integer |i| from 1 to |n|/2:</li>
-                <ol>
-                  <li>Let |k| be the element at the (|i|*2-1)-th position of |L|.</li>
-                  <li>Let |v| be the element at the (|i|*2)-th position of |L|.</li>
-                  <li>If |k| is neither an error nor a blank node, then:</li>
+                <li>For every integer |i| from 1 to |n|/2:
                   <ol>
-                    <li>If |tm| contains a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then replace this map entry (<var>k'</var>,<var>v'</var>) by the map entry (|k|,|v|). Otherwise, add the map entry (|k|,|v|) to |tm|.</li>
+                    <li>Let |k| be the element at the (2<var>i</var>-1)-th position of |L|.</li>
+                    <li>Let |v| be the element at the 2<var>i</var>-th position of |L|.</li>
+                    <li>If |k| is neither an error nor a blank node, then:
+                      <ol>
+                        <li>If |tm| contains a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then replace this map entry (<var>k'</var>,<var>v'</var>) by the map entry (|k|,|v|). Otherwise, add the map entry (|k|,|v|) to |tm|.</li>
+                      </ol>
+                    </li>
                   </ol>
-                </ol>
+                </li>
               </ol>
             </div>
           </div>
           <p class="note">
             If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold2(|S|) is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+          </p>
+          <p class="note">
+            By its definition, Fold2 behaves in the same way as the <a href="#func_map">cdt:Map</a> function if that function is invoked by passing each element of |L| as a separate argument.
           </p>
         </section>
 
