@@ -1968,11 +1968,274 @@
 
 
   <section id="fold">
-    <h2>FOLD (TODO)</h2>
+    <h2>FOLD</h2>
 
-    <p>TODO (FOLD is a <a data-cite="SPARQL11-QUERY#setFunctions">SPARQL set function</a>)</p>
+    <p>
+      This section defines a new SPARQL <a data-cite="SPARQL11-QUERY#setFunctions">Set Function</a>, `FOLD`, used to construct composite values.
+      As illustrated in Section&nbsp;<a href="#description-of-fold" class="sectionRef"></a>, this function can be used to transform individual values into <a>cdt:List literals</a> and <a>cdt:Map literals</a>.
+    </p>
+
+    <section id="fold-grammar">
+      <h2>Grammar</h2>
+
+      <p>
+        Adding the FOLD aggregate to SPARQL requires the following extension of the <a data-cite="SPARQL11-QUERY#rAggregate">`Aggregate`</a> production of the <a data-cite="SPARQL11-QUERY#sparqlGrammar">SPARQL grammar</a>. The part in which the extended production differs from the corresponding production in the original grammar is marked in bold font. The given production rule uses several symbols for which no production rule is provided below (e.g., <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>, <a data-cite="SPARQL11-QUERY#rOrderCondition">OrderCondition</a>); the production rules for these symbols are defined as given in the original SPARQL grammar.
+      </p>
+
+      <table class="grammar">
+
+        <tr id="rAggregate">
+          <td>[127+]</td>
+          <td>`Aggregate`</td>
+          <td>&nbsp;::=&nbsp;</td>
+          <td>
+            <code>&nbsp;
+            <span class="token">'COUNT'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            ( <span class="token">'*'</span> | <a data-cite="SPARQL11-QUERY#rExpression">Expression</a> )
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'SUM'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'MIN'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'MAX'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'AVG'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'SAMPLE'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            <span class="token">')'</span>
+            <br/>
+            `|`
+            <span class="token">'GROUP_CONCAT'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            ( <span class="token">';'</span> <span class="token">'SEPARATOR'</span> <span class="token">'='</span> <a data-cite="SPARQL11-QUERY#rString">String</a> )?
+            <span class="token">')'</span>
+            <br/>
+            <strong>
+            `|`
+            <span class="token">'FOLD'</span>
+            <span class="token">'('</span>
+            <span class="token">'DISTINCT'</span>?
+            <a data-cite="SPARQL11-QUERY#rExpression">Expression</a>
+            ( <span class="token">','</span> <a data-cite="SPARQL11-QUERY#rExpression">Expression</a> )?
+            ( <span class="token">'ORDER'</span> <span class="token">'BY'</span> <a data-cite="SPARQL11-QUERY#rOrderCondition">OrderCondition</a>+ )?
+            <span class="token">')'</span>
+            </strong>
+            </code>
+          </td>
+        </tr>
+
+      </table>
+
+    </section>
+
+    <section id="fold-translation">
+      <h2>Translation to the Algebra</h2>
+
+      <p>
+        Based on the SPARQL grammar, the SPARQL specification <q>defines the process of converting graph patterns and solution modifiers in a SPARQL query string into a SPARQL algebra expression</q> (see <a data-cite="SPARQL11-QUERY#sparqlQuery">Section&nbsp;18.2</a> of [[SPARQL11-QUERY]]).
+        This process must be adapted to consider FOLD clauses as added by the extended grammar introduced above.
+        In particular, the step of translating grouping and aggregation during this process needs to be extended.
+        The original algorithm that defines this translation is given in <a data-cite="SPARQL11-QUERY#sparqlGroupAggregate">Section&nbsp;18.2.4.1</a> of [[SPARQL11-QUERY]].
+        The extended version of the algorithm is given as follows, where the parts that are modified or added to cover the FOLD operator are marked in bold font.
+      </p>
+      <div style="width: 100%; border: 1px solid; padding: 5px">
+        <pre class="nohighlight" style="margin: 0px">
+Let A := the empty sequence
+Let Q := the query level being evaluated
+Let P := the algebra translation of the GroupGraphPattern of the query level
+Let E := [], a list of pairs of the form (variable, expression)
+
+If Q contains GROUP BY exprlist
+   Let G := Group(exprlist, P)
+Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
+   Let G := Group((1), P)
+Else
+   skip the rest of the aggregate step
+   End
+
+Global i := 1   # Initially 1 for each query processed
+
+For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
+  For each unaggregated variable V in X
+      Replace V with Sample(V)
+      End
+  For each aggregate R(args <strong>ORDER BY orderconditions</strong>; scalarvals) now in X
+      <strong># note ORDER BY clause may be omitted</strong>
+      # note scalarvals may be omitted, then it's equivalent to the empty set
+      <strong>If aggregate contains ORDER BY orderconditions
+          G := OrderGroups(G, orderconditions)
+          End
+      If R = Fold
+          If |args| = 1
+              setfunc = Fold1
+          Else
+              setfunc = Fold2
+              End
+      Else
+          setfunc = R
+          End</strong>
+      A<sub>i</sub> := Aggregation(args, <strong>setfunc</strong>, scalarvals, G)
+      Replace R(...) with agg<sub>i</sub> in Q
+      i := i + 1
+      End
+  End
+
+For each variable V appearing outside of an aggregate
+   A<sub>i</sub> := Aggregation(V, Sample, {}, G)
+   E := E append (V, agg<sub>i</sub>)
+   i := i + 1
+   End
+
+A := A<sub>i</sub>, ..., A<sub>i-1</sub>
+P := AggregateJoin(A)
+        </pre>
+      </div>
+
+      <p>
+        Notice that the extended algorithm uses the new algebra symbol `OrderGroups`. Hence, to use this algorithm, the list of symbols in the SPARQL algebra (as given in the second table of <a data-cite="SPARQL11-QUERY#sparqlQuery">Section&nbsp;18.2</a> [[SPARQL11-QUERY]]) needs to be extended by adding this symbol. The evaluation semantics of algebra expressions that contain this symbol is defined in the following.
+      </p>
+
+    </section>
+
+    <section id="ordergroups-algebra">
+      <h2>Algebra</h2>
+
+      <p>
+        This section defines an operator for evaluating the new algebra symbol (as <a data-cite="SPARQL11-QUERY#sparqlAlgebra">Section&nbsp;18.5</a> of [[SPARQL11-QUERY]] does for the standard SPARQL algebra symbols). This operator has the same name as the algebra symbol and shall be used in the following section to extend the evaluation semantics of algebra expressions that may contain the new algebra symbol.
+      </p>
+
+      <div class="defn">
+        <p><b>Definition: <dfn id="defn_algOrderGroups" style="font-style:normal">OrderGroups</dfn></b></p>
+        <p>
+          Let {&nbsp;<var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ..., <var>key<sub>m</sub></var>→<var>Ψ<sub>|m|</sub></var>&nbsp;} be a partial function from keys to solution sequences. OrderGroups({&nbsp;<var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ..., <var>key<sub>|m|</sub></var>→<var>Ψ<sub>|m|</sub></var>&nbsp;}, |condition|) is also a partial function from keys to solution sequences that is defined as follows:
+        </p>
+        <p>
+          OrderGroups({&nbsp;<var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ..., <var>key<sub>|m|</sub></var>→<var>Ψ<sub>|m|</sub></var>&nbsp;}, |condition|) =
+          {
+          <var>key<sub>1</sub></var>→<a data-cite="SPARQL11-QUERY#defn_algOrderBy">OrderBy</a>(<var>Ψ<sub>1</sub></var>, |condition|),
+          ...,
+          <var>key<sub>|m|</sub></var>→<a data-cite="SPARQL11-QUERY#defn_algOrderBy">OrderBy</a>(<var>Ψ<sub>|m|</sub></var>, |condition|)
+          }
+        </p>
+      </div>
+
+      <section id="aggregateAlgebra">
+        <h2>Aggregate Algebra</h2>
+        <p>Two new set functions are introduced to support the FOLD aggregate:</p>
+
+        <section id="aggFold1">
+          <h2>Fold1</h2>
+          <p>
+            Fold1 is a SPARQL set function which combines the elements in the aggregate group into a <a>cdt:List literal</a>.
+          </p>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_aggFold1">Fold1</span></b></p>
+            <pre class="code nohighlight"><a href="#dfn-cdt-list-literal">cdt:List</a> Fold1(sequence <var>S</var>)</pre>
+            <p>|L| = Flatten(|S|)</p>
+            <p>|n| = ||L||</p>
+            <p>
+              Fold1(|S|) is a <a>cdt:List literal</a> that represents a <a>term list</a>&nbsp;|tm| that contains |n| elements where, for every |i| in {1, ..., |n|}, the element at the |i|-th position of |tm| is determined as follows: If the element at the |i|-th position of |L| is an error, then the element at the |i|-th position of |tm| is <a>null</a>. Otherwise, the element at the |i|-th position of |tm| is the element at the |i|-th position of |L|.
+            </p>
+          </div>
+          <p class="note">
+            By its definition, Fold1 behaves in the same way as the <a href="#func_list">cdt:List</a> function if that function is invoked by passing each element of |L| as a separate argument.
+          </p>
+          <p class="note">
+            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold1(|S|) is a <a>cdt:List literal</a> that represents the <a>empty term list</a>.
+          </p>
+        </section>
+
+        <section id="aggFold2">
+          <h2>Fold2</h2>
+          <p>
+            Fold2 is a SPARQL set function which combines the elements in the aggregate group into a <a>cdt:Map literal</a>.
+          </p>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_aggFold2">Fold2</span></b></p>
+            <pre class="code nohighlight"><a href="#dfn-cdt-map-literal">cdt:Map</a> Fold2(sequence <var>S</var>)</pre>
+            <p>|L| = Flatten(|S|)</p>
+            <p>
+              |n| = ||L||
+              <br/>
+              Note that |n| is an even number, which is due to
+              i)&nbsp;the <a href="#fold-grammar">grammar of the FOLD aggregate</a>,
+              ii)&nbsp;the corresponding <a href="#fold-translation">translation to the algebra</a>, and
+              iii)&nbsp;the definition of the <a data-cite="SPARQL11-QUERY#defn_algAggregation ">Aggregation</a> operator.
+            </p>
+            <p>
+              Fold2(|S|) is a <a>cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| that is constructed by the following algorithm.
+            </p>
+            <div class="algorithm">
+              <ol>
+                <li>Initialize |tm| as the <a>empty term map</a>.</li>
+                <li>For every integer |i| from 1 to |n|/2:</li>
+                <ol>
+                  <li>Let |k| be the element at the (|i|*2-1)-th position of |L|.</li>
+                  <li>Let |v| be the element at the (|i|*2)-th position of |L|.</li>
+                  <li>If |k| is neither an error nor a blank node, then:</li>
+                  <ol>
+                    <li>If |tm| contains a <a>map entry</a> (<var>k'</var>,<var>v'</var>) such that |k|=<var>k'</var>, then replace this map entry (<var>k'</var>,<var>v'</var>) by the map entry (|k|,|v|). Otherwise, add the map entry (|k|,|v|) to |tm|.</li>
+                  </ol>
+                </ol>
+              </ol>
+            </div>
+          </div>
+          <p class="note">
+            If |S| is the empty sequence, then |n|=0 and, thus, the result of Fold2(|S|) is a <a>cdt:Map literal</a> that represents the <a>empty term map</a>.
+          </p>
+        </section>
+
+      </section>
+
+    </section>
+
+    <section id="ordergroups-semantics">
+      <h2>Evaluation Semantics</h2>
+
+      <p>
+        The SPARQL specification defines a function <q>eval(D(G), algebra expression) as the evaluation of an algebra expression with respect to a dataset D having active graph G</q> (see <a data-cite="SPARQL11-QUERY#sparqlAlgebraEval">Section&nbsp;18.6</a> of [[SPARQL11-QUERY]]). The definition of this function is recursive. To cover algebra expressions that may contain the new algebra symbol (`OrderGroups`) the definition of this function needs to be extended with the following additional case.
+      </p>
+
+      <div class="defn">
+        <p><b>Definition: <dfn id="defn_evalOrderGroups" style="font-style:normal">Evaluation of OrderGroups</dfn></b></p>
+        <p>
+          eval(D(G), `OrderGroups(`<var style="font-style: normal">`L`</var>, <var style="font-style: normal">`orderconditions`</var>`)`) = <a>OrderGroups</a>(eval(D(G), <var style="font-style: normal">`L`</var>), <var style="font-style: normal">`orderconditions`</var>)
+        </p>
+      </div>
+
+    </section>
 
   </section>
+
 
 
   <section id="unfold">
