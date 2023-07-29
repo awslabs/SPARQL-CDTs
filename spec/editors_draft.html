@@ -2047,7 +2047,7 @@
       <h2>Relative Order of cdt:List Literals</h2>
 
       <p>
-        The relative order of two <a>cdt:List literals</a> <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is determined by the following algorithm.
+        The relative order of two <a>cdt:List literals</a> <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is determined by the algorithm listed below. In brief, the algorithm operates as follows: If the two literals are <a href="#dfn-well-formed-cdt-list-literal">well-formed</a>, the algorithm iterates over the <a>term lists</a> of both literals and compares their elements pairwise. For every pair for which the relative order is undefined or both elements are <a>null</a>, the algorithm advances to the next pair. Once the algorithm finds a pair for which one of the two elements is ordered higher than the other element, the corresponding cdt:List literal from which this higher-ordered element originates is defined as ordered higher than the other cdt:List literal. If the algorithm reaches the end of at least one of the two term lists without finding such a pair and the other term list contains further elements, then the cdt:List literal with the larger term list is ordered higher. If no decision can be made based on any of the aforementioned conditions (or both of the literals are <a>ill-formed cdt:List literals</a>), then the relative order of the two literals is determined based on their lexical forms.
       </p>
       <div class="algorithm">
         <ol>
@@ -2078,10 +2078,6 @@
           <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
         </ol>
       </div>
-
-      <p class="note">
-        If the two <a>cdt:List literals</a> are <a href="#dfn-well-formed-cdt-list-literal">well-formed</a>, the algorithm iterates over the <a>term lists</a> of both literals and compares their elements pairwise. For every pair for which the relative order is undefined or both elements are <a>null</a>, the algorithm advances to the next pair. Once the algorithm finds a pair for which one of the two elements is ordered higher than the other element, the corresponding cdt:List literal from which this higher-ordered element originates is defined as ordered higher than the other cdt:List literal. If the algorithm reaches the end of at least one of the two term lists without finding such a pair and the other term lists contains further elements, then the cdt:List literal with the larger term list is ordered higher. If no decision can be made based on any of the aforementioned conditions (or both of the literals are <a>ill-formed cdt:List literals</a>), then the relative order of the two literals is determined based on their lexical forms.
-      </p>
 
     </section>
 
