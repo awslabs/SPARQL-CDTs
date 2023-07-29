@@ -1724,7 +1724,7 @@
       <h2>cdt:Map</h2>
 
       <p>
-        <code><a href="#dfn-cdt-list-literal">cdt:Map</a> </code>
+        <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
         <code style="color:black;font-weight:bold">cdt:Map</code>
         (
            <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
@@ -1791,7 +1791,7 @@
         <code>xsd:boolean </code>
         <code style="color:black;font-weight:bold">cdt:containsKey</code>
         (
-           <code><a href="#dfn-cdt-list-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
            <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>
         )
       </p>
@@ -1887,20 +1887,145 @@
     </section>
 
     <section id="func_put">
-      <h2>cdt:put (TODO)</h2>
+      <h2>cdt:put</h2>
 
       <p>
-        TODO
+        <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
+        <code style="color:black;font-weight:bold">cdt:put</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>
+        )
+      </p>
+
+      <p>
+        <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
+        <code style="color:black;font-weight:bold">cdt:put</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>3</sub></var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:Map literal</a> and <var>term<sub>2</sub></var> is a <a>map key</a>, then the result of this function is a <a href="#dfn-cdt-map-literal">cdt:Map literal</a> that represents a <a>term map</a> containing all <a>map entries</a> contained in the term map represented by <var>term<sub>1</sub></var>, except for any map entry whose map key is the same term as <var>term<sub>2</sub></var>, together with a new map entry whose map key is <var>term<sub>2</sub></var> and whose <a>map value</a> is <var>term<sub>3</sub></var> if given, and <a>null</a> if <var>term<sub>3</sub></var> is not given.
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is an <a>ill-formed cdt:Map literal</a> or <var>term<sub>2</sub></var> is not a <a>map key</a>, then this function produces an error.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:put( "{1: 'one'}"^^cdt:Map, 2 )
+        </pre>
+        <p>
+          results in the following cdt:Map literal (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one).
+        </p>
+        <pre class="nohighlight">
+          "{1: 'one', 2: null}"^^cdt:Map
+        </pre>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:put( "{1: 'one', 2: null}"^^cdt:Map, 2, "two" )
+        </pre>
+        <p>
+          results in the following cdt:Map literal (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one).
+        </p>
+        <pre class="nohighlight">
+          "{1: 'one', 2: 'two'}"^^cdt:Map
+        </pre>
+      </aside>
+
+      <p class="note">
+        If the <a>term map</a> represented by <var>term<sub>1</sub></var> contains a map entry&nbsp;(|k|,|v|) such that |k| is the same term as <var>term<sub>2</sub></var> and |v| is the same term as <var>term<sub>3</sub></var> (resp. |v| is <a>null</a> and <var>term<sub>3</sub></var> is not given), then the <a href="#dfn-cdt-map-literal">cdt:Map literal</a> returned by this function represents exactly the same term map as <var>term<sub>1</sub></var>.
       </p>
 
     </section>
 
     <section id="func_remove">
-      <h2>cdt:remove (TODO)</h2>
+      <h2>cdt:remove</h2>
 
       <p>
-        TODO
+        <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
+        <code style="color:black;font-weight:bold">cdt:remove</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>
+        )
       </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:Map literal</a> and <var>term<sub>2</sub></var> is a <a>map key</a>, then the result of this function is a <a href="#dfn-cdt-map-literal">cdt:Map literal</a> that represents a <a>term map</a> containing all <a>map entries</a> contained in the term map represented by <var>term<sub>1</sub></var>, except for any map entry whose map key is the same term as <var>term<sub>2</sub></var>.
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:Map literal</a> and <var>term<sub>2</sub></var> is not a <a>map key</a>, then the result of this function is <var>term<sub>1</sub></var>.
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:remove( "{1: 'one', 2: null}"^^cdt:Map, 2 )
+        </pre>
+        <p>
+          results in the following cdt:Map literal (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one).
+        </p>
+        <pre class="nohighlight">
+          "{1: 'one'}"^^cdt:Map
+        </pre>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:remove( "{1: 'one'}"^^cdt:Map, 1 )
+        </pre>
+        <p>
+          results in a cdt:Map literal that represents the <a>empty term map</a>.
+        </p>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:remove( "{'01'^^&lt;http://www.w3.org/2001/XMLSchema#integer>: 'one'}"^^cdt:Map, '1'^^&lt;http://www.w3.org/2001/XMLSchema#integer> )
+        </pre>
+        <p>
+          results in the cdt:Map literal given as the first argument (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one). The fact that the term map represented by the given cdt:Map literal is not changed in this case is because the map key of the map entry in this term map is not the same term as the second argument given to the function.
+        </p>
+      </aside>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:remove( "{'01'^^&lt;http://www.w3.org/2001/XMLSchema#integer>: 'one'}"^^cdt:Map, BNODE() )
+        </pre>
+        <p>
+          results in the cdt:Map literal given as the first argument, because the second argument is a blank node, which is not a <a>map key</a>.
+        </p>
+      </aside>
 
     </section>
 
