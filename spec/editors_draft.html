@@ -2089,7 +2089,45 @@
       </p>
       <div class="algorithm">
         <ol>
-          <li>TODO ...</li>
+          <li>If one of the two literals, <var>lit<sub>1</sub></var> or <var>lit<sub>2</sub></var>, is <a href="#dfn-ill-formed-cdt-map-literal">ill-formed</a> and the other one is <a href="#dfn-well-formed-cdt-map-literal">well-formed</a>, then the ill-formed one is ordered higher.</li>
+          <li>If both literals, <var>lit<sub>1</sub></var> or <var>lit<sub>2</sub></var>, are <a href="#dfn-well-formed-cdt-map-literal">well-formed</a>, then:
+            <ol>
+              <li>Let <var>map<sub>1</sub></var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of <var>lit<sub>1</sub></var> (i.e., <var>map<sub>1</sub></var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of <var>lit<sub>1</sub></var>).</li>
+              <li>Let <var>map<sub>2</sub></var> be the term map obtained by applying the lexical-to-value mapping of the cdt:Map datatype to the lexical form of <var>lit<sub>2</sub></var> (i.e., <var>map<sub>2</sub></var> is the value of <var>lit<sub>2</sub></var>).</li>
+              <li>Let <var>entrylist<sub>1</sub></var> be a list of all <a>map entries</a> that are <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>1</sub></var>, ordered based on their respective <a>map keys</a> by using the same order as defined in Step&nbsp;6 of the algorithm in Section&nbsp;<a href="#func_map-less-than" class="sectionRef"></a>.</li>
+              <li>Let <var>entrylist<sub>2</sub></var> be a list of all map entries that are contained in <var>map<sub>2</sub></var>, ordered in the same way as <var>entrylist<sub>1</sub></var>.</li>
+              <li>For every integer |i| from 1 to |n|, where |n| is the minimum of the respective length of <var>entrylist<sub>1</sub></var> and of <var>entrylist<sub>2</sub></var>:
+                <ol>
+                  <li>Let (<var>k<sub>1</sub></var>, <var>v<sub>1</sub></var>) be the |i|-th map entry in <var>entrylist<sub>1</sub></var>.</li>
+                  <li>Let (<var>k<sub>2</sub></var>, <var>v<sub>2</sub></var>) be the |i|-th map entry in <var>entrylist<sub>2</sub></var>.</li>
+                  <li>If evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>k<sub>1</sub></var>, <var>k<sub>2</sub></var>) results in `false`, then:
+                    <ol>
+                      <li>If <var>k<sub>1</sub></var> is ordered before <var>k<sub>2</sub></var> according to the ordering of map keys as used above for creating <var>entrylist<sub>1</sub></var> (and as defined in Step&nbsp;6 of the algorithm in Section&nbsp;<a href="#func_map-less-than" class="sectionRef"></a>), then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
+                      <li><var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                    </ol>
+                  </li>
+                  <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not null, then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
+                  <li>If <var>v<sub>2</sub></var> is null and <var>v<sub>1</sub></var> is not null, then <var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                  <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is not a blank node, then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
+                  <li>If <var>v<sub>2</sub></var> is a blank node and <var>v<sub>1</sub></var> is not a blank node, then <var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                  <div class="note">If both <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are null or both <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are blank nodes, then the condition of the following If-statement is `false` and, thus, the algorithm proceeds to the next pair of map entries.</div>
+                  <li>If <var>v<sub>1</sub></var> is not null and not a blank node, <var>v<sub>2</sub></var> is not null and not a blank node, and evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>) results in `false`, then:
+                    <ol>
+                      <li>If <var>v<sub>1</sub></var> is ordered before <var>v<sub>2</sub></var> according to the ordering of map keys as used above for creating <var>entrylist<sub>1</sub></var> (and as defined in Step&nbsp;6 of the algorithm in Section&nbsp;<a href="#func_map-less-than" class="sectionRef"></a>), then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
+                      <li><var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+              <li>If the length of <var>entrylist<sub>1</sub></var> is greater than the length of <var>entrylist<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+              <li>If the length of <var>entrylist<sub>2</sub></var> is greater than the length of <var>entrylist<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+            </ol>
+          </li>
+          <li>Let <var>str<sub>1</sub></var> be the literal that has the same lexical form as <var>lit<sub>1</sub></var> and the datatype IRI `xsd:string`.</li>
+          <li>Let <var>str<sub>2</sub></var> be the literal that has the same lexical form as <var>lit<sub>2</sub></var> and the datatype IRI `xsd:string`.</li>
+          <li>If <var>str<sub>1</sub></var> is ordered higher than <var>str<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+          <li>If <var>str<sub>2</sub></var> is ordered higher than <var>str<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+          <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
         </ol>
       </div>
 
