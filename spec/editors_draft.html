@@ -2011,7 +2011,7 @@
           cdt:remove( "{'01'^^&lt;http://www.w3.org/2001/XMLSchema#integer>: 'one'}"^^cdt:Map, '1'^^&lt;http://www.w3.org/2001/XMLSchema#integer> )
         </pre>
         <p>
-          results in the cdt:Map literal given as the first argument (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one). The fact that the term map represented by the given cdt:Map literal is not changed in this case is because the map key of the map entry in this term map is not the same term as the second argument given to the function.
+          results in the cdt:Map literal given as the first argument (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one). The fact that the term map represented by the given cdt:Map literal is not changed in this case is because the map key of the map entry in this term map is not the same term as the second argument given to the function (while both are literals that even represent the same <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a>, they having different <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical forms</a>).
         </p>
       </aside>
 
