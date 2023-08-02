@@ -1717,7 +1717,7 @@
     </p>
 
     <p>
-      Except for <a href="#func_map">cdt:Map</a>, these extension functions are evaluated as defined in <a data-cite="SPARQL11-QUERY#invocation">Section&nbsp;17.2.1</a> of [[SPARQL11-QUERY]]. In contrast, <a href="#func_map">cdt:Map</a> is a so-called <a data-cite="SPARQL11-QUERY#func-forms">functional form</a> which has specific evaluation rules (as defined in Section&nbsp;<a href="#func_list" class="sectionRef"></a>).
+      Except for <a href="#func_map">cdt:Map</a> and <a href="#func_put">cdt:put</a>, these extension functions are evaluated as defined in <a data-cite="SPARQL11-QUERY#invocation">Section&nbsp;17.2.1</a> of [[SPARQL11-QUERY]]. In contrast, <a href="#func_map">cdt:Map</a> and <a href="#func_put">cdt:put</a> are so-called <a data-cite="SPARQL11-QUERY#func-forms">functional forms</a> which have specific evaluation rules (as defined in Section&nbsp;<a href="#func_map" class="sectionRef"></a> and Section&nbsp;<a href="#func_put" class="sectionRef"></a>, respectively).
     </p>
 
     <section id="func_map">
@@ -1893,8 +1893,8 @@
         <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
         <code style="color:black;font-weight:bold">cdt:put</code>
         (
-           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
-           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>2</sub></var></code>
         )
       </p>
 
@@ -1902,18 +1902,31 @@
         <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
         <code style="color:black;font-weight:bold">cdt:put</code>
         (
-           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
-           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>2</sub></var></code>,
-           <code><a data-cite="RDF11-CONCEPTS#dfn-rdf-term">RDF term</a> <var>term<sub>3</sub></var></code>
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>1</sub></var></code>,
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>2</sub></var></code>,
+           <code><a data-cite="SPARQL11-QUERY#expressions">SPARQL expression</a> <var>expr<sub>3</sub></var></code>
         )
       </p>
 
       <p>
-        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:Map literal</a> and <var>term<sub>2</sub></var> is a <a>map key</a>, then the result of this function is a <a href="#dfn-cdt-map-literal">cdt:Map literal</a> that represents a <a>term map</a> containing all <a>map entries</a> contained in the term map represented by <var>term<sub>1</sub></var>, except for any map entry whose map key is the same term as <var>term<sub>2</sub></var>, together with a new map entry whose map key is <var>term<sub>2</sub></var> and whose <a>map value</a> is <var>term<sub>3</sub></var> if given, and <a>null</a> if <var>term<sub>3</sub></var> is not given.
+        If evaluating the expression <var>expr<sub>1</sub></var> results in a <a>well-formed cdt:Map literal</a>, hereafter denoted by |lit|, and evaluating the expression <var>expr<sub>2</sub></var> results in a <a>map key</a>, hereafter denoted by |key|, then the result of this function is a <a href="#dfn-cdt-map-literal">cdt:Map literal</a> that represents a <a>term map</a>&nbsp;|tm| produced by the following algorithm.
       </p>
+      <div class="algorithm">
+        <ol>
+          <li>Initialize |tm| as the <a>empty term map</a>.</li>
+          <li>Let <var>tm'</var> be the <a>term map</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> to the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of |lit| (i.e., <var>tm'</var> is the <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> of |lit|).</li>
+          <li>For every <a>map entry</a> (|k|,|v|) that is <a href="#dfn-contains-map-entry">contained</a> in <var>tm'</var>:
+            <ol>
+              <li>If |k| is not the same term as |key|, add the map entry (|k|,|v|) to |tm|.</li>
+            </ol>
+          </li>
+          <li>If the expression <var>expr<sub>3</sub></var> is given and evaluating this expression does not result in an error, then add the map entry (|key|,&nbsp;|term|) to |tm|, where |term| is the RDF terms resulting from the evaluation of <var>expr<sub>3</sub></var>.</li>
+          <li>If the expression <var>expr<sub>3</sub></var> is not given or evaluating this expression results in an error, then add the map entry (|key|,&nbsp;<a>null</a>) to |tm|.</li>
+        </ol>
+      </div>
 
       <p>
-        If <var>term<sub>1</sub></var> is an <a>ill-formed cdt:Map literal</a> or <var>term<sub>2</sub></var> is not a <a>map key</a>, then this function produces an error.
+        In all other cases an error is raised.
       </p>
 
       <aside class="example">
@@ -1947,7 +1960,7 @@
       </aside>
 
       <p class="note">
-        If the <a>term map</a> represented by <var>term<sub>1</sub></var> contains a map entry&nbsp;(|k|,|v|) such that |k| is the same term as <var>term<sub>2</sub></var> and |v| is the same term as <var>term<sub>3</sub></var> (resp. |v| is <a>null</a> and <var>term<sub>3</sub></var> is not given), then the <a href="#dfn-cdt-map-literal">cdt:Map literal</a> returned by this function represents exactly the same term map as <var>term<sub>1</sub></var>.
+        If the <a>term map</a> <var>tm'</var> represented by |lit| contains a map entry&nbsp;(|k|,|v|) such that |k| is the same term as |key| and |v| is the same term as the result of evaluating <var>expr<sub>3</sub></var> (resp. |v| is <a>null</a> and either <var>expr<sub>3</sub></var> is not given or evaluating <var>expr<sub>3</sub></var> results in an error), then the <a href="#dfn-cdt-map-literal">cdt:Map literal</a> returned by this function represents exactly the same term map as |lit|; i.e., <var>tm'</var>.
       </p>
 
     </section>
