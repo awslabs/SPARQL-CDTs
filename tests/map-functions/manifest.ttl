@@ -29,6 +29,18 @@
 		:containsKey-01
 		:containsKey-02
 		:containsKey-03
+
+		:remove-01
+		:remove-02
+		:remove-03
+		:remove-04
+		:remove-05
+		:remove-06
+		:remove-07
+		:remove-08
+		:remove-09
+		:remove-10
+		:remove-11
     ) .
 
 :get-01 rdf:type mf:QueryEvaluationTest ;
@@ -177,6 +189,116 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <containsKey-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-01" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-02" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-03" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-04" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-05" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-06" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-07" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-08" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-09" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-10" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:remove-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "remove-11" ;
+    mf:feature cdt:remove ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <remove-11.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
