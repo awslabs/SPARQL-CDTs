@@ -30,6 +30,28 @@
 		:containsKey-02
 		:containsKey-03
 
+		:put-01
+		:put-02
+		:put-03
+		:put-04
+		:put-05
+		:put-06
+		:put-07
+		:put-08
+		:put-09
+		:put-10
+		:put-11
+		:put-12
+		:put-13
+		:put-14
+		:put-15
+
+		:put-error-01
+		:put-error-02
+		:put-error-03
+		:put-error-04
+		:put-error-05
+
 		:remove-01
 		:remove-02
 		:remove-03
@@ -189,6 +211,206 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <containsKey-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-01" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-02" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-03" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-04" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-05" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-06" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-07" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-08" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-09" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-10" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-11" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-12 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-12" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-12.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-13 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-13" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-13.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-14 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-14" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-14.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-15 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-15" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-15.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-error-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-error-01" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-error-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-error-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-error-02" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-error-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-error-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-error-03" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-error-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-error-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-error-04" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-error-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:put-error-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "put-error-05" ;
+    mf:feature cdt:put ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <put-error-05.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
