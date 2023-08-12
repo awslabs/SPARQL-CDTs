@@ -30,6 +30,18 @@
 		:containsKey-02
 		:containsKey-03
 
+		:map-constructor-01
+		:map-constructor-02
+		:map-constructor-03
+		:map-constructor-04
+		:map-constructor-05
+		:map-constructor-06
+		:map-constructor-07
+		:map-constructor-08
+		:map-constructor-09
+		:map-constructor-10
+		:map-constructor-11
+
 		:put-01
 		:put-02
 		:put-03
@@ -211,6 +223,116 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <containsKey-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-01" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-02" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-03" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-04" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-05" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-06" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-07" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-08" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-09" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-10 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-10" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-10.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-constructor-11 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-constructor-11" ;
+    mf:feature cdt:Map ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-constructor-11.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
