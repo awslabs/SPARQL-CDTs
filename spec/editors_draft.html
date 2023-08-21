@@ -694,7 +694,100 @@
     </section>
 
     <section id="list-datatype-versus-rdflists" class="informative">
-      <h2>Relationship to RDF Lists (TODO)</h2>
+      <h2>Relationship to RDF Collections (a.k.a. RDF Lists) (TODO)</h2>
+
+      <p>
+        The RDF Collection vocabulary, as introduced in <a data-cite="RDF11-SCHEMA#ch_collectionvocab">Section&nbsp;5.2</a> of [[RDF11-SCHEMA]], provides vocabulary terms to describe lists of resources explicitly by using RDF triples. For instance, the triples in the following snippet of Turtle (prefix declarations omitted) describe a list consisting of two resources that are denoted by the IRIs `http://example.org/alice` and `http://example.org/bob`, respectively.
+      </p>
+      <pre id="rdf-list-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:book1 ex:authors _:b1 .
+        _:b1 rdf:first <http://example.org/alice> .
+        _:b1 rdf:rest _:b2 .
+        _:b2 rdf:first <http://example.org/bob> .
+        _:b2 rdf:rest rdf:nil .
+        -->
+      </pre>
+
+      <p>
+        Some serialization formats for RDF data, including Turtle [[TURTLE]], provide some form of shorthand notation based on which such lists can be written in a more concise way. For instance, by using the <a data-cite="TURTLE#collections">Turtle syntax for collections</a>, the snippet of Turtle as given in the previous example can be shortened as follows.
+      </p>
+      <pre id="concise-rdf-list-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:book1 ex:authors (<http://example.org/alice> <http://example.org/bob>) .
+        -->
+      </pre>
+
+      <p>
+        Note that even if the latter snippet of Turtle looks more compact, it still captures the same set of five RDF triples as the snippet of Turtle in <a href="#rdf-list-example" class="exampleRef"></a>.
+      </p>
+
+      <p>
+        Using a SPARQL query, the elements of such lists can be extracted into a <a>cdt:List literal</a>. To this end, the query needs to traverse the corresponding `rdf:rest` triples using a <a data-cite="SPARQL11-QUERY#propertypaths">property path expression</a>, collect the object of each `rdf:first` triple along the path, and finally combine these objects as <a>list elements</a> of a <a>term list</a> for a <a>cdt:List literal</a> by using the FOLD aggregate defined in Section&nbsp;<a href="#fold" class="sectionRef"></a>. Additionally, to preserve the order of the list elements, grouping needs to be used for each position in the given list and the number of path traversal steps to this position need to be counted. The following query illustrates how this approach can be used for the example data above, without making any assumption about the given list (such as number of elements or absence of duplicate entries).
+      </p>
+      <pre id="duplicate-aware-order-preserving-rdf-list-to-cdt-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ( FOLD(?elmt ORDER BY ?index) AS ?cdtList ) WHERE {
+          {
+            SELECT ?position (COUNT(?step) AS ?index) WHERE {
+              ex:book1 ex:authors ?rdfList .
+              ?rdfList rdf:rest* ?step .
+              ?step rdf:rest* ?position .
+            }
+            GROUP BY ?position
+          }
+
+          ?position rdf:first ?elmt .
+        }
+        -->
+      </pre>
+
+      <p>
+        If the given list is known to be free of duplicates, the query can be slightly simplified:
+      </p>
+      <pre id="duplicate-free-order-preserving-rdf-list-to-cdt-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ( FOLD(?elmt ORDER BY ?index) AS ?cdtList ) WHERE {
+          {
+            SELECT ?elmt (COUNT(?step) AS ?index) WHERE {
+              ex:book1 ex:authors ?rdfList .
+              ?rdfList rdf:rest* ?step .
+              ?step rdf:rest* ?position .
+              ?position rdf:first ?elmt .
+            }
+            GROUP BY ?elmt
+          }
+        }
+        -->
+      </pre>
+
+      <p>
+        If the order of the list elements does not need to be preserved, an even simpler version of the query without grouping and counting can be used (which is also duplicate preserving in case the given list contains duplicate entries):
+      </p>
+      <pre id="order-agnostic-rdf-list-to-cdt-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ( FOLD(?elmt) AS ?cdtList ) WHERE {
+          ex:book1 ex:authors ?rdfList .
+          ?rdfList rdf:rest* ?step .
+          ?step rdf:first ?elmt .
+        }
+        -->
+      </pre>
 
       <p class="issue">
         TODO
