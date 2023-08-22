@@ -808,20 +808,23 @@
         }
         WHERE {
           ?s ?p ?list .
+
+          BIND( CONCAT("http://example.org/", SHA256(STR(?list)), "/") AS ?prf )
+
           BIND( cdt:size(?list) AS ?size )
           BIND( IF( ?size=0,
                     rdf:nil,
-                    IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", 1))
+                    IRI(CONCAT(?prf, STR(1)))
                 ) AS ?firstStep )
 
           OPTIONAL {
             UNFOLD( ?list AS ?elmt, ?pos )
             FILTER( ! isLITERAL(?elmt) )
 
-            BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos)) AS ?thisStep )
+            BIND( IRI(CONCAT(?prf, STR(?pos))) AS ?thisStep )
             BIND( IF( ?pos=?size,
                       rdf:nil,
-                      IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos+1))
+                      IRI(CONCAT(?prf, STR(?pos+1)))
                   ) AS ?rest )
           }
         }
@@ -848,23 +851,26 @@
         }
         WHERE {
           ?s ?p ?list .
+
+          BIND( CONCAT("http://example.org/", SHA256(STR(?list)), "/") AS ?prf )
+
           BIND( cdt:size(?list) AS ?size )
-          BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", 1)) AS ?firstStep )
+          BIND( IRI(CONCAT(?prf, STR(1))) AS ?firstStep )
 
           UNFOLD( ?list AS ?elmt, ?pos )
           FILTER( ! isLITERAL(?elmt) )
 
-          BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos)) AS ?thisStep )
+          BIND( IRI(CONCAT(?prf, STR(?pos))) AS ?thisStep )
           BIND( IF( ?pos=?size,
                     rdf:nil,
-                    IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos+1))
+                    IRI(CONCAT(?prf, STR(?pos+1)))
                 ) AS ?rest )
         }
         -->
       </pre>
 
       <p>
-        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `IRI` functions do not need to include the hash code of the cdt:List literal; instead, they may be based solely on the respective positions of list elements. For instance, the `IRI` function in the last `BIND` clause of these queries can be written as: `IRI(CONCAT("http://example/", ?pos+1))`.
+        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `IRI` functions do not need to include the hash code of the cdt:List literal; instead, they may be based solely on the respective positions of list elements. In other words, the first `BIND` clause of these queries can be simplified to something like: `BIND("http://example.org/" AS ?prf)`.
       </p>
 
     </section>
