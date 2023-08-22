@@ -794,7 +794,7 @@
       </pre>
 
       <p>
-        To <strong>convert a cdt:List literal into an RDF collection</strong> a `CONSTRUCT` query needs to be used that produces the relevant RDF triples based on the RDF collection vocabulary. The `WHERE` clause of such a query needs to use the `UNFOLD` operator (see Section&nbsp;<a href="#unfold" class="sectionRef"></a>) to obtain each <a>list element</a> together with its position within the <a>term list</a> represented by the given cdt:List literal. The positions can then be used to reliably create blank nodes for constructing the structure of the RDF collection. Special care needs to be taken to correctly close the RDF collection with the term `rdf:nil`, for which the position of each element needs to be compared with the size of the list (as can be obtained with the `cdt:size` function defined in Section&nbsp;<a href="#func_size" class="sectionRef"></a>). Finally, to properly handle empty lists as well, the `UNFOLD` operator needs to be placed within an `OPTIONAL` block. The following query illustrates this approach for arbitrary triples with a cdt:List literal in the object position.
+        To <strong>convert a cdt:List literal into an RDF collection</strong> a `CONSTRUCT` query needs to be used that produces the relevant RDF triples based on the RDF collection vocabulary. The `WHERE` clause of such a query needs to use the `UNFOLD` operator (see Section&nbsp;<a href="#unfold" class="sectionRef"></a>) to obtain each <a>list element</a> together with its position within the <a>term list</a> represented by the given cdt:List literal. The positions can then be used to reliably create IRIs for the various resources based on which the structure of the created RDF collection is built (it is not possible to create blank nodes for this purpose). Special care needs to be taken to correctly close the RDF collection with the term `rdf:nil`, for which the position of each element needs to be compared with the size of the list (as can be obtained with the `cdt:size` function defined in Section&nbsp;<a href="#func_size" class="sectionRef"></a>). Finally, to properly handle empty lists as well, the `UNFOLD` operator needs to be placed within an `OPTIONAL` block. The following query illustrates this approach for arbitrary triples with a cdt:List literal in the object position.
       </p>
       <pre id="complete-cdt-list-to-rdf-list-example"
            data-transform="updateExample"
@@ -808,14 +808,21 @@
         }
         WHERE {
           ?s ?p ?list .
-          BIND( cdt:size((?list) AS ?size )
-          BIND( IF( ?size=0, rdf:nil, BNODE(CONCAT(?list,1))) AS ?firstStep )
+          BIND( cdt:size(?list) AS ?size )
+          BIND( IF( ?size=0,
+                    rdf:nil,
+                    IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", 1))
+                ) AS ?firstStep )
 
           OPTIONAL {
             UNFOLD( ?list AS ?elmt, ?pos )
             FILTER( ! isLITERAL(?elmt) )
-            BIND( BNODE(CONCAT(?list,?pos)) AS ?thisStep )
-            BIND( IF( ?pos=?size, rdf:nil, BNODE(CONCAT(?list,?pos+1)) ) AS ?rest )
+
+            BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos)) AS ?thisStep )
+            BIND( IF( ?pos=?size,
+                      rdf:nil,
+                      IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos+1))
+                  ) AS ?rest )
           }
         }
         -->
@@ -841,19 +848,23 @@
         }
         WHERE {
           ?s ?p ?list .
-          BIND( cdt:size((?list) AS ?size )
-          BIND( BNODE(CONCAT(?list,1)) AS ?firstStep )
+          BIND( cdt:size(?list) AS ?size )
+          BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", 1)) AS ?firstStep )
 
           UNFOLD( ?list AS ?elmt, ?pos )
           FILTER( ! isLITERAL(?elmt) )
-          BIND( BNODE(CONCAT(?list,?pos)) AS ?thisStep )
-          BIND( IF( ?pos=?size, rdf:nil, BNODE(CONCAT(?list,?pos+1)) ) AS ?rest )
+
+          BIND( IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos)) AS ?thisStep )
+          BIND( IF( ?pos=?size,
+                    rdf:nil,
+                    IRI(CONCAT("http://example/", SHA256(STR(?list)), "/", ?pos+1))
+                ) AS ?rest )
         }
         -->
       </pre>
 
       <p>
-        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `BNODE` functions do not need to include the lexical form of the cdt:Literal but, instead, they can be based solely on the respective positions of list elements (i.e., the use of `CONCAT` can be removed). For instance, the `BNODE` function in the last `BIND` clause of these queries can be written as: `BNODE(STR(?pos+1))`.
+        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `IRI` functions do not need to include the hash code of the cdt:List literal; instead, they may be based solely on the respective positions of list elements. For instance, the `IRI` function in the last `BIND` clause of these queries can be written as: `IRI(CONCAT("http://example/", ?pos+1))`.
       </p>
 
     </section>
