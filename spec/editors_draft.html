@@ -694,7 +694,7 @@
     </section>
 
     <section id="list-datatype-versus-rdflists" class="informative">
-      <h2>Relationship to RDF Collections (a.k.a. RDF Lists) (TODO)</h2>
+      <h2>Relationship to RDF Collections</h2>
 
       <p>
         The RDF Collection vocabulary, as introduced in <a data-cite="RDF11-SCHEMA#ch_collectionvocab">Section&nbsp;5.2</a> of [[RDF11-SCHEMA]], provides vocabulary terms to describe lists of resources explicitly by using RDF triples. For instance, the triples in the following snippet of Turtle (prefix declarations omitted) describe a list consisting of two resources that are denoted by the IRIs `http://example.org/alice` and `http://example.org/bob`, respectively.
@@ -713,7 +713,7 @@
       </pre>
 
       <p>
-        Some serialization formats for RDF data, including Turtle [[TURTLE]], provide some form of shorthand notation based on which such lists can be written in a more concise way. For instance, by using the <a data-cite="TURTLE#collections">Turtle syntax for collections</a>, the snippet of Turtle as given in the previous example can be shortened as follows.
+        Some serialization formats for RDF, including Turtle [[TURTLE]], provide some form of shorthand notation based on which such lists can be written in a more concise way. For instance, by using the <a data-cite="TURTLE#collections">Turtle syntax for collections</a>, the snippet of Turtle as given in the previous example can be shortened as follows.
       </p>
       <pre id="concise-rdf-list-example"
            data-transform="updateExample"
@@ -729,7 +729,11 @@
       </p>
 
       <p>
-        Using a SPARQL query, the elements of such lists can be extracted into a <a>cdt:List literal</a>. To this end, the query needs to traverse the corresponding `rdf:rest` triples using a <a data-cite="SPARQL11-QUERY#propertypaths">property path expression</a>, collect the object of each `rdf:first` triple along the path, and finally combine these objects as <a>list elements</a> of a <a>term list</a> for a <a>cdt:List literal</a> by using the FOLD aggregate defined in Section&nbsp;<a href="#fold" class="sectionRef"></a>. Additionally, to preserve the order of the list elements, grouping needs to be used for each position in the given list and the number of path traversal steps to this position need to be counted. The following query illustrates how this approach can be used for the example data above, without making any assumption about the given list (such as number of elements or absence of duplicate entries).
+        Such lists can be converted into <a>cdt:List literals</a> and vice versa. The remainder of this section introduces generic approaches to describe such conversions using the SPARQL language. These approaches are generic in the sense that they do not make any assumptions about the given lists that are to be converted (such as assuming knowledge of the list size or of the absence of duplicate entries).
+      </p>
+
+      <p>
+        To <strong>convert an RDF collection into a cdt:List literal</strong> by using a SPARQL query, this query needs to traverse the corresponding `rdf:rest` triples using a <a data-cite="SPARQL11-QUERY#propertypaths">property path expression</a>, collect the object of each `rdf:first` triple along the path, and finally combine these objects as <a>list elements</a> of a <a>term list</a> for a <a>cdt:List literal</a> by using the FOLD aggregate defined in Section&nbsp;<a href="#fold" class="sectionRef"></a>. Additionally, to preserve the order of the list elements, grouping needs to be used for each position in the given list and the number of path traversal steps to this position need to be counted. The following query illustrates how this approach can be used in the context of the example data above.
       </p>
       <pre id="duplicate-aware-order-preserving-rdf-list-to-cdt-list-example"
            data-transform="updateExample"
@@ -789,8 +793,67 @@
         -->
       </pre>
 
-      <p class="issue">
-        TODO
+      <p>
+        To <strong>convert a cdt:List literal into an RDF collection</strong> a `CONSTRUCT` query needs to be used that produces the relevant RDF triples based on the RDF collection vocabulary. The `WHERE` clause of such a query needs to use the `UNFOLD` operator (see Section&nbsp;<a href="#unfold" class="sectionRef"></a>) to obtain each <a>list element</a> together with its position within the <a>term list</a> represented by the given cdt:List literal. The positions can then be used to reliably create blank nodes for constructing the structure of the RDF collection. Special care needs to be taken to correctly close the RDF collection with the term `rdf:nil`, for which the position of each element needs to be compared with the size of the list (as can be obtained with the `cdt:size` function defined in Section&nbsp;<a href="#func_size" class="sectionRef"></a>). Finally, to properly handle empty lists as well, the `UNFOLD` operator needs to be placed within an `OPTIONAL` block. The following query illustrates this approach for arbitrary triples with a cdt:List literal in the object position.
+      </p>
+      <pre id="complete-cdt-list-to-rdf-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        CONSTRUCT {
+          ?s ?p ?firstStep .
+          ?thisStep rdf:first ?elmt .
+          ?thisStep rdf:rest ?rest .
+        }
+        WHERE {
+          ?s ?p ?list .
+          BIND( cdt:size((?list) AS ?size )
+          BIND( IF( ?size=0, rdf:nil, BNODE(CONCAT(?list,1))) AS ?firstStep )
+
+          OPTIONAL {
+            UNFOLD( ?list AS ?elmt, ?pos )
+            FILTER( ! isLITERAL(?elmt) )
+            BIND( BNODE(CONCAT(?list,?pos)) AS ?thisStep )
+            BIND( IF( ?pos=?size, rdf:nil, BNODE(CONCAT(?list,?pos+1)) ) AS ?rest )
+          }
+        }
+        -->
+      </pre>
+
+      <p>
+        It needs to be emphasized that the given query ignores <a>list elements</a> that are <a>null</a> values or literals because RDF collections can contain only IRIs and blank nodes. Hence, for any cdt:List literal whose <a>term list</a> contains a <a>null</a> value or a literal, the conversion based on the given query is not complete, and neither can any other direct conversion be complete for such a cdt:List literal.
+        For cases in which it is guaranteed, however, that the cdt:List literals that are to be converted do not contain null values or literals, the query can be slightly simplified by removing the `FILTER` clause.
+      </p>
+
+      <p>
+        Another possible simplification (orthogonal to aforementioned one about removing the `FILTER` clause) can be applied if the cdt:List literals that are to be converted are guaranteed to represent only nonempty term lists. In this case, as illustrated by the following query, there is no need to place the `UNFOLD` operator into an `OPTIONAL` block and the `BIND` clause that assigns the `?firstStep` variable does not need to cover the special case of `?size=0`.
+      </p>
+      <pre id="simplified-cdt-list-to-rdf-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        CONSTRUCT {
+          ?s ?p ?firstStep .
+          ?thisStep rdf:first ?elmt .
+          ?thisStep rdf:rest ?rest .
+        }
+        WHERE {
+          ?s ?p ?list .
+          BIND( cdt:size((?list) AS ?size )
+          BIND( BNODE(CONCAT(?list,1)) AS ?firstStep )
+
+          UNFOLD( ?list AS ?elmt, ?pos )
+          FILTER( ! isLITERAL(?elmt) )
+          BIND( BNODE(CONCAT(?list,?pos)) AS ?thisStep )
+          BIND( IF( ?pos=?size, rdf:nil, BNODE(CONCAT(?list,?pos+1)) ) AS ?rest )
+        }
+        -->
+      </pre>
+
+      <p>
+        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `BNODE` functions do not need to include the lexical form of the cdt:Literal but, instead, they can be based solely on the respective positions of list elements (i.e., the use of `CONCAT` can be removed). For instance, the `BNODE` function in the last `BIND` clause of these queries can be written as: `BNODE(STR(?pos+1))`.
       </p>
 
     </section>
