@@ -24,6 +24,7 @@
 		:list-constructor-13
 		:list-constructor-14
 		:list-constructor-15
+		:list-constructor-16
 
 		:concat-01
 		:concat-02
@@ -460,6 +461,17 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <list-constructor-15.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:list-constructor-16 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-constructor-16" ;
+    rdfs:comment    "construct a list with a blank node and check that the identity of the blank node is preserved" ;
+    mf:feature cdt:list-constructor ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <list-constructor-16.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
