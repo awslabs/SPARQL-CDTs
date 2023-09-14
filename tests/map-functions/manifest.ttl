@@ -13,6 +13,8 @@
     (
 		:get-01
 		:get-02
+		:get-03
+		:get-04
 		:get-null-01
 		:get-error-01
 
@@ -93,6 +95,26 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <get-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-03" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:get-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "get-04" ;
+    mf:feature cdt:get ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <get-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
