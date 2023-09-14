@@ -5,5 +5,5 @@ ASK {
 	BIND( cdt:List(?b, ?b) AS ?list )
 
 	UNFOLD( ?list AS ?elmt )
-	FILTER( ! SAMETERM(?elmt, cdt:get(?list,1)) )
+	FILTER( SAMETERM(?elmt, cdt:get(?list,1)) )
 }
