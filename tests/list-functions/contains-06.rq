@@ -7,5 +7,5 @@ ASK {
 	BIND( cdt:contains(?list,?elmt) AS ?result )
 
 	FILTER( BOUND(?result) )
-	FILTER( ?result = false )
+	FILTER( ?result = true )
 }
