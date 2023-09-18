@@ -75,6 +75,14 @@
 		:remove-09
 		:remove-10
 		:remove-11
+		
+		# sameTerm Tests for Maps
+		:sameterm-01 # empty list
+		:sameterm-02 # single-pair
+		:sameterm-03 # single-pair, same entry, but different lexical form for integers
+		:sameterm-04 # single-pair, same entry, but different lexical form for whitespace
+		:sameterm-05 # single-pair, same entry with blank node
+		:sameterm-null-01 # map with null
     ) .
 
 :get-01 rdf:type mf:QueryEvaluationTest ;
@@ -643,6 +651,66 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <remove-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-01" ;
+    rdfs:comment    "sameterm test on empty map" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-02" ;
+    rdfs:comment    "sameterm test on single-pair" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-03" ;
+    rdfs:comment    "sameterm test on same entry, but different lexical form for integers" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-04" ;
+    rdfs:comment    "sameterm test on same entry, but different lexical form for whitespace" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-05" ;
+    rdfs:comment    "sameterm test on same entry with blank node" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:sameterm-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "sameterm-null-01" ;
+    rdfs:comment    "sameterm test on list with null (allowed since the test is on the list lexical, not the elements)" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <sameterm-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
