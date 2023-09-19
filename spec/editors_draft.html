@@ -2062,10 +2062,46 @@
     </section>
 
     <section id="func_merge">
-      <h2>cdt:merge (TODO)</h2>
+      <h2>cdt:merge</h2>
 
       <p>
-        TODO
+        <code><a href="#dfn-cdt-map-literal">cdt:Map</a> </code>
+        <code style="color:black;font-weight:bold">cdt:merge</code>
+        (
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>1</sub></var></code>,
+           <code><a href="#dfn-cdt-map-literal">cdt:Map</a> <var>term<sub>2</sub></var></code>
+        )
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is a <a>well-formed cdt:Map literal</a> and <var>term<sub>2</sub></var> is a <a>well-formed cdt:Map literal</a>, then the result of this function is a <a href="#dfn-cdt-map-literal">cdt:Map literal</a> that represents a <a>term map</a> containing all <a>map entries</a> contained in the term map represented by <var>term<sub>1</sub></var>, together with every map entry (|k|,|v|) that is contained in the term map represented by <var>term<sub>2</sub></var> and that has a <a>map key</a>&nbsp;|k| that is not in the domain of the term map of <var>term<sub>1</sub></var>.
+      </p>
+
+      <p>
+        If <var>term<sub>1</sub></var> is an <a>ill-formed cdt:Map literal</a> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:Map literal</a>, then this function produces an error.
+      </p>
+
+      <aside class="example">
+        <p>
+          Evaluating the SPARQL expression
+        </p>
+        <pre class="nohighlight">
+          cdt:merge( "{1: 'one', 2: 'two'}"^^cdt:Map, "{1: 'another one', 3: 'three'}"^^cdt:Map )
+        </pre>
+        <p>
+          results in the following cdt:Map literal (or any other cdt:Map literal that is <a href="#func_map-equal">equal</a> to the given one).
+        </p>
+        <pre class="nohighlight">
+          "{1: 'one', 2: 'two', 3: 'three'}"^^cdt:Map
+        </pre>
+      </aside>
+
+      <p class="note">
+        By the definition of the <code>cdt:merge</code> function, and as illustrated in the example above, if the term maps of the two given cdt:Map literals contain map entries with the same key, then the respective map entry from the first of the two literals is used for the resulting merged term map. The rationale for defining <code>cdt:merge</code> in this way is to be consistent with the default way in which the XPath <a data-cite="XPATH-FUNCTIONS#func-map-merge">map:merge</a> function handles duplicate keys.
+      </p>
+
+      <p class="note">
+        If the term map represented by any of the two given cdt:Map literals is the <a>empty term map</a>, then the cdt:Map literal returned by this function represents exactly the same term map as the other of the two given cdt:Map literals (which may, of course, be the empty term map as well).
       </p>
 
     </section>
