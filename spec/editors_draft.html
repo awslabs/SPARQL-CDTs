@@ -917,9 +917,14 @@
         The <a>empty term map</a> does not <a>contain</a> any map entries.
       </p>
 
-      <p class="note">
-        A <a>term map</a> MAY <a>contain</a> multiple map entries that all have the same <a>value</a>, but they MUST have different <a>keys</a>. It is possible, however, that multiple map entries of a term map MAY have literals with the same <a data-cite="RDF11-CONCEPTS#dfn-literal-value">literal value</a> as their respective keys, as long as all these literals have a different lexical form. For instance, a term map MAY contain two map entries, (|k|,|v|) and (<var>k'</var>,<var>v'</var>), such that |k| is the literal `"0042"^^xsd:integer` and <var>k'</var> is the literal `"42"^^xsd:integer` (using a Turtle representation of these literals for the sake of readability). Clearly, these are two different literals and, thus, two different map keys, but their literal value is the same (the integer&nbsp;42).
-      </p>
+      <div class="note">
+        <p>
+          A <a>term map</a> MAY <a>contain</a> multiple map entries that all have the same <a>value</a>, but they MUST have different <a>keys</a>. It is possible, however, that multiple map entries of a term map MAY have literals with the same <a data-cite="RDF11-CONCEPTS#dfn-literal-value">literal value</a> as their respective keys, as long as all these literals have a different lexical form. For instance, a term map MAY contain two map entries, (|k|,|v|) and (<var>k'</var>,<var>v'</var>), such that |k| is the literal `"0042"^^xsd:integer` and <var>k'</var> is the literal `"42"^^xsd:integer` (using a Turtle representation of these literals for the sake of readability). Clearly, these are two different literals and, thus, two different map keys, but their literal value is the same (the integer&nbsp;42).
+        </p>
+        <p>
+          Distinguishing map keys that are literals based on their lexical form rather than their value is a deliberate design decision. If the distinction was based on the value instead, then the distinction could be made only for literals with <a data-cite="RDF11-CONCEPTS#dfn-recognized-datatype-iris">recognized datatype IRIs</a>. This would not only raise the question of what to do with map keys that are literals with an unrecognized datatype IRI, but it would also make the notion of map keys (and what makes them different from one another) dependent on the set of datatype IRIs recognized by the RDF processing system. Such a dependency may then result in different and potentially incompatible behavior in terms of how cdt:Map literals are handled by different RDF processing systems that support different sets of recognized datatype IRIs. Distinguishing map keys that are literals based on their lexical form avoids such incompatibilities.
+        </p>
+      </div>
 
     </section>
 
