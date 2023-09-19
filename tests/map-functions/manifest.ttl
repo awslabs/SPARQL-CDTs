@@ -44,6 +44,19 @@
 		:map-constructor-10
 		:map-constructor-11
 
+		:merge-01
+		:merge-02
+		:merge-03
+		:merge-04
+		:merge-05
+		:merge-06
+		:merge-07
+		:merge-08
+		:merge-null-01
+		:merge-null-02
+		:merge-null-03
+		:merge-null-04
+
 		:put-01
 		:put-02
 		:put-03
@@ -363,6 +376,126 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-constructor-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-01" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-02" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-03" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-04" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-05" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-06" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-07" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-08" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-null-01" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-null-02" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-null-03" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:merge-null-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "merge-null-04" ;
+    mf:feature cdt:merge ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <merge-null-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
