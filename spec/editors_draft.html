@@ -787,8 +787,7 @@
         <!--
         SELECT ( FOLD(?elmt) AS ?cdtList ) WHERE {
           ex:book1 ex:authors ?rdfList .
-          ?rdfList rdf:rest* ?step .
-          ?step rdf:first ?elmt .
+          ?rdfList rdf:rest/rdf:first ?elmt .
         }
         -->
       </pre>
