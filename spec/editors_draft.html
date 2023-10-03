@@ -793,7 +793,7 @@
       </pre>
 
       <p>
-        To <strong>convert a cdt:List literal into an RDF collection</strong> a `CONSTRUCT` query needs to be used that produces the relevant RDF triples based on the RDF collection vocabulary. The `WHERE` clause of such a query needs to use the `UNFOLD` operator (see Section&nbsp;<a href="#unfold" class="sectionRef"></a>) to obtain each <a>list element</a> together with its position within the <a>term list</a> represented by the given cdt:List literal. The positions can then be used to reliably create IRIs for the various resources based on which the structure of the created RDF collection is built (it is not possible to create blank nodes for this purpose). Special care needs to be taken to correctly close the RDF collection with the term `rdf:nil`, for which the position of each element needs to be compared with the size of the list (as can be obtained with the `cdt:size` function defined in Section&nbsp;<a href="#func_size" class="sectionRef"></a>). Finally, to properly handle empty lists as well, the `UNFOLD` operator needs to be placed within an `OPTIONAL` block. The following query illustrates this approach for arbitrary triples with a cdt:List literal in the object position.
+        To <strong>convert a cdt:List literal into an RDF collection</strong> a `CONSTRUCT` query needs to be used that produces the relevant RDF triples based on the RDF collection vocabulary. The `WHERE` clause of such a query needs to use the `UNFOLD` operator (see Section&nbsp;<a href="#unfold" class="sectionRef"></a>) to obtain each <a>list element</a> together with its position within the <a>term list</a> represented by the given cdt:List literal. The positions can then be associated with blank nodes to be used for the various resources based on which the structure of the created RDF collection is built (the following query creates a <a>cdt:Map literal</a> as an intermediary structure for this purpose). Special care needs to be taken to correctly close the RDF collection with the term `rdf:nil`, for which the position of each element needs to be compared with the size of the list (as can be obtained with the `cdt:size` function defined in Section&nbsp;<a href="#func_size" class="sectionRef"></a>). Finally, to properly handle empty lists as well, the whole query pattern <em>for the non-empty lists</em> needs to be placed within an `OPTIONAL` block and a second `OPTIONAL` block needs to be added to cover the cases of empty lists. The following query illustrates this approach for all cdt:List literals in the object positions of triples with the IRI `ex:authorList` as predicate.
       </p>
       <pre id="complete-cdt-list-to-rdf-list-example"
            data-transform="updateExample"
@@ -801,75 +801,50 @@
            class="nohighlight example">
         <!--
         CONSTRUCT {
-          ?s ?p ?firstStep .
+          ?s ex:authors ?firstStep .
           ?thisStep rdf:first ?elmt .
           ?thisStep rdf:rest ?rest .
         }
         WHERE {
-          ?s ?p ?list .
+          OPTIONAL { # for the cases of non-empty lists
+            {
+              SELECT ?s ?list (FOLD(?pos, BNODE()) AS ?listHeads) WHERE {
+                ?s ex:authorList ?list .
+                FILTER( DATATYPE(?list) = cdt:List )
+                UNFOLD( ?list AS ?elmt, ?pos )
+              }
+              GROUP BY ?s ?list
+            }
 
-          BIND( CONCAT("http://example.org/", SHA256(STR(?list)), "/") AS ?prf )
-
-          BIND( cdt:size(?list) AS ?size )
-          BIND( IF( ?size=0,
-                    rdf:nil,
-                    IRI(CONCAT(?prf, STR(1)))
-                ) AS ?firstStep )
-
-          OPTIONAL {
             UNFOLD( ?list AS ?elmt, ?pos )
-            FILTER( ! isLITERAL(?elmt) )
-
-            BIND( IRI(CONCAT(?prf, STR(?pos))) AS ?thisStep )
+            BIND( cdt:get(?listHeads, ?pos) AS ?thisStep )
+            BIND( cdt:size(?list) AS ?size )
             BIND( IF( ?pos=?size,
                       rdf:nil,
-                      IRI(CONCAT(?prf, STR(?pos+1)))
+                      cdt:get(?listHeads, ?pos+1)
                   ) AS ?rest )
+            BIND( cdt:get(?listHeads, 1) AS ?firstStep )
+          }
+          OPTIONAL { # for the cases of empty lists
+            ?s ex:authorList ?list .
+            FILTER( DATATYPE(?list) = cdt:List )
+            FILTER( cdt:size(?list) = 0 )
+            BIND( rdf:nil AS ?firstStep )
           }
         }
         -->
       </pre>
 
       <p>
-        It needs to be emphasized that the given query ignores <a>list elements</a> that are <a>null</a> values or literals because RDF collections can contain only IRIs and blank nodes. Hence, for any cdt:List literal whose <a>term list</a> contains a <a>null</a> value or a literal, the conversion based on the given query is not complete, and neither can any other direct conversion be complete for such a cdt:List literal.
-        For cases in which it is guaranteed, however, that the cdt:List literals that are to be converted do not contain null values or literals, the query can be slightly simplified by removing the `FILTER` clause.
+        It needs to be emphasized that, for cdt:List literals that represent term lists with <a>null</a> values, the given query creates no `rdf:first` triples for the corresponding positions in the resulting RDF collection (but the `rdf:rest` triples for these positions are created by the query). The reason for this is that the `UNFOLD` operator leaves the variable `?elmt` unbound for the positions where a term list has a null value.
       </p>
 
       <p>
-        Another possible simplification (orthogonal to aforementioned one about removing the `FILTER` clause) can be applied if the cdt:List literals that are to be converted are guaranteed to represent only nonempty term lists. In this case, as illustrated by the following query, there is no need to place the `UNFOLD` operator into an `OPTIONAL` block and the `BIND` clause that assigns the `?firstStep` variable does not need to cover the special case of `?size=0`.
+        Notice also that the query contains two `FILTER` clauses (one in each `OPTIONAL` block) that ensure the datatype of the literals bound to the variable `?list` is indeed `cdt:List`. The purpose of these two `FILTER` clauses is to avoid accidentially creating RDF collections from potentially matching cdt:Map literals (as the `UNFOLD` operator and the `cdt:size` function can be applied to such literals as well). For cases in which it is guaranteed, however, that `?list` would not be bound to any cdt:Map literal, the query can be slightly simplified by removing these two `FILTER` clauses.
       </p>
-      <pre id="simplified-cdt-list-to-rdf-list-example"
-           data-transform="updateExample"
-           data-content-type="application/sparql-query"
-           class="nohighlight example">
-        <!--
-        CONSTRUCT {
-          ?s ?p ?firstStep .
-          ?thisStep rdf:first ?elmt .
-          ?thisStep rdf:rest ?rest .
-        }
-        WHERE {
-          ?s ?p ?list .
-
-          BIND( CONCAT("http://example.org/", SHA256(STR(?list)), "/") AS ?prf )
-
-          BIND( cdt:size(?list) AS ?size )
-          BIND( IRI(CONCAT(?prf, STR(1))) AS ?firstStep )
-
-          UNFOLD( ?list AS ?elmt, ?pos )
-          FILTER( ! isLITERAL(?elmt) )
-
-          BIND( IRI(CONCAT(?prf, STR(?pos))) AS ?thisStep )
-          BIND( IF( ?pos=?size,
-                    rdf:nil,
-                    IRI(CONCAT(?prf, STR(?pos+1)))
-                ) AS ?rest )
-        }
-        -->
-      </pre>
 
       <p>
-        Yet another simplification of any of these variations of the query can be used if it is guaranteed that only a single cdt:List literal is converted. In this case, the strings that are passed to the `IRI` functions do not need to include the hash code of the cdt:List literal; instead, they may be based solely on the respective positions of list elements. In other words, the first `BIND` clause of these queries can be simplified to something like: `BIND("http://example.org/" AS ?prf)`.
+        Another possible simplification (orthogonal to aforementioned one about removing the two `FILTER` clauses) can be applied if the cdt:List literals that are to be converted are guaranteed to represent only nonempty term lists. In this case, the whole pattern within the first `OPTIONAL` block does not need to be wrapped within an `OPTIONAL` block and the second `OPTIONAL` block can be removed completely.
       </p>
 
     </section>
