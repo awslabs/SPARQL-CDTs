@@ -21,6 +21,8 @@
 		:fold-list-distinct-04
 		:fold-list-distinct-05
 		:fold-list-distinct-06
+		:fold-list-distinct-07
+		:fold-list-distinct-08
 
 		:fold-list-orderby-01
 		:fold-list-orderby-02
@@ -123,6 +125,26 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-distinct-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-07  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-07" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-08  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-08" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-08.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
