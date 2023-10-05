@@ -6,8 +6,8 @@ ASK {
 		WHERE {
 			VALUES (?sort ?v) {
 				(1 1)
-				(2 UNDEF)
 				(3 3)
+				(2 UNDEF)
 			}
 		}
 	}
