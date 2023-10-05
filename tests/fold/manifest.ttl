@@ -15,6 +15,13 @@
 		:fold-list-02
 		:fold-list-03
 
+		:fold-list-distinct-01
+		:fold-list-distinct-02
+		:fold-list-distinct-03
+		:fold-list-distinct-04
+		:fold-list-distinct-05
+		:fold-list-distinct-06
+
 		:fold-list-orderby-01
 		:fold-list-orderby-02
 		:fold-list-orderby-03
@@ -55,6 +62,67 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+
+:fold-list-distinct-01  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-01" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-02  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-02" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-03  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-03" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-04  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-04" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-05  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-05" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-06  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-06" ;
+    rdfs:comment    "FOLD with DISTINCT" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-06.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
