@@ -1359,15 +1359,10 @@
                 </ol>
               </li>
               <li>If <var>v<sub>1</sub></var> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
-              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, terminate with an error.</li>
-              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is not a blank node, return `true`.</li>
-              <li>If <var>v<sub>2</sub></var> is a blank node and <var>v<sub>1</sub></var> is not a blank node, return `false`.</li>
-              <li>If evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>) results in `false`, then:
-                <ol>
-                  <li>Return `true` if <var>v<sub>1</sub></var> is ordered before <var>v<sub>2</sub></var> according to the ordering of map keys as defined above for creating <var>entrylist<sub>1</sub></var> (notice that, at this point, <var>v<sub>1</sub></var> is an IRI or a literal, and so is <var>v<sub>2</sub></var>).</li>
-                  <li>Return `false`.</li>
-                </ol>
-              </li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `true`, return `false`.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in `false`, return `false`.</li>
             </ol>
           </li>
           <li>Return `true` if the length of <var>entrylist<sub>1</sub></var> is smaller than the length of <var>entrylist<sub>2</sub></var>.</li>
