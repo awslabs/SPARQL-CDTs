@@ -2310,13 +2310,12 @@
                   </li>
                   <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not null, then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
                   <li>If <var>v<sub>2</sub></var> is null and <var>v<sub>1</sub></var> is not null, then <var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
-                  <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is not a blank node, then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
-                  <li>If <var>v<sub>2</sub></var> is a blank node and <var>v<sub>1</sub></var> is not a blank node, then <var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
-                  <div class="note">If both <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are null or both <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are blank nodes, then the condition of the following If-statement is `false` and, thus, the algorithm proceeds to the next pair of map entries.</div>
-                  <li>If <var>v<sub>1</sub></var> is not null and not a blank node, <var>v<sub>2</sub></var> is not null and not a blank node, and evaluating the SPARQL expression <a data-cite="SPARQL11-QUERY#func-sameTerm">`SAMETERM`</a>(<var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>) results in `false`, then:
+                  <li>If <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are not null, then
                     <ol>
-                      <li>If <var>v<sub>1</sub></var> is ordered before <var>v<sub>2</sub></var> according to the ordering of map keys as used above for creating <var>entrylist<sub>1</sub></var> (and as defined in Step&nbsp;6 of the algorithm in Section&nbsp;<a href="#func_map-less-than" class="sectionRef"></a>), then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
-                      <li><var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                      <li>If the order of <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> is defined, and <var>v<sub>1</sub></var> is ordered before <var>v<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered before <var>lit<sub>2</sub></var>.</li>
+                      <li>If the order of <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> is defined, and <var>v<sub>2</sub></var> is ordered before <var>v<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered before <var>lit<sub>1</sub></var>.</li>
+                      <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in an error, then the relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
+                      <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results `false`, then the relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
                     </ol>
                   </li>
                 </ol>
