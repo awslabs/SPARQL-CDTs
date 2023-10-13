@@ -8,17 +8,14 @@ ASK {
 		}
 	}
 
-	FILTER( cdt:size(?list) = 3 )
+	FILTER( cdt:size(?list) = 2 )
 
 	BIND( cdt:get(?list, 1) AS ?e1 )
 	BIND( cdt:get(?list, 2) AS ?e2 )
-	BIND( cdt:get(?list, 3) AS ?e3 )
 
 	FILTER(
-	    ( ?e1 = 1 && ! BOUND(?e2) && ! BOUND(?e3) )
+	    ( ?e1 = 1 && ! BOUND(?e2) )
 	    ||
-	    ( ?e2 = 1 && ! BOUND(?e1) && ! BOUND(?e3) )
-	    ||
-	    ( ?e3 = 1 && ! BOUND(?e1) && ! BOUND(?e2) )
+	    ( ?e2 = 1 && ! BOUND(?e1) )
 	)
 }
