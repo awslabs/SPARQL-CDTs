@@ -14,6 +14,8 @@
 		:fold-list-01
 		:fold-list-02
 		:fold-list-03
+		:fold-list-04
+		:fold-list-05
 
 		:fold-list-distinct-01
 		:fold-list-distinct-02
@@ -64,6 +66,26 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-04  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-04" ;
+    rdfs:comment    "FOLD with two elements, including an error" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-05  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-05" ;
+    rdfs:comment    "FOLD with three elements, including two errors" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-05.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
