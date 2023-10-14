@@ -33,6 +33,10 @@
 		:fold-list-orderby-05
 		:fold-list-orderby-06
 
+		:fold-list-distinct-orderby-01
+		:fold-list-distinct-orderby-02
+		:fold-list-distinct-orderby-03
+
 		:fold-map-01
 		:fold-map-02
 		:fold-map-03
@@ -230,6 +234,37 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-orderby-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+
+:fold-list-distinct-orderby-01  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-orderby-01" ;
+    rdfs:comment    "FOLD with DISTINCT and ORDER BY" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-orderby-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-orderby-02  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-orderby-02" ;
+    rdfs:comment    "FOLD with DISTINCT and ORDER BY" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-orderby-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-distinct-orderby-03  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-distinct-orderby-03" ;
+    rdfs:comment    "FOLD with DISTINCT and ORDER BY" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-distinct-orderby-03.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
