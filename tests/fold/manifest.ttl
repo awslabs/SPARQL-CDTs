@@ -43,6 +43,9 @@
 		:fold-map-04
 		:fold-map-05
 		:fold-map-06
+
+		:fold-map-orderby-01
+		:fold-map-orderby-02
     ) .
 
 :fold-list-01  rdf:type  mf:QueryEvaluationTest ;
@@ -326,5 +329,26 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-map-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+
+:fold-map-orderby-01  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-orderby-01" ;
+    rdfs:comment    "FOLD for maps with ORDER BY" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-orderby-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-map-orderby-02  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-map-orderby-02" ;
+    rdfs:comment    "FOLD for maps with ORDER BY" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-map-orderby-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
