@@ -30,6 +30,7 @@
 		:fold-list-orderby-02
 		:fold-list-orderby-03
 		:fold-list-orderby-04
+		:fold-list-orderby-05
 
 		:fold-map-01
 		:fold-map-02
@@ -208,6 +209,16 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-orderby-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-orderby-05  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-orderby-05" ;
+    rdfs:comment    "FOLD with ORDER BY over different types of RDF terms" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-orderby-05.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
