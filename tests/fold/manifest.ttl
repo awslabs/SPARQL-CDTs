@@ -31,6 +31,7 @@
 		:fold-list-orderby-03
 		:fold-list-orderby-04
 		:fold-list-orderby-05
+		:fold-list-orderby-06
 
 		:fold-map-01
 		:fold-map-02
@@ -219,6 +220,16 @@
     dawgt:approval  dawgt:Proposed ;
     mf:action
          [ qt:query  <fold-list-orderby-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> .
+
+:fold-list-orderby-06  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "fold-list-orderby-06" ;
+    rdfs:comment    "FOLD with ORDER BY with two sort conditions" ;
+    mf:feature      cdt:fold ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:query  <fold-list-orderby-06.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> .
 
