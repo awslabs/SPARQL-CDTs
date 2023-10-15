@@ -1360,9 +1360,12 @@
               </li>
               <li>If <var>v<sub>1</sub></var> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
               <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `true`, return `false`.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in `false`, return `false`.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `false`, then:
+                <ol>
+                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
+                  <li>Return the result of evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var>.</li>
+                </ol>
+              </li>
             </ol>
           </li>
           <li>Return `true` if the length of <var>entrylist<sub>1</sub></var> is smaller than the length of <var>entrylist<sub>2</sub></var>.</li>
