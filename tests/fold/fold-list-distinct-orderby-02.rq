@@ -18,5 +18,5 @@ ASK {
 		}
 	}
 
-	FILTER(?list = "[1,2,2,3,3]"^^cdt:List)
+	FILTER(?list = "[1,2,3]"^^cdt:List)
 }
