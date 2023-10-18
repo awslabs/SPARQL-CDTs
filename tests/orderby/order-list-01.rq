@@ -1,0 +1,15 @@
+PREFIX cdt:    <http://example.org/cdt/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+ASK {
+	{
+		SELECT * WHERE {
+			VALUES (?id ?list) {
+				(1  "ill-formed"^^cdt:List)
+				(2  "[ 'well-formed' ]"^^cdt:List)
+			}
+		}
+		ORDER BY ?list LIMIT 1
+	}
+	FILTER (?id = 2)
+}
