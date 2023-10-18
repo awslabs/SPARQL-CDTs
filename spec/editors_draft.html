@@ -2270,9 +2270,9 @@
                   <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is an RDF term, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
                   <li>If both <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms and evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results either in `false` or in an error, then:
                     <ol>
-                      <li>If the relative order of <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> is undefined&nbsp;(according to the definition in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], and also considering the extension of this definition as provided in this section), then the relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
-                      <li>If <var>elmt<sub>1</sub></var> is ordered higher than <var>elmt<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
+                      <li>If <var>elmt<sub>1</sub></var> is ordered higher than <var>elmt<sub>2</sub></var>&nbsp;(according to the definition in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], and also considering the extension of this definition as provided in this section), then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
                       <li>If <var>elmt<sub>2</sub></var> is ordered higher than <var>elmt<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
+                      <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
                     </ol>
                   </li>
                 </ol>
