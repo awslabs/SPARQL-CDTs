@@ -11,8 +11,6 @@
     rdfs:label "ORDER BY for cdt:List and cdt:Map literals" ;
     mf:entries
     (
-		:order-list-01
-		:order-list-02
 		:order-list-03
 		:order-list-04
 		:order-list-05
@@ -25,8 +23,6 @@
 		:order-list-null-01
 		:order-list-null-02
 
-		:order-map-01
-		:order-map-02
 		:order-map-03
 		:order-map-03
 		:order-map-04
@@ -47,24 +43,6 @@
 		:order-map-null-01
 		:order-map-null-02
     ) .
-
-:order-list-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "order-list-01" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <order-list-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:order-list-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "order-list-02" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <order-list-02.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
 
 :order-list-03 rdf:type mf:QueryEvaluationTest ;
     mf:name    "order-list-03" ;
@@ -157,24 +135,6 @@
     mf:result  <true.srx> ;
 	.
 
-
-:order-map-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "order-map-01" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <order-map-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:order-map-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "order-map-02" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <order-map-02.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
 
 :order-map-03 rdf:type mf:QueryEvaluationTest ;
     mf:name    "order-map-03" ;
