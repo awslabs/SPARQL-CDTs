@@ -11,5 +11,5 @@ ASK {
 		}
 		ORDER BY ?map LIMIT 1
 	}
-	FILTER (?id = 2)
+	FILTER ( (?id = 1) || (?id = 2) )
 }
