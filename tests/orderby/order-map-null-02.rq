@@ -6,7 +6,7 @@ ASK {
 		SELECT * WHERE {
 			VALUES (?id ?map) {
 				(1  "{   1:null,  2:41}"^^cdt:Map)
-				(2  "{  1:'hello, 2:42}"^^cdt:Map)
+				(2  "{  1:'hello', 2:42}"^^cdt:Map)
 				(3  "{ 1:null,  2:43}"^^cdt:Map)
 			}
 		}
