@@ -24,9 +24,8 @@
           "url": "https://kasei.us/",
           "company": "Amazon",
           "companyURL": "https://amazon.com/",
-          "w3cid": 112469,
+          "w3cid": 38870,
         },
-// TODO: Greg's w3cid ?
       ],
       github: {
         repoURL: "hartig/SPARQL-CDTs",
@@ -390,8 +389,58 @@
     <p>TODO</p>
 
     <section id="description-of-literals">
-      <h2>Representation of Composite Values as RDF Literals (TODO)</h2>
-      <p>TODO</p>
+      <h2>Representation of Composite Values as RDF Literals</h2>
+
+      <p>
+        The basis of the approach is to capture composite values (lists and maps) as RDF literals. The components of such a composite value may be RDF terms, including literals representing scalar values (numbers, strings, etc.) as well as literals representing other composite values. The <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> (i.e., the string representation) of such a literal that represents a composite value contains the components of the composite value serialized in a format that is based on the <a href="https://www.w3.org/TR/turtle/">RDF Turtle format</a> [[TURTLE]]. For instance, the literals in the object positions of the following three RDF triples represent lists. Notice that, in the lexical form of these literals, the elements of the lists are separated by commas and enclosed in square brackets.
+      </p>
+      <pre id="first-list-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:s ex:p1 "[ 0.504, 0.344, 0.002, 0.716 ]"^^cdt:List .
+        ex:s ex:p2 "[ <http://example.org/alice>, <http://example.org/bob> ]"^^cdt:List .
+        ex:s ex:p3 "[ '1999-08-16'^^<http://www.w3.org/2001/XMLSchema#date>, 42 ]"^^cdt:List .
+        -->
+      </pre>
+      <p>
+        In addition to lists, the approach considers maps, which are sets of key-value pairs where the keys must be distinct. Within the lexical form, the key-values pairs of such a map are separated by commas and a colon is used as separator between each key and its value, as demonstrated by the literal in the object position of the following triple.
+      </p>
+      <pre id="first-map-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:s ex:p1 "{ 'name' : 'Tuva', 1: <http://example.org/>, 2: null }"^^cdt:Map .
+        -->
+      </pre>
+      <p>
+        The previous example also illustrates that, in addition to RDF terms, the approach supports `null` as a special value to be used within maps, as well as in lists. Moreover, the kinds of elements within each list or map may be mixed arbitrarily (defining strongly-typed variations of the proposed composite datatypes is part of our ongoing work).
+      </p>
+      <p>
+        As the examples illustrate, list and map elements that are numeric literals (of particular types) can be written using the Turtle-specific shorthand notation (e.g., `0.504` is a shortened version of `'0.504'^^&lt;http://www.w3.org/2001/XMLSchema#decimal&gt;`), and the same holds for boolean-typed literals. Yet, IRIs cannot be shortened in the ways as are possible in Turtle; instead, within the lexical forms of list and map literals, they must be written as absolute IRIs (which is to avoid loosing the definition of the prefix label or the base IRI when the list and map literals are taken out of context). However, as another form of shorthand notation, our approach allows users to directly nest the lexical forms of lists and maps into one another (but still interpreting such contained lists or maps as literals with the corresponding data type). For instance, the literal in the object position of the following triple represents a map in which both of the key-value pairs have a literal as their value, with one of these literals representing a list and the other one a map.
+      </p>
+      <pre id="first-map-example"
+           data-transform="updateExample"
+           data-content-type="text/turtle"
+           class="nohighlight example">
+        <!--
+        ex:s ex:p1 """{
+                        'names' : ['Tuva', 'Ada', 'Eva'],
+                        'address': {
+                            'street': 'Harbor St.',
+                            'number': 43,
+                        }
+                      }"""^^cdt:Map .
+        -->
+      </pre>
+      <p>
+        The attentive reader may observe that the lexical form of the literal in the previous example looks like a JSON document, which is not a coincidence. In contrast, our approach is designed such that, by and large, JSON is a subset of what can be used in the lexical forms of the list and map literals (see Section&nbsp;<a href="#map-datatype-versus-json" class="sectionRef"></a> for further details).
+      </p>
+      <p>
+        For the definition of the datatypes used for such list and map literals, refer to Sections&nbsp;<a href="#list-datatype" class="sectionRef"></a> and <a href="#map-datatype" class="sectionRef"></a>, respectively.
+      </p>
     </section>
 
     <section id="description-of-functions">
