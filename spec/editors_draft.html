@@ -517,22 +517,91 @@
         <li><a href="#func_size">`cdt:size`</a> - returns the number of key-value pairs in a given map</li>
       </ul>
       <p>
-        While all the functions mentioned above operate on the composite datatype literals introduced in this document, the document also defines functions to construct such literals: see Sections&nbsp;<a href="#func_list" class="sectionRef"></a> and <a href="#func_map" class="sectionRef"></a>.
+        While all the functions mentioned above operate on the composite datatype literals introduced in this document, the document also defines functions to construct such literals. In particular, the <a href="#func_list">`cdt:List`</a> function can be used to construct a literal that represents a list consisting of the elements that are passed as arguments to the function. For instance, the following query constructs and returns such a literal with the three integers 1, 2, and 3 as elements of the represented list.
+      </p>
+      <pre id="second-functions-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?list WHERE {
+          BIND( 1 AS ?arg )
+          BIND( cdt:List(?arg, ?arg+1, ?arg+2) AS ?list )
+        }
+        -->
+      </pre>
+      <p>
+        Similarly, the <a href="#func_map">`cdt:Map`</a> function can be used to construct a literal representing a map of the key-value pairs that are passed as arguments to that function.
       </p>
     </section>
 
-    <section id="description-of-comparing-and-ordering">
-      <h2>Comparing and Ordering Composite Datatype Literals (TODO)</h2>
-      <p>TODO</p>
-    </section>
-
     <section id="description-of-fold">
-      <h2>FOLD Aggregate (TODO)</h2>
-      <p>TODO</p>
+      <h2>FOLD Aggregate</h2>
+      <p>
+        Another way to create list and map literals from within SPARQL queries (in addition to the aforementioned two constructor functions, <a href="#func_list">`cdt:List`</a> and <a href="#func_map">`cdt:Map`</a>) is to use the <a href="#fold">FOLD</a> function introduced in this document. As a so-called <a data-cite="SPARQL11-QUERY#setFunctions">set function</a>, which are typically used for aggregation, FOLD produces composite values for groups of solution mappings. The following query illustrates how this function can be used to create lists of persons that have the same surname.
+      </p>
+      <pre id="simple-fold-list-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?sname (FOLD(?person) AS ?list) WHERE {
+          ?person rdf:type foaf:Person .
+          ?person foaf:surname ?sname .
+        }
+        GROUP BY ?sname
+        -->
+      </pre>
+      <p>
+        Notice that the solution mappings within each of the groups in the previous query are not sorted. As a consequence, the order of the elements in the lists created by the query (i.e., the person IRIs in these lists) is undefined and may even be different each time the query is executed. For use cases in which a particular order is required, the FOLD function can be used with an ORDER BY clause. As an example, consider the following query, which extends the previous one with the requirement that the persons within each list are ordered based on their first names.
+      </p>
+      <pre id="fold-list-with-order-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?sname (FOLD(?person ORDER BY ?fname) AS ?list) WHERE {
+          ?person rdf:type foaf:Person .
+          ?person foaf:surname ?sname .
+          ?person foaf:firstName ?fname .
+        }
+        GROUP BY ?sname
+        -->
+      </pre>
+      <p>
+        The ORDER BY feature of FOLD works exactly as the ORDER BY clause that can be used in SPARQL queries. Hence, it is possible to specify multiple ordering comparators, each with the optional keywords ASC and DESC (where ASC is the default).
+      </p>
+      <p>
+        In addition to creating list literals, the FOLD function can also be used to create map literals. To this end, two arguments must be passed to the function, where the first argument provides the keys of the key-value pairs to be added to the map, and the second argument provides the corresponding values. The following query illustrates this functionality; it creates a single map literal in which the key-value pairs are surnames paired up with the number of persons in the queried graph that have the respective surname.
+      </p>
+      <pre id="fold-map-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT (FOLD(?sname, ?cnt) AS ?map) WHERE {
+          {
+            SELECT ?sname (COUNT(*) AS ?cnt) WHERE {
+              ?person rdf:type foaf:Person .
+              ?person foaf:surname ?sname .
+            }
+            GROUP BY ?sname
+          }
+        }
+        -->
+      </pre>
+      <p>
+        When using the two-argument version of FOLD, it may be the case that multiple solution mappings within a group to which FOLD is applied result in key-value pairs with the same key. If that is the case, only one of these key-value pairs is added to the map (which one is undefined unless ORDER BY is used within FOLD, in which case it is the last one in the specified order).
+      </p>
     </section>
 
     <section id="description-of-unfold">
       <h2>UNFOLD Operator (TODO)</h2>
+      <p>TODO</p>
+    </section>
+
+    <section id="description-of-comparing-and-ordering">
+      <h2>Comparing and Ordering Composite Datatype Literals (TODO)</h2>
       <p>TODO</p>
     </section>
 
@@ -2475,7 +2544,7 @@
 
     <p>
       This section defines a new SPARQL <a data-cite="SPARQL11-QUERY#setFunctions">Set Function</a>, `FOLD`, used to construct composite values.
-      As illustrated in Section&nbsp;<a href="#description-of-fold" class="sectionRef"></a>, this function can be used to transform individual values into <a>cdt:List literals</a> and <a>cdt:Map literals</a>.
+      As illustrated in Section&nbsp;<a href="#description-of-fold" class="sectionRef"></a>, this function can be used to collect individual values into <a>cdt:List literals</a> and <a>cdt:Map literals</a>.
     </p>
 
     <section id="fold-grammar">
