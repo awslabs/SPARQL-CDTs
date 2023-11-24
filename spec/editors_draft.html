@@ -173,6 +173,27 @@
         padding-left:  10px;
         padding-right: 10px;
     }
+
+    .sparqlresult {
+        border: solid;
+        border-width: 1px;
+        border-collapse: collapse;
+    }
+
+    .sparqlresult th {
+        border: solid;
+        border-width: 1px;
+        font-weight: bold;
+        padding-left:  1ex;
+        padding-right: 1ex;
+    }
+
+    .sparqlresult td {
+        border: solid;
+        border-width: 1px;
+        padding-left:  1ex;
+        padding-right: 1ex;
+    }
     
     .heavy { color:black; font-weight:bold }
     .small { font-size: smaller; }
@@ -519,7 +540,7 @@
       <p>
         While all the functions mentioned above operate on the composite datatype literals introduced in this document, the document also defines functions to construct such literals. In particular, the <a href="#func_list">`cdt:List`</a> function can be used to construct a literal that represents a list consisting of the elements that are passed as arguments to the function. For instance, the following query constructs and returns such a literal with the three integers 1, 2, and 3 as elements of the represented list.
       </p>
-      <pre id="second-functions-example"
+      <pre id="constructor-function-example"
            data-transform="updateExample"
            data-content-type="application/sparql-query"
            class="nohighlight example">
@@ -532,6 +553,9 @@
       </pre>
       <p>
         Similarly, the <a href="#func_map">`cdt:Map`</a> function can be used to construct a literal representing a map of the key-value pairs that are passed as arguments to that function.
+      </p>
+      <p>
+        For both of these constructor functions, it is possible that some of the given arguments evaluate to an error. For instance, the second and the third argument in the <a href="#constructor-function-example">previous query</a> would evaluate to an error if the variable `?arg` was bound to an IRI (because the `+` operator is not defined for IRIs). For any such argument that evaluates to an error, the corresponding element in the created list or map literal becomes the `null` value, unless it is an argument that specifies the key of a key-value pair for a map literal; in such a case, this key-value pair is ignored because keys cannot be `null`.
       </p>
     </section>
 
@@ -597,7 +621,133 @@
 
     <section id="description-of-unfold">
       <h2>UNFOLD Operator (TODO)</h2>
-      <p>TODO</p>
+      <p>
+        While FOLD compiles values from multiple solution mappings into a composite value, to support the reverse of this process as well this document adds a new operator to SPARQL. This operator, called <a href="#unfold">UNFOLD</a>, breaks composite values into their individual components and assigns these components separately to a new query variable. The following query illustrates how this operator can be used to extract all elements from each list literal of the triples that match a given triple pattern.
+      </p>
+      <pre id="first-unfold-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?p ?element WHERE {
+          ex:s ?p ?list .
+          UNFOLD( ?list AS ?element )
+        }
+        -->
+      </pre>
+      <p>
+        When executing this query over the <a href="#first-list-example">first example data above</a>, the query result consists of eight solutions as enumerated in the following tabular representation of the result. Notice that the first four solutions in this table are produced from the four elements of the list in the first triple of the example data; the next two solutions are from the two elements of the list in the second triple; and the last two solutions from the two elements of the list in the third triple.
+      </p>
+      <table class="sparqlresult">
+        <tr>
+          <th>?p</th>
+          <th>?element</th>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>0.504</td>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>0.344</td>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>0.002</td>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>0.716</td>
+        </tr>
+        <tr>
+          <td>ex:p2</td>
+          <td>http://example.org/alice</td>
+        </tr>
+        <tr>
+          <td>ex:p2</td>
+          <td>http://example.org/bob</td>
+        </tr>
+        <tr>
+          <td>ex:p3</td>
+          <td>'1999-08-16'^^&lt;http://www.w3.org/2001/XMLSchema#date&gt;</td>
+        </tr>
+        <tr>
+          <td>ex:p3</td>
+          <td>42</td>
+        </tr>
+      </table>
+      <p>
+        If a list literal that is given to the UNFOLD operator contains `null` values, then the variable introduced in the UNFOLD operator remains unbound in the solution mappings created for these `null` elements. Yet, it is also possible to add a second variable in the UNFOLD operator, which then gets assigned an integer that represents the position of the list element assigned to the first variable. The following query illustrates this feature for a list that contains a `null` value.
+      </p>
+      <pre id="unfold-with-null-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?element ?pos WHERE {
+          BIND( "[42, null, <http://example.org/>]"^^cdt:List AS ?list ).
+          UNFOLD( ?list AS ?element, ?pos )
+        }
+        -->
+      </pre>
+      <p>
+        The result of this query is illustrated in the following table. The empty cell in the table indicates that the solution mapping represented by the corresponding table row does not contain a binding for the corresponding variable (`?element`).
+      </p>
+      <table class="sparqlresult">
+        <tr>
+          <th>?element</th>
+          <th>?pos</th>
+        </tr>
+        <tr>
+          <td>42</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>2</td>
+        </tr>
+          <td>http://example.org/</td>
+          <td>3</td>
+        </tr>
+      </table>
+      <p>
+        The UNFOLD operator can be used for map literals as well. In this case, the one-variable version extracts the keys of the key-value pairs, whereas the two-variables version extracts both the keys (into the first variable) and the their corresponding values (into the second variable). As an example of the latter option, consider the following query.
+      </p>
+      <pre id="unfold-map-example"
+           data-transform="updateExample"
+           data-content-type="application/sparql-query"
+           class="nohighlight example">
+        <!--
+        SELECT ?p ?key ?value WHERE {
+          ex:s ?p ?map .
+          UNFOLD( ?map AS ?key, ?value )
+        }
+        -->
+      </pre>
+      <p>
+        When executing this query over the <a href="#first-map-example">data of the first map-related example above</a>, the query result consists of the three solutions listed in the following table (where the variable `?value` is unbound in the last solution because the value of the corresponding key-value pair in the map is `null`).
+      </p>
+      <table class="sparqlresult">
+        <tr>
+          <th>?p</th>
+          <th>?key</th>
+          <th>?value</th>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>"name"</td>
+          <td>"Tuva"</td>
+        </tr>
+        <tr>
+          <td>ex:p1</td>
+          <td>1</td>
+          <td>http://example.org/</td>
+        </tr>
+          <td>ex:p1</td>
+          <td>2</td>
+          <td></td>
+        </tr>
+      </table>
     </section>
 
     <section id="description-of-comparing-and-ordering">
