@@ -1554,10 +1554,15 @@
             <ol>
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
-              <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
+              <li>If <var>elmt<sub>1</sub></var> is <a>null</a> and <var>elmt<sub>2</sub></var> is not <a>null</a>, terminate with an error.</li>
+              <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is not <a>null</a>, terminate with an error.</li>
+              <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a>, then:
+                <ol>
+                  <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
+                </ol>
+              </li>
             </ol>
           </li>
           <li>Return `true`.</li>
@@ -1599,11 +1604,16 @@
           <li>For every <a>map entry</a> (|k|, <var>v<sub>1</sub></var>) <a href="#dfn-contains-map-entry">contained</a> in <var>map<sub>1</sub></var>:
             <ol>
               <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
-              <li>If <var>v<sub>1</sub></var> is <a>null</a> or <var>map<sub>2</sub></var>(|k|) is <a>null</a>, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
-              <li>Let <var>v<sub>2</sub></var> be the RDF term <var>map<sub>2</sub></var>(|k|).</li>
-              <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in an error, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in `false`, return `false`.</li>
+              <li>Let <var>v<sub>2</sub></var> be the map value <var>map<sub>2</sub></var>(|k|).</li>
+              <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not <a>null</a>, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+              <li>If <var>v<sub>2</sub></var> is <a>null</a> and <var>v<sub>1</sub></var> is not <a>null</a>, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+              <li>If neither <var>v<sub>1</sub></var> nor <var>v<sub>2</sub></var> is <a>null</a>, then:
+                <ol>
+                  <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+                  <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in an error, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+                  <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in `false`, return `false`.</li>
+                </ol>
+              </li>
             </ol>
           </li>
           <li>If |error| is `true`, terminate with an error.</li>
@@ -1645,15 +1655,12 @@
             <ol>
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-              <li>If <var>elmt<sub>1</sub></var> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If <var>elmt<sub>1</sub></var> is <a>null</a> and <var>elmt<sub>2</sub></var> is <a>null</a>, return `false`.</li>
+              <li>If <var>elmt<sub>1</sub></var> is <a>null</a> or <var>elmt<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
               <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in `true` or in `false` (i.e., not in an error), return this result.</li>
               <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, then:
-                <ol>
-                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
-                  <li>Return the result of evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `&lt;` <var>elmt<sub>2</sub></var>.</li>
-                </ol>
-              </li>
+              <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> `=` <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
             </ol>
           </li>
           <li>If the length of <var>list<sub>1</sub></var> is smaller than the length of <var>list<sub>2</sub></var>, return `true`.</li>
@@ -1719,14 +1726,12 @@
                   <li>Return `false`.</li>
                 </ol>
               </li>
-              <li>If <var>v<sub>1</sub></var> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is <a>null</a>, return `false`.</li>
+              <li>If <var>v<sub>1</sub></var> is <a>null</a> or <var>v<sub>2</sub></var> is <a>null</a>, terminate with an error.</li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in `true` or in `false` (i.e., not an error), return this result.</li>
+
               <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `false`, then:
-                <ol>
-                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var> results in an error, terminate with an error.</li>
-                  <li>Return the result of evaluating the SPARQL expression <var>v<sub>1</sub></var> &lt; <var>v<sub>2</sub></var>.</li>
-                </ol>
-              </li>
+              <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `false`, return `false`.</li>
             </ol>
           </li>
           <li>Return `true` if the length of <var>entrylist<sub>1</sub></var> is smaller than the length of <var>entrylist<sub>2</sub></var>.</li>
@@ -2626,11 +2631,11 @@
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
               <li>If <var>elmt<sub>1</sub></var> is <a>null</a> and <var>elmt<sub>2</sub></var> is not null, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
               <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is not null, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
-              <li>If both <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> are RDF terms (i.e., both are not null) and evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results either in `false` or in an error, then:
+              <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is null (i.e., both are RDF terms), then:
                 <ol>
                   <li>If the relative order of <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> is defined such that <var>elmt<sub>1</sub></var> is ordered higher than <var>elmt<sub>2</sub></var>&nbsp;(according to the definition in <a data-cite="SPARQL11-QUERY#modOrderBy">Section&nbsp;15.1</a> of [[SPARQL11-QUERY]], and also considering the extension of this definition as provided in this section), then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
                   <li>If the relative order of <var>elmt<sub>1</sub></var> and <var>elmt<sub>2</sub></var> is defined such that <var>elmt<sub>2</sub></var> is ordered higher than <var>elmt<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
-                  <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
+                  <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false` or in an error, then the relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
                 </ol>
               </li>
             </ol>
@@ -2678,11 +2683,11 @@
               </li>
               <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not null, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
               <li>If <var>v<sub>2</sub></var> is null and <var>v<sub>1</sub></var> is not null, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
-              <li>If <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> are RDF terms (i.e., none of them is null) and evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `false` or in an error, then
+              <li>If neither <var>v<sub>1</sub></var> nor <var>v<sub>2</sub></var> is null (i.e., both are RDF terms), then:
                 <ol>
                   <li>If the order of <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> is defined such that <var>v<sub>1</sub></var> is ordered higher than <var>v<sub>2</sub></var>, then <var>lit<sub>1</sub></var> is ordered higher than <var>lit<sub>2</sub></var>.</li>
                   <li>If the order of <var>v<sub>1</sub></var> and <var>v<sub>2</sub></var> is defined such that <var>v<sub>2</sub></var> is ordered higher than <var>v<sub>1</sub></var>, then <var>lit<sub>2</sub></var> is ordered higher than <var>lit<sub>1</sub></var>.</li>
-                  <li>The relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
+                  <li>If evaluating the SPARQL expression <var>v<sub>1</sub></var> = <var>v<sub>2</sub></var> results in `false` or in an error, then the relative order of <var>lit<sub>1</sub></var> and <var>lit<sub>2</sub></var> is undefined.</li>
                 </ol>
               </li>
             </ol>
