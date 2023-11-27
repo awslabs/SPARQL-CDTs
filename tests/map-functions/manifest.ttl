@@ -70,6 +70,8 @@
 		:map-less-than-error-02
 		:map-less-than-null-01
 		:map-less-than-null-02
+		:map-less-than-null-03
+		:map-less-than-null-04
 
 		:map-less-equal-01
 		:map-less-equal-02
@@ -97,6 +99,8 @@
 		:map-less-equal-error-02
 		:map-less-equal-null-01
 		:map-less-equal-null-02
+		:map-less-equal-null-03
+		:map-less-equal-null-04
 
 		:map-greater-than-01
 		:map-greater-than-02
@@ -124,6 +128,8 @@
 		:map-greater-than-error-02
 		:map-greater-than-null-01
 		:map-greater-than-null-02
+		:map-greater-than-null-03
+		:map-greater-than-null-04
 
 		:map-greater-equal-01
 		:map-greater-equal-02
@@ -151,6 +157,8 @@
 		:map-greater-equal-error-02
 		:map-greater-equal-null-01
 		:map-greater-equal-null-02
+		:map-greater-equal-null-03
+		:map-greater-equal-null-04
 
 		:merge-01
 		:merge-02
@@ -713,6 +721,24 @@
     mf:result  <true.srx> ;
 	.
 
+:map-less-than-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-less-than-null-03" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-less-than-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-less-than-null-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-less-than-null-04" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-less-than-null-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
 :map-less-equal-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "map-less-equal-01" ;
     dawgt:approval dawgt:Proposed ;
@@ -934,6 +960,24 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-less-equal-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-less-equal-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-less-equal-null-03" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-less-equal-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-less-equal-null-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-less-equal-null-04" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-less-equal-null-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
@@ -1163,6 +1207,24 @@
     mf:result  <true.srx> ;
 	.
 
+:map-greater-than-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-greater-than-null-03" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-greater-than-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-greater-than-null-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-greater-than-null-04" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-greater-than-null-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
 :map-greater-equal-01 rdf:type mf:QueryEvaluationTest ;
     mf:name    "map-greater-equal-01" ;
     dawgt:approval dawgt:Proposed ;
@@ -1384,6 +1446,24 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-greater-equal-null-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-greater-equal-null-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-greater-equal-null-03" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-greater-equal-null-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-greater-equal-null-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-greater-equal-null-04" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-greater-equal-null-04.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
