@@ -1575,6 +1575,14 @@
         If <var>term<sub>1</sub></var> or <var>term<sub>2</sub></var> is an <a>ill-formed cdt:List literal</a>, then this function produces an error.
       </p>
 
+      <div class="note">
+        Whenever the given algorithm, during its pairwise comparison of the elements of the two given lists, comes across a pair in which both elements are <a>null</a>, the algorithm advances to the next pair of elements. In this sense, the algorithm considers null values to be indistinguishable from one another. This behavior is necessary to guarantee that an expression such as the following evaluates to `true` (rather than to `false` or to an error).
+        <pre data-content-type="application/sparql-query" class="nohighlight">
+          "[null]"^^cdt:List = "[null]"^^cdt:List
+        </pre>
+        Guaranteeing that this expression evaluates to `true` is necessary for the following reason. Notice that the two arguments in this expression are identical (i.e., they are the same literal, with the same lexical form and the same datatype IRI). Therefore, by the definition of the `=` operator in [[SPARQL11-QUERY]], the evaluation of the expression is `true` if `cdt:List` is <em>not</em> in the set of <a data-cite="RDF11-CONCEPTS#dfn-recognized-datatype-iris">recognized datatype IRIs</a> (i.e., if the RDF processing system does not support `cdt:List`). Then, the version of the `=` operator for systems that support `cdt:List` (i.e., the version of the operator as defined by the list-equal function in this section) must also return `true`, because "no additional operator may yield a result that replaces any result other than a type error" (see <a data-cite="SPARQL11-QUERY#operatorExtensibility">Section&nbsp;17.3.1</a> of [[SPARQL11-QUERY]]).
+      </div>
+
     </section>
 
     <section id="func_map-equal">
