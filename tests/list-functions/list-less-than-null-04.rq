@@ -5,5 +5,7 @@ ASK {
 	BIND( cdt:List(?x, ?y) AS ?list1 )
 	BIND( cdt:List(?z)     AS ?list2 )
 	BIND( ( ?list1 < ?list2 ) AS ?result)
-	FILTER( ! BOUND(?result) )
+
+	FILTER( BOUND(?result) )
+	FILTER( ?result = false )
 }
