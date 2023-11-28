@@ -262,7 +262,7 @@
 </head>
 <body>
   <section id="abstract">
-    <p>The Resource Description Framework (RDF) is a general-purpose framework for representing information on the Web, and the SPARQL language is a declarative language for querying and updating RDF data. This specification defines an approach to represent composite values (lists and maps) as literals in RDF, and corresponding extensions of the SPARQL language. These extensions include an aggregation function to produce such composite values, functions to operate on such composite values in expressions, and a new operator to transform such composite values into their individual components.</p>
+    <p>The Resource Description Framework (RDF) is a general-purpose framework for representing information on the Web, and the SPARQL language is a declarative language for querying and updating RDF data. This specification defines an approach to represent composite values (lists and maps, in particular) as literals in RDF, and corresponding extensions of the SPARQL language. These extensions include an aggregation function to produce such composite values, functions to operate on such composite values in expressions, and a new operator to transform such composite values into their individual components.</p>
   </section>
   <section id="sotd">
   </section>
@@ -276,104 +276,21 @@
       <p>The RDF data model lets you state facts in three-part subject-predicate-object statements known as triples. For example, with a single RDF triple, you can say that employee38 has a familyName of "Smith". A triple's predicate is a property specified with an IRI (an Internationalized version of a URI), identifying that property in a globally unambiguous way. A triple's subject and object can each be an IRI referencing any entity, and the object can also be a literal value such as "Smith" or data of other types such as dates, numbers, or Boolean values.</p>
 
       <p>TODO</p>
-<!-- <p class="issue" data-number="43">Although the examples in this document, and the tests in <a href="https://w3c.github.io/rdf-star/tests/">the test suite</a>, adopt the optimistic approach, it should be noted that no clear consensus emerged from the group on which approach is the best.</p> -->
 
     </section>
 
-    <section class="informative">
-      <h2>Overview</h2>
-
+    <section id="structure">
+      <h2>Structure of this Document (TODO)</h2>
       <p>
-        The basis of the approach is to capture composite values (lists and maps) as RDF literals. The components of such a composite value may be RDF terms, including literals representing other composite values. The <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> (i.e., the string representation) of such a literal that represents a composite value contains the components of the composite value serialized in a format that is based on the <a href="https://www.w3.org/TR/turtle/">RDF Turtle format</a> [[TURTLE]]. For instance, the literals in the object positions of the following two RDF triples represent lists. Notice that, in the lexical form of these literals, the elements of the lists are separated by commas and enclosed in square brackets.
+        In addition to sections marked as non-normative, all examples and notes in this specification are non-normative. Everything else in this specification is normative.
       </p>
-      <pre id="first-list-example"
-           data-transform="updateExample"
-           data-content-type="text/turtle"
-           class="nohighlight example">
-        <!--
-        ex:s ex:p1 "[ '1999-08-16'^^<http://www.w3.org/2001/XMLSchema#date>, 42 ]"^^cdt:List .
-        ex:s ex:p2 "[ <http://example.org/>, [1,2,3], 2.5 ]"^^cdt:List .
-        -->
-      </pre>
-      <p>
-        In addition to lists, the approach considers maps, as demonstrated by the literal in the object position of the following triple.
-      </p>
-      <pre id="first-map-example"
-           data-transform="updateExample"
-           data-content-type="text/turtle"
-           class="nohighlight example">
-        <!--
-        ex:s ex:p1 "{ 'name' : 'Tuva', 1: <http://example.org/> }"^^cdt:Map .
-        -->
-      </pre>
-      <p>
-        For a more detailed description of this form of literals for composite values, refer to the more extensive <a href="#description-of-literals">informal description of the approach</a>. For the definition of the datatypes used for these literals, refer to Sections&nbsp;<a href="#list-datatype" class="sectionRef"></a> and <a href="#map-datatype" class="sectionRef"></a>.
-      </p>
-      <p>
-        Given such composite datatype literals, the approach extends the SPARQL language with functionality related to the types of composite values that these literals capture. In particular, SPARQL is extended in the following three ways.
-      </p>
-      <p>
-        First, the approach introduces various functions for such literals that can be used in expressions (as given in BIND clauses, FILTER clauses, and SELECT expressions). As an example, consider the following SPARQL query (prefix declarations omitted) that uses two such functions in a BIND clause; one of these functions (<a href="#func_concat">`cdt:concat`</a>) concatenates two lists, returning the resulting list as a literal again, and the other function (<a href="#func_size">`cdt:size`</a>) returns the cardinality of the resulting list.
-      </p>
-      <p class="issue">
-      Can we include both the query and the expected output in these examples? Something like <a href="https://www.w3.org/TR/json-ld11/#example-3-sample-json-ld-document-using-full-iris-instead-of-terms">JSON-LD spec examples</a>?
-      </p>
-      <pre id="first-functions-example"
-           data-transform="updateExample"
-           data-content-type="application/sparql-query"
-           class="nohighlight example">
-        <!--
-        SELECT * WHERE {
-          ex:s ex:p1 ?l1 .
-          ex:s ex:p2 ?l2 .
-          BIND( cdt:size( cdt:concat(?l1,?l2) ) AS ?combinedLength )
-        }
-        -->
-      </pre>
-      <p>
-        When executing this query over the <a href="#first-list-example">first example data above</a> (the example with the two lists), the value produced for the `?combinedLength` variable would be&nbsp;5.
-      </p>
-      <p>
-        As its second extension to SPARQL, the approach introduces a set function called FOLD that produces composite values for groups of solution mappings. The following query illustrates how this function can be used to create lists of persons that have the same name.
-      </p>
-      
-      <pre id="first-fold-example"
-           data-transform="updateExample"
-           data-content-type="application/sparql-query"
-           class="nohighlight example">
-        <!--
-        SELECT ?name (FOLD(?person) AS ?list) WHERE {
-          ?person rdf:type foaf:Person .
-          ?person foaf:name ?name .
-        }
-        GROUP BY ?name
-        -->
-      </pre>
-      <p>
-        The third extension to SPARQL is a new operator called UNFOLD that transforms composite values into their individual components and, then, assigns these components separately to a new query variable. The following query illustrates how this operator can be used to extract all elements from all lists represented by the objects of triples that match a given triple pattern.
-      </p>
-      <pre id="first-fold-example"
-           data-transform="updateExample"
-           data-content-type="application/sparql-query"
-           class="nohighlight example">
-        <!--
-        SELECT ?element ?list WHERE {
-          ex:s ?p ?list .
-          UNFOLD( ?list AS ?element )
-        }
-        -->
-      </pre>
-      <p>
-        When executing this query over the <a href="#first-list-example">first example data above</a>, the query result consists of five solutions: two for the two elements of the list in the first triple of the example data and another three for the three elements of the list in the second triple.
-        For a more detailed description and more examples of these three extensions to SPARQL, refer to the extensive <a href="#description-of-literals">informal description of the approach</a>.
-      </p>
-
+      <p>TODO</p>
     </section>
 
     <section>
-      <h2>Conventions</h2>
+      <h2>Document Conventions (TODO)</h2>
       <p>
-        For the remainder of this document, examples will assume that the following prefixes have been declared to represent the IRIs shown with them here:
+        Examples in this document assume that the following prefixes have been declared to represent the IRIs shown with them here:
       </p>
 
       <table>
@@ -390,15 +307,6 @@
         <tr><td>`ex:`</td><td>`&lt;http://example.org/&gt;`</td></tr>
       </table>
 
-    </section>
-
-    <section id="structure">
-      <h2>Structure of this Document (TODO)</h2>
-      <p>TODO</p>
-    </section>
-
-    <section id="conformance">
-      <p>TODO</p>
     </section>
 
   </section>
