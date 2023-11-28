@@ -762,7 +762,7 @@
         Similarly, two map literals are considered equal (`=`) if they contain the same number of key-value pairs, they have the exact same keys, and for each such key, the values associated with that key in both maps compare equal (`=`). The algorithms that define these two comparison processes in detail can be found in Sections&nbsp;<a href="#func_list-equal" class="sectionRef"></a> and <a href="#func_map-equal" class="sectionRef"></a>, respectively.
       </p>
       <p>
-        The definition of whether a list literal is smaller (`&lt;`) than another list literal is also captured in terms of an algorithm that iterates over the two lists (see Section&nbsp;<a href="#func_list-less-than" class="sectionRef"></a>). In this case, the iteration stops once it arrives at a position where the respective elements at this position in the two lists do not compare equal (`=`). At this point, if one of these two elements is smaller than the other one, then the list with this element is considered smaller. If, however, comparing the two elements results in an error or one of them is `null` and the other one not, then the comparison of the two lists also raises an error. In case the iteration arrives at the end of one of the two lists without stopping, then this list (with fewer elements) is considered smaller.
+        The definition of whether a list literal is smaller (`&lt;`) than another list literal is also captured in terms of an algorithm that iterates over the two lists (see Section&nbsp;<a href="#func_list-less-than" class="sectionRef"></a>). In this case, the iteration stops once it arrives at a position where the respective elements at this position in the two lists do not compare equal (`=`). At this point, if one of these two elements is smaller (`&lt;`) than the other one, then the list with this element is considered smaller. If, however, comparing the two elements results in an error or one of them is `null` and the other one not, then the comparison of the two lists also raises an error. In case the iteration arrives at the end of one of the two lists without stopping, then this list (with fewer elements) is considered smaller.
       </p>
       <p>
         Finally, to define whether a map literal is smaller than another map literal we provide another algorithm (see Section&nbsp;<a href="#func_map-less-than" class="sectionRef"></a>). This algorithm iterates over the key-value pairs of both maps, assuming these pairs are ordered based on their keys. Once the iteration arrives at two such pairs that do not have both the same key and equal values, the iteration stops. At this point, the algorithm first compares the keys of these two pairs. If the two keys are not the same, then the map with the key that would be ordered before the other one is considered smaller. If the keys are the same, the decision is made by comparing the corresponding values (in the same way as done by the algorithm for the list literals).
@@ -770,11 +770,34 @@
     </section>
 
     <section id="description-of-ordering">
-      <h2>Ordering Composite Datatype Literals (TODO)</h2>
+      <h2>Ordering Composite Datatype Literals</h2>
       <p>
-        The last main contribution of this document is to define a relative order of list and map literals, to be used in the context of the ORDER BY clause of SPARQL (and, therefore, also for the aforementioned ORDER BY feature of FOLD).
+        The last main contribution of this document is to define a relative order of list and map literals, to be used in the context of the ORDER BY clause of SPARQL (and, therefore, also for the aforementioned ORDER BY feature of FOLD). This definition is based on algorithms&mdash;one for list literals and one for map literals&mdash;that are similar to the respective comparison algorithms as mentioned in the previous section. In particular, these algorithms that define the relative order also iterate over the components of a given pair of composite values; i.e., the elements of two lists (resp. the key-value pairs of two maps) are considered in a pairwise manner. The major difference between these algorithms and the comparison algorithms is that the latter apply the smaller-than operator (`&lt;`) at each iteration step whereas the former consider the relative ordering of the list elements (resp. key-value pairs) considered at each iteration step.
       </p>
-      <p>TODO</p>
+      <p>
+        The effect of this difference can be observed for composite values that contain IRIs or blank nodes. For instance, while the expression
+      </p>
+      <pre data-content-type="application/sparql-query" class="nohighlight">
+        "[&lt;http://example.org/a&gt;]"^^cdt:List  &lt;  "[&lt;http://example.org/b&gt;]"^^cdt:List
+      </pre>
+      <p>
+        yields an error because &lt; is not defined for IRIs, the relative order of the two list literals in this expression is defined (namely based on the relative order of the IRIs they contain).
+      </p>
+      <p>
+        Similarly, the expression
+      </p>
+      <pre data-content-type="application/sparql-query" class="nohighlight">
+        "[&lt;http://example.org/a&gt;]"^^cdt:List  &lt;  "[42]"^^cdt:List
+      </pre>
+      <p>
+        yields an error because &lt; is not defined between IRIs and (numeric) literals, whereas the relative order of the two list literals in this expression is defined (namely based on the fact that <a data-cite="SPARQL11-QUERY#modOrderBy">literals are ordered higher than IRIs</a>).
+      </p>
+      <p>
+        Yet, there are also pairs of list literals and pairs of map literals for which the relative order is undefined. For instance, this is the case for `"['hello'@en]"^^cdt:List` and `"['hello']"^^cdt:List`, because the relative order between language-tagged literals and string literals without language tag <a data-cite="SPARQL11-QUERY#modOrderBy">is undefined in SPARQL</a>.
+      </p>
+      <p>
+        The complete algorithms that define the relative order for list literals and for map literals can be found in Section&nbsp;<a href="#relative-order-of-list-literals" class="sectionRef"></a> and in Section&nbsp;<a href="#relative-order-of-map-literals" class="sec-ref"></a>, respectively.
+      </p>
     </section>
 
   </section>
@@ -837,7 +860,7 @@
         The <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production in the given grammar is special as the Turtle grammar also contains a very similar production for the same symbol (see <a data-cite="TURTLE#grammar-production-RDFLiteral">`RDFLiteral`</a> in [[TURTLE]]). The difference is that the version of the rule in the Turtle grammar permits the <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> of a <a data-cite="RDF11-CONCEPTS#literal">literal</a> to be written as a <a data-cite="TURTLE#prefixed-name">prefixed name</a>, whereas the version of the rule as defined below does not permit datatype IRIs written as prefixed names (but only as absolute IRIs and as <a data-cite="TURTLE#relative-iri">relative IRIs</a>).
       </p>
       <p>
-        An additional restriction that is not explicitly captured in the given grammar is that any occurrence of the <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a> production MUST--after handling of <a href="https://www.w3.org/TR/turtle/#numeric">escape sequences</a>--also match the (more restrictive) `absolute-IRI` production of [[RFC3987]]. Hence, IRI references in the lexical form of <a>cdt:List literals</a> and <a>cdt:Map literals</a> MUST be absolute; they cannot be written as <a data-cite="TURTLE#prefixed-name">prefixed names</a> (see the previous paragraph about the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production) nor as <a data-cite="TURTLE#relative-iri">relative IRI references</a>.
+        An additional restriction that is not explicitly captured in the given grammar is that any occurrence of the <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a> production MUST&mdash;after handling of <a href="https://www.w3.org/TR/turtle/#numeric">escape sequences</a>&mdash;also match the (more restrictive) `absolute-IRI` production of [[RFC3987]]. Hence, IRI references in the lexical form of <a>cdt:List literals</a> and <a>cdt:Map literals</a> MUST be absolute; they cannot be written as <a data-cite="TURTLE#prefixed-name">prefixed names</a> (see the previous paragraph about the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production) nor as <a data-cite="TURTLE#relative-iri">relative IRI references</a>.
       </p>
 
       <table class="grammar">
