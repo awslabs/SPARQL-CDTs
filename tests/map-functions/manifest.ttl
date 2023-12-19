@@ -44,6 +44,18 @@
 		:map-constructor-10
 		:map-constructor-11
 
+		:map-equals-01 # empty map
+		:map-equals-02 # single-element
+		:map-equals-03 # single-entry, integer shortcut syntax
+		:map-equals-04 # single-entry, keys with different lexical form but same value
+		:map-equals-05 # same IRI
+		:map-equals-06 # blank nodes
+		:map-equals-07 # blank nodes
+		:map-equals-08 # blank nodes
+		:map-equals-09 # blank nodes
+		:map-equals-null-01
+		:map-equals-null-02
+
 		:map-less-than-01
 		:map-less-than-02
 		:map-less-than-03
@@ -492,6 +504,116 @@
     dawgt:approval dawgt:Proposed ;
     mf:action
          [ qt:query  <map-constructor-11.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-01" ;
+    rdfs:comment    "equals test on empty list" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-02" ;
+    rdfs:comment    "equals test on single-element" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-02.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-03 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-03" ;
+    rdfs:comment    "equals test on single-element, integer shortcut syntax" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-03.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-04 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-04" ;
+    rdfs:comment    "equals test on single-element, keys with different lexical form but same value" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-04.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-05 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-05" ;
+    rdfs:comment    "equals test on lists with same IRI" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-05.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-06 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-06" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-06.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-07 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-07" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-07.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-08 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-08" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-08.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-09 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-09" ;
+    rdfs:comment    "equals test on lists with blank nodes" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-09.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-null-01" ;
+    rdfs:comment    "equality of pairs of null within maps" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-null-01.rq> ;
+           qt:data   <empty.ttl> ] ;
+    mf:result  <true.srx> ;
+	.
+
+:map-equals-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "map-equals-null-02" ;
+    rdfs:comment    "null is not equal to any RDF term" ;
+    dawgt:approval dawgt:Proposed ;
+    mf:action
+         [ qt:query  <map-equals-null-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
