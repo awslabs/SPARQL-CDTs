@@ -670,7 +670,7 @@
         Another important contribution of this document is to extend the definition of the SPARQL comparison operators (`=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=`) for list and map literals. The general idea captured by this extension is that two composite values of the same type (i.e., either two lists or two maps) are compared based on a pairwise comparison of the components of the compared composite values.
       </p>
       <p>
-        In particular, two list literals are considered equal (`=`) if they contain the same number of elements and, for each position within the lists, the elements at that position are equal (`=`). For instance, `"[42]"^^cdt:List` and `"[42,43]"^^cdt:List` are not equal, and neither are `"[42]"^^cdt:List` and `"['42']"^^cdt:List`. In contrast, `"[42,43]"^^cdt:List` and `"[&nbsp;42&nbsp;,&nbsp;43&nbsp;]"^^cdt:List` are equal, and so are `"['1'^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;>]"^^cdt:List` and `"['001'^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;>]"^^cdt:List`.
+        In particular, two list literals are considered equal (`=`) if they contain the same number of elements and, for each position within the lists, the elements at that position are equal (`=`). For instance, `"[42]"^^cdt:List` and `"[42,43]"^^cdt:List` are not equal, and neither are `"[42]"^^cdt:List` and `"['42']"^^cdt:List`. In contrast, `"[42,43]"^^cdt:List` and `"[&nbsp;42&nbsp;,&nbsp;43&nbsp;]"^^cdt:List` are equal, and so are `"['1'^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;]"^^cdt:List` and `"['001'^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;]"^^cdt:List`.
       </p>
       <p>
         Similarly, two map literals are considered equal (`=`) if they contain the same number of key-value pairs, they have the exact same keys, and for each such key, the values associated with that key in both maps compare equal (`=`). The algorithms that define these two comparison processes in detail can be found in Sections&nbsp;<a href="#func_list-equal" class="sectionRef"></a> and <a href="#func_map-equal" class="sectionRef"></a>, respectively.
@@ -1493,8 +1493,8 @@
             <ol>
               <li>Let <var>elmt<sub>1</sub></var> be the |i|-th element in <var>list<sub>1</sub></var>.</li>
               <li>Let <var>elmt<sub>2</sub></var> be the |i|-th element in <var>list<sub>2</sub></var>.</li>
-              <li>If <var>elmt<sub>1</sub></var> is <a>null</a> and <var>elmt<sub>2</sub></var> is not <a>null</a>, terminate with an error.</li>
-              <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is not <a>null</a>, terminate with an error.</li>
+              <li>If <var>elmt<sub>1</sub></var> is <a>null</a> and <var>elmt<sub>2</sub></var> is not <a>null</a>, return `false`.</li>
+              <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is not <a>null</a>, return `false`.</li>
               <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a>, then:
                 <ol>
                   <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
@@ -1552,8 +1552,8 @@
             <ol>
               <li>If |k| is not in the domain of <var>map<sub>2</sub></var>, return `false`.</li>
               <li>Let <var>v<sub>2</sub></var> be the map value <var>map<sub>2</sub></var>(|k|).</li>
-              <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not <a>null</a>, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
-              <li>If <var>v<sub>2</sub></var> is <a>null</a> and <var>v<sub>1</sub></var> is not <a>null</a>, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+              <li>If <var>v<sub>1</sub></var> is <a>null</a> and <var>v<sub>2</sub></var> is not <a>null</a>, return `false`.</li>
+              <li>If <var>v<sub>2</sub></var> is <a>null</a> and <var>v<sub>1</sub></var> is not <a>null</a>, return `false`.</li>
               <li>If neither <var>v<sub>1</sub></var> nor <var>v<sub>2</sub></var> is <a>null</a>, then:
                 <ol>
                   <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
