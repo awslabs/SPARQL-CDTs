@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Composite Datatype Literals in RDF and SPARQL</title>
+<!--   <title>Composite Datatype Literals in RDF and SPARQL</title> -->
+  <title>SPARQL CDTs: Representing and Querying Lists and Maps as RDF Literals</title>
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script>
   <script class="remove">
    // All config options at https://respec.org/docs/
@@ -262,7 +263,9 @@
 </head>
 <body>
   <section id="abstract">
-    <p>The Resource Description Framework (RDF) is a general-purpose framework for representing information on the Web, and the SPARQL language is a declarative language for querying and updating RDF data. This specification defines an approach to represent composite values (lists and maps, in particular) as literals in RDF, and corresponding extensions of the SPARQL language. These extensions include an aggregation function to produce such composite values, functions to operate on such composite values in expressions, and a new operator to transform such composite values into their individual components.</p>
+    <p>
+      This specification defines an approach to represent generic forms of composite values (lists and maps, in particular) as literals in RDF, and corresponding extensions of the SPARQL language. These extensions include an aggregation function to produce such composite values, functions to operate on such composite values in expressions, and a new operator to transform such composite values into their individual components.
+    </p>
   </section>
   <section id="sotd">
   </section>
@@ -272,14 +275,14 @@
 
     <section class="informative">
       <h2>Background and Motivation (TODO)</h2>
-
-      <p>The RDF data model lets you state facts in three-part subject-predicate-object statements known as triples. For example, with a single RDF triple, you can say that employee38 has a familyName of "Smith". A triple's predicate is a property specified with an IRI (an Internationalized version of a URI), identifying that property in a globally unambiguous way. A triple's subject and object can each be an IRI referencing any entity, and the object can also be a literal value such as "Smith" or data of other types such as dates, numbers, or Boolean values.</p>
-
+      <p>
+        The Resource Description Framework (RDF) is a general-purpose framework for representing and exchanging data [[RDF11-PRIMER]], and the SPARQL language is a declarative language for querying and updating RDF data [[SPARQL11-OVERVIEW]]. Yet, a feature regarding which RDF and SPARQL lag behind other popular data representation forms such as SQL databases and Property Graphs, and their corresponding query languages, is a built-in support for generic types of composite values such as lists, maps, and sets. Instead, RDF introduces so-called <a data-cite="RDF11-SCHEMA#ch_containervocab">containers</a> and <a data-cite="RDF11-SCHEMA#ch_collectionvocab">collections</a>, which allow users to model composite values through dedicated vocabulary <em>on top</em> of the core data model.
+      </p>
       <p>TODO</p>
 
     </section>
 
-    <section id="structure">
+    <section id="structure" class="informative">
       <h2>Structure of this Document (TODO)</h2>
       <p>
         In addition to sections marked as non-normative, all examples and notes in this specification are non-normative. Everything else in this specification is normative.
@@ -287,7 +290,7 @@
       <p>TODO</p>
     </section>
 
-    <section>
+    <section class="informative">
       <h2>Document Conventions (TODO)</h2>
       <p>
         Examples in this document assume that the following prefixes have been declared to represent the IRIs shown with them here:
@@ -307,6 +310,9 @@
         <tr><td>`ex:`</td><td>`&lt;http://example.org/&gt;`</td></tr>
       </table>
 
+    </section>
+
+    <section id="conformance">
     </section>
 
   </section>
