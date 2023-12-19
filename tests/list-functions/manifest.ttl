@@ -162,11 +162,8 @@
 		:list-equals-07 # blank nodes
 		:list-equals-08 # blank nodes
 		:list-equals-09 # blank nodes
-		:list-equals-null-error-01 # cannot test equality of lists with null
-		:list-equals-null-error-02 # cannot test equality of lists with null
-		:list-equals-null-false-01 # ... unless other parts of the compared lists are clearly different
-		:list-equals-null-false-02 # ... unless other parts of the compared lists are clearly different
-		:list-equals-null-false-03 # ... unless other parts of the compared lists are clearly different
+		:list-equals-null-01
+		:list-equals-null-02
 
 		# Comparison Tests for Lists
 		:list-less-than-01
@@ -1718,52 +1715,22 @@
     mf:result  <true.srx> ;
 	.
 
-:list-equals-null-error-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-equals-null-error-01" ;
-    rdfs:comment    "cannot test equality of pairs of null within lists" ;
+:list-equals-null-01 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-null-01" ;
+    rdfs:comment    "equality of pairs of null within lists" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-equals-null-error-01.rq> ;
+         [ qt:query  <list-equals-null-01.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
 
-:list-equals-null-error-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-equals-null-error-02" ;
-    rdfs:comment    "cannot test equality of pairs of null within lists" ;
+:list-equals-null-02 rdf:type mf:QueryEvaluationTest ;
+    mf:name    "list-equals-null-02" ;
+    rdfs:comment    "null is not equal to any RDF term" ;
     dawgt:approval dawgt:Proposed ;
     mf:action
-         [ qt:query  <list-equals-null-error-02.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-equals-null-false-01 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-equals-null-false-01" ;
-    rdfs:comment    "equals test on lists that are clearly different but also contain null" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-equals-null-false-01.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-equals-null-false-02 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-equals-null-false-02" ;
-    rdfs:comment    "equals test on lists that are clearly different but also contain null" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-equals-null-false-02.rq> ;
-           qt:data   <empty.ttl> ] ;
-    mf:result  <true.srx> ;
-	.
-
-:list-equals-null-false-03 rdf:type mf:QueryEvaluationTest ;
-    mf:name    "list-equals-null-false-03" ;
-    rdfs:comment    "equals test on lists that are clearly different but also contain null" ;
-    dawgt:approval dawgt:Proposed ;
-    mf:action
-         [ qt:query  <list-equals-null-false-03.rq> ;
+         [ qt:query  <list-equals-null-02.rq> ;
            qt:data   <empty.ttl> ] ;
     mf:result  <true.srx> ;
 	.
