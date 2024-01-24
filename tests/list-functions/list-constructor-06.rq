@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# list with two mixed types
+ASK {
+	BIND(cdt:List("a", 1) AS ?list)
+	FILTER(?list = "['a', 1]"^^cdt:List)
+}

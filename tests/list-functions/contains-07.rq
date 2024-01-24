@@ -1,0 +1,11 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# nested lists
+ASK {
+	BIND("[1,[2]]"^^cdt:List AS ?list)
+	BIND("[2]"^^cdt:List AS ?list2)
+
+	FILTER(cdt:contains(?list, 1))
+	FILTER(!cdt:contains(?list, 2))
+	FILTER(cdt:contains(?list, ?list2))
+}

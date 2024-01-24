@@ -1,0 +1,9 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# unary concat
+ASK {
+	BIND("[1]"^^cdt:List AS ?input)
+	BIND(cdt:concat(?input) AS ?result)
+	FILTER(?result = "[1]"^^cdt:List)
+}

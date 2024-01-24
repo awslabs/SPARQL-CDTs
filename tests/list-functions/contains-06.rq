@@ -1,0 +1,11 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# contains blank nodes
+ASK {
+	BIND("[_:b,2]"^^cdt:List AS ?list)
+	BIND( cdt:head(?list) AS ?elmt)
+	BIND( cdt:contains(?list,?elmt) AS ?result )
+
+	FILTER( BOUND(?result) )
+	FILTER( ?result = true )
+}

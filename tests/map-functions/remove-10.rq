@@ -1,0 +1,9 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+ASK {
+	BIND("{'hello':'there', 1:'one', 2:'two'}"^^cdt:Map AS ?mapIn )
+	BIND( cdt:remove(?mapIn, 'hello'@en) AS ?mapOut )
+
+	FILTER( BOUND(?mapOut) )    # check that there was no error
+	FILTER( ?mapOut = ?mapIn )
+}

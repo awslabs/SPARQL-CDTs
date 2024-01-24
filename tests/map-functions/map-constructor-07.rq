@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+ASK {
+	BIND( cdt:Map(<http://example.org/>,"uri", "hello", <http://example.org/string>) AS ?map )
+	FILTER( ?map = "{<http://example.org/>:'uri', 'hello':<http://example.org/string>}"^^cdt:Map )
+}

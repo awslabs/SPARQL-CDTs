@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+# contains IRIs
+ASK {
+	BIND("[<http://example.org/test>,1]"^^cdt:List AS ?list)
+
+	FILTER(cdt:contains(?list, <http://example.org/test>))
+}

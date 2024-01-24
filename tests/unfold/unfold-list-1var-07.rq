@@ -1,0 +1,6 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+SELECT ?elmt WHERE {
+	BIND( "[<http://example/1>, _:x, _:y]"^^cdt:List AS ?list )
+	UNFOLD( ?list AS ?elmt )
+}

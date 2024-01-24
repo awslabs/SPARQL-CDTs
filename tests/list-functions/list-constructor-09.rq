@@ -1,0 +1,8 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+
+# list with nested empty list
+ASK {
+	BIND(cdt:List(cdt:List()) AS ?list)
+	FILTER(?list = "[[]]"^^cdt:List)
+}

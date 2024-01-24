@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+ASK {
+	BIND( cdt:put(?unbound, 1, "one") AS ?mapOut ) # unbound cdt:Map literal
+
+	FILTER( ! BOUND(?mapOut) )
+}

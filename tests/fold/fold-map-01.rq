@@ -1,0 +1,11 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+ASK {
+	{
+		SELECT (FOLD(?k, ?v) AS ?map)
+		WHERE {
+			FILTER(false)
+		}
+	}
+	FILTER(?map = "{}"^^cdt:Map)
+}

@@ -1,0 +1,7 @@
+PREFIX cdt:    <http://example.org/cdt/>
+
+ASK {
+	BIND("[]" AS ?noListLiteral)
+	BIND(cdt:concat(?noListLiteral) AS ?result)
+	FILTER(!BOUND(?result))
+}
