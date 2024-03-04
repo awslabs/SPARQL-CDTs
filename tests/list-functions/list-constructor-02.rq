@@ -1,4 +1,4 @@
-PREFIX cdt:    <http://example.org/cdt/>
+PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 
 
 # list with one integer

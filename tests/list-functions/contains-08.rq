@@ -1,8 +1,8 @@
-PREFIX cdt:    <http://example.org/cdt/>
+PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 
 # nested lists given as literals
 ASK {
-	BIND("[1,'[2]'^^<http://example.org/cdt/List>]"^^cdt:List AS ?list)
+	BIND("[1,'[2]'^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List>]"^^cdt:List AS ?list)
 	BIND("[2]"^^cdt:List AS ?list2)
 
 	FILTER(cdt:contains(?list, 1))

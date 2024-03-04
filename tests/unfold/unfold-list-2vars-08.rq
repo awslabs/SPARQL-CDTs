@@ -1,4 +1,4 @@
-PREFIX cdt:    <http://example.org/cdt/>
+PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 
 SELECT ?elmt ?idx WHERE {
 	BIND( "[<http://example/1>, _:x, _:x]"^^cdt:List AS ?list )

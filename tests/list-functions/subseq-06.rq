@@ -1,4 +1,4 @@
-PREFIX cdt:    <http://example.org/cdt/>
+PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 
 # special case: idx = size+1 and length=0
 ASK {
