@@ -9,8 +9,10 @@
    // All config options at https://respec.org/docs/
    var respecConfig = {
       specStatus: "unofficial",
-// TODO:
-      edDraftURI: "https://w3c.github.io/rdf-star/cg-spec/editors_draft.html",
+      edDraftURI: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/editors_draft.html",
+      latestVersion: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/latest.html",
+      testSuiteURI: "https://github.com/awslabs/SPARQL-CDTs/tree/main/tests",
+//       implementationReportURI:"https://w3c.github.io/rdf-star/reports/",
       editors: [
         {
           "name": "Olaf Hartig",
@@ -29,7 +31,7 @@
         },
       ],
       github: {
-        repoURL: "hartig/SPARQL-CDTs",
+        repoURL: "awslabs/SPARQL-CDTs",
         branch: "main",
       },
       localBiblio: {
@@ -52,11 +54,8 @@
 //       shortName: "rdf-star",
 //       group: "rdf-dev",
 
-//       testSuiteURI: "https://w3c.github.io/rdf-star/tests/",
-//       implementationReportURI:"https://w3c.github.io/rdf-star/reports/",
       xref: ["RDF11-CONCEPTS", "SPARQL11-QUERY", "RDF11-MT"],
       maxTocLevel: 3,
-//       latestVersion: "https://w3c.github.io/rdf-star/cg-spec",
     };
     // set publishDate and previousDate in order to make a published draft
     var publishDate = null;
