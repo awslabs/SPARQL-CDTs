@@ -9,8 +9,8 @@
    // All config options at https://respec.org/docs/
    var respecConfig = {
       specStatus: "unofficial",
-      edDraftURI: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/editors_draft.html",
-      latestVersion: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/latest.html",
+      edDraftURI: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/editors_draft.html",
+      latestVersion: "https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html",
       testSuiteURI: "https://github.com/awslabs/SPARQL-CDTs/tree/main/tests",
 //       implementationReportURI:"https://w3c.github.io/rdf-star/reports/",
       editors: [
@@ -297,16 +297,10 @@
 
       <table>
         <tr><td>`:`</td><td>`&lt;http://www.example.org/&gt;`</td></tr>
-        <tr><td>`rdf:`</td><td>`&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;`</td></tr>
-        <tr><td>`rdfs:`</td><td>`&lt;http://www.w3.org/2000/01/rdf-schema#&gt;`</td></tr>
-        <tr><td>`owl:`</td><td>`&lt;http://www.w3.org/2002/07/owl#&gt;`</td></tr>
-        <tr><td>`foaf:`</td><td>`&lt;http://xmlns.com/foaf/0.1/&gt;`</td></tr>
-        <tr><td>`prov:`</td><td>`&lt;http://www.w3.org/ns/prov#&gt;`</td></tr>
-        <tr><td>`dbo:`</td><td>`&lt;http://dbpedia.org/ontology/&gt;`</td></tr>
-        <tr><td>`dbr:`</td><td>`&lt;http://dbpedia.org/resource/&gt;`</td></tr>
-        <tr><td>`dc:`</td><td>`&lt;http://purl.org/dc/elements/1.1/&gt;`</td></tr>
-        <tr><td>`dct:`</td><td>`&lt;http://purl.org/dc/terms/&gt;`</td></tr>
         <tr><td>`ex:`</td><td>`&lt;http://example.org/&gt;`</td></tr>
+        <tr><td>`rdf:`</td><td>`&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;`</td></tr>
+        <tr><td>`foaf:`</td><td>`&lt;http://xmlns.com/foaf/0.1/&gt;`</td></tr>
+        <tr><td>`cdt:`</td><td>`&lt;https://w3id.org/awslabs/neptune/SPARQL-CDTs/&gt;`</td></tr>
       </table>
 
     </section>
@@ -383,9 +377,6 @@
       </p>
       <p>
         For instance, the following SPARQL query (prefix declarations omitted) uses two such functions in a BIND clause; one of these functions (<a href="#func_concat">`cdt:concat`</a>) concatenates two or more lists, returning the resulting list as a literal again, and the other function (<a href="#func_size">`cdt:size`</a>) returns the cardinality of the resulting list.
-      </p>
-      <p class="issue">
-      Can we include both the query and the expected output in these examples? Something like <a href="https://www.w3.org/TR/json-ld11/#example-3-sample-json-ld-document-using-full-iris-instead-of-terms">JSON-LD spec examples</a>?
       </p>
       <pre id="first-functions-example"
            data-transform="updateExample"
@@ -723,9 +714,8 @@
       The <dfn data-lt="cdt:List datatype">cdt:List datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#list-datatype-valuespace" class="sectionRef"></a>, <a href="#list-datatype-lexspace" class="sectionRef"></a>, and <a href="#list-datatype-lex-to-value-mapping" class="sectionRef"></a>, respectively), and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
-      `http://example.org/cdt/List`
+      `https://w3id.org/awslabs/neptune/SPARQL-CDTs/List`
     </p>
-    <p class="issue" title="Resolve on actual datatype IRI">
     <p>
       Every <a data-cite="RDF11-CONCEPTS#dfn-literal">literal</a> that has this IRI as its <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:List literal">cdt:List literal</dfn>. If the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of such a literal is in the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:List datatype</a>, as defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>, then the literal is called a <dfn data-lt="well-formed cdt:List literal">well-formed cdt:List literal</dfn>. In contrast, a <a>cdt:List literal</a> whose lexical form is not in the lexical space of the cdt:List datatype is called an <dfn data-lt="ill-formed cdt:List literal">ill-formed cdt:List literal</dfn>.
     </p>
@@ -1159,7 +1149,7 @@
       The <dfn data-lt="cdt:Map datatype">cdt:Map datatype</dfn> is the <a data-cite="RDF11-CONCEPTS#dfn-datatype">RDF datatype</a> that consists of the <a data-cite="RDF11-CONCEPTS#dfn-value-space">value space</a>, the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a>, and the <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#map-datatype-valuespace" class="sectionRef"></a>, <a href="#map-datatype-lexspace" class="sectionRef"></a>, and <a href="#map-datatype-lex-to-value-mapping" class="sectionRef"></a>, respectively), and that is denoted by the following <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
-      `http://example.org/cdt/Map`
+      `https://w3id.org/awslabs/neptune/SPARQL-CDTs/Map`
     </p>
     <p>
       Every <a data-cite="RDF11-CONCEPTS#dfn-literal">literal</a> that has this IRI as its <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:Map literal">cdt:Map literal</dfn>. If the <a data-cite="RDF11-CONCEPTS#dfn-lexical-form">lexical form</a> of such a literal is in the <a data-cite="RDF11-CONCEPTS#dfn-lexical-space">lexical space</a> of the <a>cdt:Map datatype</a>, as defined in Section&nbsp;<a href="#map-datatype-lexspace" class="sectionRef"></a>, then the literal is called a <dfn data-lt="well-formed cdt:Map literal">well-formed cdt:Map literal</dfn>. In contrast, a <a>cdt:Map literal</a> whose lexical form is not in the lexical space of the cdt:Map datatype is called an <dfn data-lt="ill-formed cdt:Map literal">ill-formed cdt:Map literal</dfn>.

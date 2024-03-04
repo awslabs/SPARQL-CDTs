@@ -293,8 +293,8 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 </style>
 <script id="initialUserConfig" type="application/json">{
   "specStatus": "unofficial",
-  "edDraftURI": "https://w3id.org/awslabs/neptune/SPARQL-CDTs/editors_draft.html",
-  "latestVersion": "https://w3id.org/awslabs/neptune/SPARQL-CDTs/latest.html",
+  "edDraftURI": "https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/editors_draft.html",
+  "latestVersion": "https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html",
   "testSuiteURI": "https://github.com/awslabs/SPARQL-CDTs/tree/main/tests",
   "editors": [
     {
@@ -353,9 +353,9 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
       <dl>
         
         <dt>Latest published version:</dt><dd>
-                <a href="https://w3id.org/awslabs/neptune/SPARQL-CDTs/latest.html">https://w3id.org/awslabs/neptune/SPARQL-CDTs/latest.html</a>
+                <a href="https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html">https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html</a>
               </dd>
-        <dt>Latest editor's draft:</dt><dd><a href="https://w3id.org/awslabs/neptune/SPARQL-CDTs/editors_draft.html">https://w3id.org/awslabs/neptune/SPARQL-CDTs/editors_draft.html</a></dd>
+        <dt>Latest editor's draft:</dt><dd><a href="https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/editors_draft.html">https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/editors_draft.html</a></dd>
         <dt>History:</dt><dd>
                     <a href="https://github.com/awslabs/SPARQL-CDTs/commits/main">Commit history</a>
                   </dd>
@@ -442,16 +442,10 @@ var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
 
       <table>
         <tbody><tr><td><code>:</code></td><td><code>&lt;http://www.example.org/&gt;</code></td></tr>
-        <tr><td><code>rdf:</code></td><td><code>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</code></td></tr>
-        <tr><td><code>rdfs:</code></td><td><code>&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</code></td></tr>
-        <tr><td><code>owl:</code></td><td><code>&lt;http://www.w3.org/2002/07/owl#&gt;</code></td></tr>
-        <tr><td><code>foaf:</code></td><td><code>&lt;http://xmlns.com/foaf/0.1/&gt;</code></td></tr>
-        <tr><td><code>prov:</code></td><td><code>&lt;http://www.w3.org/ns/prov#&gt;</code></td></tr>
-        <tr><td><code>dbo:</code></td><td><code>&lt;http://dbpedia.org/ontology/&gt;</code></td></tr>
-        <tr><td><code>dbr:</code></td><td><code>&lt;http://dbpedia.org/resource/&gt;</code></td></tr>
-        <tr><td><code>dc:</code></td><td><code>&lt;http://purl.org/dc/elements/1.1/&gt;</code></td></tr>
-        <tr><td><code>dct:</code></td><td><code>&lt;http://purl.org/dc/terms/&gt;</code></td></tr>
         <tr><td><code>ex:</code></td><td><code>&lt;http://example.org/&gt;</code></td></tr>
+        <tr><td><code>rdf:</code></td><td><code>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</code></td></tr>
+        <tr><td><code>foaf:</code></td><td><code>&lt;http://xmlns.com/foaf/0.1/&gt;</code></td></tr>
+        <tr><td><code>cdt:</code></td><td><code>&lt;https://w3id.org/awslabs/neptune/SPARQL-CDTs/&gt;</code></td></tr>
       </tbody></table>
 
     </section>
@@ -526,9 +520,6 @@ ex:s ex:p3 "[ '1999-08-16'^^&lt;http://www.w3.org/2001/XMLSchema#date&gt;, 42 ]"
       <p>
         For instance, the following SPARQL query (prefix declarations omitted) uses two such functions in a BIND clause; one of these functions (<a href="#func_concat"><code>cdt:concat</code></a>) concatenates two or more lists, returning the resulting list as a literal again, and the other function (<a href="#func_size"><code>cdt:size</code></a>) returns the cardinality of the resulting list.
       </p>
-      <div class="issue" id="issue-container-number-1"><div role="heading" class="issue-title marker" id="h-issue" aria-level="4"><span>Issue 1</span></div><p class="">
-      Can we include both the query and the expected output in these examples? Something like <a href="https://www.w3.org/TR/json-ld11/#example-3-sample-json-ld-document-using-full-iris-instead-of-terms">JSON-LD spec examples</a>?
-      </p></div>
       <div class="example" id="first-functions-example">
         <div class="marker">
     <a class="self-link" href="#first-functions-example">Example<bdi> 4</bdi></a>
@@ -831,10 +822,9 @@ GROUP BY ?sname</pre>
       The <dfn data-lt="cdt:List datatype" id="dfn-cdt-list-datatype" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cdt:List datatype</dfn> is the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype">RDF datatype</a>&nbsp;that consists of the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-value-space">value space</a>, the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-space">lexical space</a>, and the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#list-datatype-valuespace" class="sectionRef sec-ref"><bdi class="secno">3.1 </bdi>Value Space</a>, <a href="#list-datatype-lexspace" class="sectionRef sec-ref"><bdi class="secno">3.2 </bdi>Lexical Space</a>, and <a href="#list-datatype-lex-to-value-mapping" class="sectionRef sec-ref"><bdi class="secno">3.3 </bdi>Lexical-To-Value Mapping</a>, respectively), and that is denoted by the following <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
-      <code>http://example.org/cdt/List</code>
+      <code>https://w3id.org/awslabs/neptune/SPARQL-CDTs/List</code>
     </p>
-    <div class="issue" id="issue-container-number-2"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="3"><span>Issue 2</span><span class="issue-label">: Resolve on actual datatype IRI</span></div><p class="">
-    </p></div><p>
+    <p>
       Every <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-literal">literal</a> that has this IRI as its <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:List literal" data-plurals="cdt:list literals" id="dfn-cdt-list-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cdt:List literal</dfn>. If the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-form">lexical form</a> of such a literal is in the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-space">lexical space</a> of the <a href="#dfn-cdt-list-datatype" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-list-datatype-1">cdt:List datatype</a>, as defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef sec-ref"><bdi class="secno">3.2 </bdi>Lexical Space</a>, then the literal is called a <dfn data-lt="well-formed cdt:List literal" data-plurals="well-formed cdt:list literals" id="dfn-well-formed-cdt-list-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">well-formed cdt:List literal</dfn>. In contrast, a <a href="#dfn-cdt-list-literal" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-list-literal-1">cdt:List literal</a> whose lexical form is not in the lexical space of the cdt:List datatype is called an <dfn data-lt="ill-formed cdt:List literal" id="dfn-ill-formed-cdt-list-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">ill-formed cdt:List literal</dfn>.
     </p>
 
@@ -1249,7 +1239,7 @@ WHERE {
       The <dfn data-lt="cdt:Map datatype" id="dfn-cdt-map-datatype" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cdt:Map datatype</dfn> is the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype">RDF datatype</a> that consists of the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-value-space">value space</a>, the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-space">lexical space</a>, and the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> defined in this section (see Subsections <a href="#map-datatype-valuespace" class="sectionRef sec-ref"><bdi class="secno">4.1 </bdi>Value Space</a>, <a href="#map-datatype-lexspace" class="sectionRef sec-ref"><bdi class="secno">4.2 </bdi>Lexical Space</a>, and <a href="#map-datatype-lex-to-value-mapping" class="sectionRef sec-ref"><bdi class="secno">4.3 </bdi>Lexical-To-Value Mapping</a>, respectively), and that is denoted by the following <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype-iri">datatype IRI</a>:
     </p>
     <p>
-      <code>http://example.org/cdt/Map</code>
+      <code>https://w3id.org/awslabs/neptune/SPARQL-CDTs/Map</code>
     </p>
     <p>
       Every <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-literal">literal</a> that has this IRI as its <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-datatype-iri">datatype IRI</a> is called a <dfn data-lt="cdt:Map literal" data-plurals="cdt:map literals" id="dfn-cdt-map-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">cdt:Map literal</dfn>. If the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-form">lexical form</a> of such a literal is in the <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-space">lexical space</a> of the <a href="#dfn-cdt-map-datatype" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-map-datatype-1">cdt:Map datatype</a>, as defined in Section&nbsp;<a href="#map-datatype-lexspace" class="sectionRef sec-ref"><bdi class="secno">4.2 </bdi>Lexical Space</a>, then the literal is called a <dfn data-lt="well-formed cdt:Map literal" data-plurals="well-formed cdt:map literals" id="dfn-well-formed-cdt-map-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">well-formed cdt:Map literal</dfn>. In contrast, a <a href="#dfn-cdt-map-literal" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-map-literal-3">cdt:Map literal</a> whose lexical form is not in the lexical space of the cdt:Map datatype is called an <dfn data-lt="ill-formed cdt:Map literal" id="dfn-ill-formed-cdt-map-literal" tabindex="0" aria-haspopup="dialog" data-dfn-type="dfn">ill-formed cdt:Map literal</dfn>.
@@ -1298,7 +1288,7 @@ WHERE {
         The <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-lexical-space">lexical space</a> of the <a href="#dfn-cdt-map-datatype" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-map-datatype-3">cdt:Map datatype</a> consists of all strings that are recognized by the <a href="#cdt-grammar-production-Map"><code>Map</code></a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef sec-ref"><bdi class="secno">3.2 </bdi>Lexical Space</a> and in which all substrings that matched the <a href="#cdt-grammar-production-MapKey"><code>MapKey</code></a> production are different from one another.
       </p>
 
-      <div class="issue" id="issue-container-number-3"><div role="heading" class="issue-title marker" id="h-issue-1" aria-level="4"><span>Issue 3</span></div><div class="">
+      <div class="issue" id="issue-container-number-1"><div role="heading" class="issue-title marker" id="h-issue" aria-level="4"><span>Issue 1</span></div><div class="">
         <p>
           The constraint about the substrings is not restrictive enough because the <a href="#cdt-grammar-production-MapKey"><code>MapKey</code></a> production recognizes both the generic way of serializing literals in Turtle and the Turtle shorthand notations for some datatypes. For instance, consider the following string:
         </p>
@@ -1989,7 +1979,7 @@ ORDER BY  ISLITERAL(?k)  STR(DATATYPE(?k))  STR(?k)  LANG(?k)</pre>
         An error is raised if any of the arguments is not a <a href="#dfn-well-formed-cdt-list-literal" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-well-formed-cdt-list-literal-8">well-formed cdt:List literal</a>.
       </p>
 
-      <div class="issue" id="issue-container-number-4"><div role="heading" class="issue-title marker" id="h-issue-2" aria-level="4"><span>Issue 4</span></div><p class="">
+      <div class="issue" id="issue-container-number-2"><div role="heading" class="issue-title marker" id="h-issue-0" aria-level="4"><span>Issue 2</span></div><p class="">
         We should define the notion of "represents" as used in this definition!
       </p></div>
 
@@ -3363,7 +3353,7 @@ The result is G.</pre>
       <p>
         The following is a complete grammar for composite datatype literals (i.e., literals that conform either to the <a href="#dfn-cdt-list-datatype" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-list-datatype-12">cdt:List datatype</a> or to the <a href="#dfn-cdt-map-datatype" class="internalDFN" data-link-type="dfn" id="ref-for-dfn-cdt-map-datatype-13">cdt:Map datatype</a>). The <abbr title="Extended Backus-Naur Form">EBNF</abbr> used here is defined in XML 1.0 [<cite><a class="bibref" data-link-type="biblio" href="#bib-ebnf-notation" title="EBNF NOTATION">EBNF-NOTATION</a></cite>].
       </p>
-      <div data-include="../ebnf/cdt-literals.html" data-include-id="include-4330961727842524" class="respec-offending-element" title="`data-include` failed: `../ebnf/cdt-literals.html` (NetworkError when attempting to fetch resource.)." id="respec-offender-data-include-failed-ebnf-cdt-literals-html-networkerror-when-attempting-to-fetch-resource"></div>
+      <div data-include="../ebnf/cdt-literals.html" data-include-id="include-1868917218801338" class="respec-offending-element" title="`data-include` failed: `../ebnf/cdt-literals.html` (NetworkError when attempting to fetch resource.)." id="respec-offender-data-include-failed-ebnf-cdt-literals-html-networkerror-when-attempting-to-fetch-resource"></div>
     </section>
 
     <section class="appendix informative" id="sparql-cdt-ebnf"><div class="header-wrapper"><h3 id="b-2-sparql-cdt-ebnf-grammar"><bdi class="secno">B.2 </bdi>SPARQL-CDT <abbr title="Extended Backus-Naur Form">EBNF</abbr> Grammar</h3><a class="self-link" href="#sparql-cdt-ebnf" aria-label="Permalink for Appendix B.2"></a></div><p><em>This section is non-normative.</em></p>
@@ -3371,7 +3361,7 @@ The result is G.</pre>
       <p>
         The following is a complete grammar for the SPARQL language with the extensions for composite datatype literals as defined in this document. The <abbr title="Extended Backus-Naur Form">EBNF</abbr> used here is defined in XML 1.0 [<cite><a class="bibref" data-link-type="biblio" href="#bib-ebnf-notation" title="EBNF NOTATION">EBNF-NOTATION</a></cite>].
       </p>
-      <div data-include="../ebnf/sparql-cdt.html" data-include-id="include-20871037359372602" class="respec-offending-element" title="`data-include` failed: `../ebnf/sparql-cdt.html` (NetworkError when attempting to fetch resource.)." id="respec-offender-data-include-failed-ebnf-sparql-cdt-html-networkerror-when-attempting-to-fetch-resource"></div>
+      <div data-include="../ebnf/sparql-cdt.html" data-include-id="include-8328090733625264" class="respec-offending-element" title="`data-include` failed: `../ebnf/sparql-cdt.html` (NetworkError when attempting to fetch resource.)." id="respec-offender-data-include-failed-ebnf-sparql-cdt-html-networkerror-when-attempting-to-fetch-resource"></div>
     </section>
 
   </section>
