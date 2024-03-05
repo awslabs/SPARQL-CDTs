@@ -18,7 +18,7 @@ We have extended the Java-based RDF programming framework [Apache Jena](https://
 TODO ... (how to ...)
 
 ### Attean
-We have also extended the Perl-based RDF programming framework [Attean](https://github.com/kasei/attean) with a complete implementation of the specification. Currently, the source code of this extension can be found in the [mutli-value-exprs branch](https://github.com/kasei/attean/tree/) directly within the [Attean Github repository](https://github.com/kasei/attean), ready to be merged after discussion with the Attean community.
+We have also extended the Perl-based RDF programming framework [Attean](https://github.com/kasei/attean) with a complete implementation of the specification. Currently, the source code of this extension can be found in the [mutli-value-exprs branch](https://github.com/kasei/attean/tree/mutli-value-exprs) directly within the [Attean Github repository](https://github.com/kasei/attean), ready to be merged after discussion with the Attean community.
 
 ### Other implementations?
 If you have another implementation, let us know!
