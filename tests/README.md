@@ -9,4 +9,4 @@ This directory contains contains a test suite with a comprehensive collection of
 The test suite is described in RDF using the [framework](https://www.w3.org/2001/sw/DataAccess/tests/README.html) that was defined by the
 [RDF Data Access Working Group](https://www.w3.org/2001/sw/DataAccess/homepage-20080115) of the [W3C](https://www.w3.org/). Since this framework is integrated into the test harnesses of many RDF and SPARQL systems, providing the test suite in this form should make it easy for implementers to use these tests if they want to extend their systems with support for the SPARQL-CDTs approach.
 
-TODO .. how can they be used (run all tests versus individual sets of tests) ..
+To run the complete test suite (i.e., the tests in all of the subdirectories) use the `manifest-all.ttl` file in this directory. To run an individual set of tests use the `manifest.ttl` file in the corresponding subdirectory (as listed above).
