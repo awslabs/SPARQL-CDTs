@@ -273,12 +273,13 @@
     <h1>Introduction</h1>
 
     <section class="informative">
-      <h2>Background and Motivation (TODO)</h2>
+      <h2>Background and Motivation</h2>
       <p>
-        The Resource Description Framework (RDF) is a general-purpose framework for representing and exchanging data [[RDF11-PRIMER]], and the SPARQL language is a declarative language for querying and updating RDF data [[SPARQL11-OVERVIEW]]. Yet, a feature regarding which RDF and SPARQL lag behind other popular data representation forms such as SQL databases and Property Graphs, and their corresponding query languages, is a built-in support for generic types of composite values such as lists, maps, and sets. Instead, RDF introduces so-called <a data-cite="RDF11-SCHEMA#ch_containervocab">containers</a> and <a data-cite="RDF11-SCHEMA#ch_collectionvocab">collections</a>, which allow users to model composite values through dedicated vocabulary <em>on top</em> of the core data model.
+        The Resource Description Framework (RDF) is a general-purpose framework for representing and exchanging data [[RDF11-PRIMER]], and the SPARQL language is a declarative language for querying and updating RDF data [[SPARQL11-OVERVIEW]].
+        Yet, a feature regarding which RDF and SPARQL lag behind other popular data representation forms such as SQL databases and Property Graphs, and their corresponding query languages, is a built-in support for generic types of composite values such as lists, maps, and sets.
+        Instead, RDF introduces so-called <a data-cite="RDF11-SCHEMA#ch_containervocab">containers</a> and <a data-cite="RDF11-SCHEMA#ch_collectionvocab">collections</a>, which allow users to model composite values through dedicated vocabulary <em>on top</em> of the core data model.
+        This approach has several drawbacks when compared to the alternative of representing composite values as compact, self-contained objects. Namely, it can easily become verbose and bloat up the storage footprint; moreover, extracting information from such containers and collections in SPARQL queries is cumbersome and can even be tricky (e.g., enumerating the elements of an RDF collection in their given order requires a complex query if the size of the collection is not assumed to be known), and manipulating containers and collections in SPARQL is complex (e.g., inserting a value into an RDF collection at a particular position is all but trivial).
       </p>
-      <p>TODO</p>
-
     </section>
 
     <section id="structure" class="informative">
