@@ -928,7 +928,13 @@
       <h2>Lexical-To-Value Mapping</h2>
         
       <p>
-        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> is defined as follows for every string&nbsp;|S| that is recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:List datatype</a> is defined for every string that is recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+      </p>
+      <p>
+        For the definition of this mapping, we assume an injective function&nbsp;<dfn data-lt="bnl2bn">bnl2bn</dfn> from the set of all strings recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar to the set of all blank nodes. Hence, <i><a>bnl2bn</a></i> maps every string recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production to a distinct blank node.
+      </p>
+      <p>
+        Then, given a string&nbsp;|S| that is recognized by the <a href="#cdt-grammar-production-List">`List`</a> production of the grammar, the <a>term list</a> that |S| is mapped to is defined as follows.
       </p>
       <p>
         If the string&nbsp;|S| does <em>not</em> contain a substring that is recognized by the <a href="#cdt-grammar-production-NonEmptyListContent">`NonEmptyListContent`</a> production of the grammar, then |S| is mapped to the <a>empty term list</a>.
@@ -949,7 +955,7 @@
             
           </li>
           <li>
-            If <var>E<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then the |i|-th element in |tm| is the blank node constructed from the substring <var>E<sub>|i|</sub></var> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
+            If <var>E<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then the |i|-th element in |tm| is the blank node <i><a>bnl2bn</a></i>(<var>E<sub>|i|</sub></var>).
           </li>
           <li>
             If <var>E<sub>|i|</sub></var> is recognized by the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production, then the |i|-th element in |tm| is a literal that has as its lexical form the string that has matched the first rule argument, <a data-cite="TURTLE#grammar-production-String">`String`</a>, and the datatype IRI and language tag of the literal are as follows.
@@ -1217,7 +1223,7 @@
       <h2>Lexical-To-Value Mapping</h2>
 
       <p>
-        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> is defined as follows for every string&nbsp;|S| that is recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>.
+        The <a data-cite="RDF11-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</a> of the <a>cdt:Map datatype</a> is defined as follows for every string&nbsp;|S| that is recognized by the <a href="#cdt-grammar-production-Map">`Map`</a> production of the grammar defined in Section&nbsp;<a href="#list-datatype-lexspace" class="sectionRef"></a>. The definition assumes the same <i><a>bnl2bn</a></i> function as assumed for the <a href="#list-datatype-lex-to-value-mapping">lexical-to-value mapping of the cdt:List datatype</a>.
       </p>
       <p>
         If the string&nbsp;|S| does <em>not</em> contain a substring that is recognized by the <a href="#cdt-grammar-production-NonEmptyMapContent">`NonEmptyMapContent`</a> production of the grammar, then |S| is mapped to the <a>empty term map</a>.
@@ -1247,7 +1253,7 @@
             If <var>V<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a> production, then <var>v<sub>|i|</sub></var> is the IRI constructed from the substring <var>V<sub>|i|</sub></var> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
           </li>
           <li>
-            If <var>V<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then <var>v<sub>|i|</sub></var> is the blank node constructed from the substring <var>V<sub>|i|</sub></var> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
+            If <var>V<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then <var>v<sub>|i|</sub></var> is the blank node <i><a>bnl2bn</a></i>(<var>V<sub>|i|</sub></var>).
           </li>
           <li>
             If <var>V<sub>|i|</sub></var> is recognized by the <a href="#cdt-grammar-production-RDFLiteral">`RDFLiteral`</a> production, then <var>v<sub>|i|</sub></var> is a literal that has as its lexical form the string that has matched the first rule argument, <a data-cite="TURTLE#grammar-production-String">`String`</a>, and the datatype IRI and language tag of the literal are as follows.
