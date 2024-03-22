@@ -945,14 +945,13 @@
           <li>
             If <var>E<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-IRIREF">`IRIREF`</a> production, then the |i|-th element in |tm| is the IRI constructed from the substring <var>E<sub>|i|</sub></var> according to the table in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]].
             <p class="note">
-            The procedure described in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]] involves unescaping Turtle's <a href="https://www.w3.org/TR/turtle/#numeric">numeric escape sequences</a>.
-            If an IRI appears in the lexical form of a <a>cdt:List literal</a> in a SPARQL query, it will be subject to <em>both</em> Turtle's numeric escaping <em>and</em> SPARQL's <a href="https://www.w3.org/TR/sparql11-query/#codepointEscape">Codepoint Escape Sequences</a> [[SPARQL11-QUERY]].
-            For example, including <code>BIND("[&lt;http://example.org/\u005cu0041>]"^^cdt:List AS ?list)</code> in a SPARQL query will result in a <a>well-formed cdt:List literal</a> whose <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> is a <a>term list</a> with the IRI `http://example.org/A` as element.
-            <br/><br/>
-            In contrast, if the literal <code>"[&lt;http://example.org/\u005cu0041>]"^^cdt:List</code> occurs in a Turtle file, then the literal is not pre-processed for SPARQL's codepoint escape sequences but the IRI inside the lexical form of the literal is still subject to unescaping the numeric escape sequences.
-            The result of this unescaping is the substring <code>http://example.org/\u0041</code> which is not a valid IRI.
+              The procedure described in <a href="https://www.w3.org/TR/turtle/#sec-parsing-terms">Section&nbsp;7.2</a> of [[TURTLE]] involves unescaping Turtle's <a href="https://www.w3.org/TR/turtle/#numeric">numeric escape sequences</a>.
+              If an IRI appears in the lexical form of a <a>cdt:List literal</a> in a SPARQL query, it will be subject to <em>both</em> Turtle's numeric escaping <em>and</em> SPARQL's <a href="https://www.w3.org/TR/sparql11-query/#codepointEscape">Codepoint Escape Sequences</a> [[SPARQL11-QUERY]].
+              For example, including <code>BIND("[&lt;http://example.org/\u005cu0041>]"^^cdt:List AS ?list)</code> in a SPARQL query will result in a <a>well-formed cdt:List literal</a> whose <a data-cite="RDF11-CONCEPTS#dfn-literal-value">value</a> is a <a>term list</a> with the IRI `http://example.org/A` as element.
+              <br/><br/>
+              In contrast, if the literal <code>"[&lt;http://example.org/\u005cu0041>]"^^cdt:List</code> occurs in a Turtle file, then the literal is not pre-processed for SPARQL's codepoint escape sequences but the IRI inside the lexical form of the literal is still subject to unescaping the numeric escape sequences.
+              The result of this unescaping is the substring <code>http://example.org/\u0041</code> which is not a valid IRI.
             </p>
-            
           </li>
           <li>
             If <var>E<sub>|i|</sub></var> is recognized by the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, then the |i|-th element in |tm| is the blank node <i><a>bnl2bn</a></i>(<var>E<sub>|i|</sub></var>).
