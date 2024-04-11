@@ -3304,8 +3304,8 @@ The result is G.
     <section class="informative">
       <h2>Motivation</h2>
       <p>
-        In the normal handling of an RDF syntax, a blank node is scoped to the document, and any identifiers used in that document are merely a syntactic convenience for referencing blank nodes freshly allocated during parsing.
-        For example,
+        In the normal handling of an RDF syntax, <a data-cite="RDF11-CONCEPTS#dfn-blank-node-identifier">blank node identifiers</a> are scoped to the current document, and any identifiers used in that document are merely a syntactic convenience for referencing blank nodes freshly allocated during parsing.
+        As an example, consider the following snippet of Turtle syntax [[TURTLE]].
       </p>
         
       <pre id="load-renaming-blank-example"
@@ -3318,7 +3318,7 @@ The result is G.
       </pre>
       
       <p>
-        Parsing this data as Turtle will result in a single triple whose subject is a blank node (now dissociated from the `b1` identifier), and whose object is a three-element <a>cdt:List literal</a>.
+        Parsing this data as Turtle will result in a single triple whose subject is a blank node (now dissociated from the `b1` identifier), and whose object is a <a>cdt:List literal</a> that represents a three-element <a>term list</a> in which the third element is a blank node.
         However, using a Turtle parser not aware of Composite Values will result in an object literal containing the substring "_:eve".
         This presents a challenge, as allowing values to reference specific blank nodes by identifier in this way would allow multiple documents to reference the same blank node, and might expose <em>internal</em> blank node identifiers as <em>external</em> identifiers (a form of unintentional <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-skolem-iri">skolemization</a>).
       </p>
@@ -3338,10 +3338,11 @@ The result is G.
         <li>within the scope of the document being processed, all occurrences of <var>id</var> are replaced with the same <var>b</var> value, and</li>
         <li>within the scope of the document being processed, two distinct <var>id</var> values are replaced with distinct <var>b</var> values, and</li>
         <li>
-        	if the document being processed has a mechanism for representing blank nodes outside of composite values (e.g. `_:b1` syntax in N-Triples or Turtle, `rdf:nodeID` in RDF/XML),
-        	and the blank node identifier <var>id</var> appears both inside and outside of composite values,
-        	and the parser emits a blank node <var>B</var> for occurrences of <var>id</var> outside of composite values,
-        	then the rewritten blank node label <var>b</var> MUST be a lexical form that maps to <var>B</var> in the lexical-to-value mapping (that is, <i><a>bnl2bn</a></i>(<var>id</var>) = <var>B</var>).</li>
+          if the format of the document being processed has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
+          and the blank node identifier <var>id</var> appears both inside and outside of such literals,
+          and the parser for this document format emits a blank node <var>B</var> for occurrences of <var>id</var> outside of the literals,
+          then the rewritten blank node label <var>b</var> MUST be a lexical form that maps to <var>B</var> in the lexical-to-value mapping (that is, <i><a>bnl2bn</a></i>(<var>id</var>) = <var>B</var>).
+        </li>
       </ul>
 
       <p>
@@ -3359,7 +3360,7 @@ The result is G.
 
       <p>Loading the Turtle in <a href="#load-renaming-blank-example-simple"></a>, data with `_:b0` in a <a>cdt:List literal</a> MUST result in an (internal) dataset with a single triple whose object is a <a>cdt:List literal</a> containing a blank node whose identifier is NOT "b0" (<a href="#load-renaming-blank-example-simple-result"></a>):
       <pre id="load-renaming-blank-example-simple"
-         title="Loading of a simple Composite Value with blank node"
+         title="Loading of a cdt:List literal with a blank node"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
@@ -3368,7 +3369,7 @@ The result is G.
       -->
       </pre>
       <pre id="load-renaming-blank-example-simple-result"
-         title="Loading of a simple Composite Value with blank node: Result"
+         title="Loading of a cdt:List literal with a blank node: Result"
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
@@ -3379,7 +3380,7 @@ The result is G.
 
       <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in the addition of two triples to the dataset in which the newly-added triples' <a>cdt:List literal</a>s contain different blank nodes and where those blank node identifiers MUST be different and MUST NOT be "b0" (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
       <pre id="load-renaming-blank-example-load-twice"
-         title="Repeated loading of Composite Values with blank node"
+         title="Repeated loading of cdt:List literals with a blank node"
          data-transform="updateExample"
          data-content-type="application/sparql-update"
          class="nohighlight example">
@@ -3389,7 +3390,7 @@ The result is G.
       -->
       </pre>
       <pre id="load-renaming-blank-example-load-twice-result"
-         title="Repeated loading of Composite Values with blank node: Result"
+         title="Repeated loading of cdt:List literals with a blank node: Result"
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
@@ -3401,7 +3402,7 @@ The result is G.
 
       <p>Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a dataset with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (<a href="#load-renaming-blank-example-consistent-ids-result"></a>):</p>
       <pre id="load-renaming-blank-example-consistent-ids"
-         title="Producing consistent blank node identifiers shared between RDF and Composite Values"
+         title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
@@ -3410,7 +3411,7 @@ The result is G.
       -->
       </pre>
       <pre id="load-renaming-blank-example-consistent-ids-result"
-         title="Producing consistent blank node identifiers shared between RDF and Composite Values: Result"
+         title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal: Result"
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
@@ -3421,7 +3422,7 @@ The result is G.
 
       <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node value, MUST result in a dataset with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
       <pre id="load-renaming-blank-reuse"
-         title="Producing consistent blank node identifiers used multiple times in Composite Values"
+         title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
@@ -3430,7 +3431,7 @@ The result is G.
       -->
       </pre>
       <pre id="load-renaming-blank-reuse-result"
-         title="Producing consistent blank node identifiers used multiple times in Composite Values: Result"
+         title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal: Result"
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
