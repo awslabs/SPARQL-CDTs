@@ -3358,7 +3358,7 @@ The result is G.
         <li>The loading of SPARQL Results via [[SPARQL11-FEDERATED-QUERY]]</li>
       </ul>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-example-simple"></a>, data with `_:b0` in a <a>cdt:List literal</a> MUST result in an (internal) dataset with a single triple whose object is a <a>cdt:List literal</a> containing a blank node whose identifier is NOT "b0" (<a href="#load-renaming-blank-example-simple-result"></a>):
+      <p>Loading the Turtle in <a href="#load-renaming-blank-example-simple"></a>, data with `_:b0` in a <a>cdt:List literal</a> MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that is NOT "b0" (<a href="#load-renaming-blank-example-simple-result"></a>):
       <pre id="load-renaming-blank-example-simple"
          title="Loading of a cdt:List literal with a blank node"
          data-transform="updateExample"
@@ -3420,7 +3420,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node value, MUST result in a dataset with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
+      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a dataset with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
       <pre id="load-renaming-blank-reuse"
          title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal"
          data-transform="updateExample"
@@ -3457,10 +3457,10 @@ The result is G.
       </p>
 
       <ul>
-        <li>Serializing SPARQL Results in a concrete syntax (such as [[SPARQL11-RESULTS-JSON]] or [[SPARQL11-RESULTS-CSV-TSV]])</li>
-        <li>Serializing RDF results to a CONSTRUCT or DESCRIBE query in a concrete syntax (such as [[TURTLE]])</li>
-        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax (such as [[RDF-12-N-QUADS]]) via [[SPARQL12-GRAPH-STORE-PROTOCOL]]</li>
-        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax via means other than [[SPARQL12-GRAPH-STORE-PROTOCOL]]</li>
+        <li>Serializing the result of a SPARQL query in a concrete syntax such as [[SPARQL11-RESULTS-JSON]] or [[SPARQL11-RESULTS-CSV-TSV]]</li>
+        <li>Serializing the RDF graph resulting from a SPARQL CONSTRUCT or DESCRIBE query in a concrete RDF serialization format such as [[TURTLE]]</li>
+        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax (such as [[N-QUADS]]) in response to a SPARQL graph store protocol request [[SPARQL11-HTTP-RDF-UPDATE]]</li>
+        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax via means other than responses to SPARQL graph store protocol requests</li>
       </ul>
 
       <p>Exporting the dataset in <a href="#export-consistent-ids-turtle"></a> as Turtle MUST result in a document containing a single triple whose blank node subject has the same identifier as the blank node contained in the one-value <a>cdt:List literal</a> object (<a href="#export-consistent-ids-turtle-result"></a>):</p>
