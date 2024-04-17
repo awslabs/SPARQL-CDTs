@@ -3355,7 +3355,7 @@ The result is G.
         <li>The loading of RDF data via a single SPARQL graph store protocol request [[SPARQL11-HTTP-RDF-UPDATE]]</li>
         <li>The loading of RDF data via any single SPARQL <a data-cite="SPARQL11-QUERY#unnamedGraph">`FROM`</a> or <a data-cite="SPARQL11-QUERY#namedGraphs">`FROM NAMED`</a> clause [[SPARQL11-QUERY]] in systems that <a data-cite="SPARQL11-SERVICE-DESCRIPTION#sd-dereferencesuris">support the dereferencing and loading of RDF data specified for the dataset to be queried</a></li>
         <li>Importing of any RDF data to the internally-managed RDF dataset via means other than SPARQL Update statements [[SPARQL11-UPDATE]] or the SPARQL Graph Store HTTP Protocol [[SPARQL11-HTTP-RDF-UPDATE]]</li>
-        <li>The loading of SPARQL Results via [[SPARQL11-FEDERATED-QUERY]]</li>
+        <li>The loading of a SPARQL result obtained from a SPARQL service when evaluating a <a data-cite="SPARQL11-FEDERATED-QUERY#service">`SERVICE`</a> pattern [[SPARQL11-FEDERATED-QUERY]]</li>
       </ul>
 
       <p>Loading the Turtle in <a href="#load-renaming-blank-example-simple"></a>, data with `_:b0` in a <a>cdt:List literal</a> MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that is NOT "b0" (<a href="#load-renaming-blank-example-simple-result"></a>):
