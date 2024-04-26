@@ -3404,7 +3404,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a dataset with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (<a href="#load-renaming-blank-example-consistent-ids-result"></a>):</p>
+      <p>Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (<a href="#load-renaming-blank-example-consistent-ids-result"></a>):</p>
       <pre id="load-renaming-blank-example-consistent-ids"
          title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal"
          data-transform="updateExample"
@@ -3424,7 +3424,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a dataset with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
+      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a system-internal representation with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
       <pre id="load-renaming-blank-reuse"
          title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal"
          data-transform="updateExample"
