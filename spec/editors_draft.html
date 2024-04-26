@@ -3339,8 +3339,9 @@ The result is G.
       </p>
       
       <ul>
-        <li>within the scope of the document being processed, all occurrences of <var>id</var> are replaced with the same <var>b</var> value, and</li>
-        <li>within the scope of the document being processed, two distinct <var>id</var> values are replaced with distinct <var>b</var> values, and</li>
+        <li><i><a>bnl2bn</a></i>(<var>b</var>) must be a fresh blank node not already used in the SPARQL system or RDF Dataset, and</li>
+        <li>within the scope of the document being processed, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
+        <li>within the scope of the document being processed, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
         <li>
           if the format of the document being processed has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
           and the blank node identifier <var>id</var> appears both inside and outside of such literals,
@@ -3350,7 +3351,7 @@ The result is G.
       </ul>
 
       <p>
-        Here, "loading" is any single process by which composite values enter a SPARQL system or RDF Dataset. This includes (but is not limited to):
+        Here, "loading" is every individual, discrete process by which composite values enter a SPARQL system or RDF Dataset. This includes (but is not limited to):
       </p>
 
       <ul>
@@ -3382,7 +3383,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in the addition of two triples to the dataset in which the newly-added triples' <a>cdt:List literal</a>s contain different blank nodes and where those blank node identifiers MUST be different and MUST NOT be "b0" (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
+      <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose <a>cdt:List literal</a> objects' <a>term lists</a> contain different blank nodes and where the literals' blank node identifiers MUST be different and MUST NOT be "b0" (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
       <pre id="load-renaming-blank-example-load-twice"
          title="Repeated loading of cdt:List literals with a blank node"
          data-transform="updateExample"
@@ -3454,8 +3455,8 @@ The result is G.
       </p>
 
       <ul>
-        <li>within the scope of the document being serialized, all occurrences of <var>id</var> as a blank node identifier are replaced with the same <var>b</var> value (both inside and outside of composite values), and</li>
-        <li>within the scope of the document being serialized, two distinct <var>id</var> values are replaced with distinct <var>b</var> values.</li>
+        <li>within the scope of the document being serialized, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
+        <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values.</li>
       </ul>
 
       <p>
