@@ -3456,11 +3456,16 @@ The result is G.
 
       <ul>
         <li>within the scope of the document being serialized, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
-        <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values.</li>
+        <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
+        <li>
+          if the format of the document being serialized has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
+          and the blank node <var>B</var> is contained in the data to be serialized both inside and outside of composite value literals,
+          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var> (both inside and outside of composite values)
+        </li>
       </ul>
 
       <p>
-        Here, "exporting" is any single process by which composite values leave a SPARQL system or RDF Dataset. This includes (but is not limited to):
+        Here, "exporting" is any single process by which a SPARQL system serializes data in a form to be consumed by external processes in other systems. This includes (but is not limited to):
       </p>
 
       <ul>
