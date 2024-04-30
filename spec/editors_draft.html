@@ -3319,9 +3319,9 @@ The result is G.
       
       <p>
         Parsing this data as Turtle will result in a single triple whose subject is a blank node (now dissociated from the `b1` identifier), and whose object is a <a>cdt:List literal</a> that represents a three-element <a>term list</a> in which the third element is a blank node.
-        However, using a Turtle parser not aware of Composite Values will result in an object literal containing the substring "_:eve" (that is, the literal will keep this exact lexical form: `"[ &lt;http://example.org/alice>, &lt;http://example.org/bob>, _:eve ]"`).
-        Allowing multiple such composite values, from multiple sources, to be inserted into the same RDF Dataset (e.g. via two SPARQL `LOAD` updates) presents a challenge:
-        the <a>term lists</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">cdt:List lexical-to-value mapping</a> will contain the same blank nodes (the mapping process for each cdt:List literal applying the <i><a>bnl2bn</a></i> function to the same blank node identifier `_:eve`).
+        However, using a Turtle parser not aware of the <a href="#list-datatype">cdt:List datatype</a> will result in an object literal containing the substring "_:eve"; that is, the literal will keep the exact lexical form as given in the Turtle snippet above (<a href="#load-renaming-blank-example"></a>).
+        Allowing multiple such composite values, from multiple sources, to be inserted into the same RDF Dataset (e.g., via two SPARQL `LOAD` updates) presents a challenge:
+        the <a>term lists</a> obtained by applying the <a href="#list-datatype-lex-to-value-mapping">cdt:List lexical-to-value mapping</a> will contain the same blank nodes (because, during the mapping process for each cdt:List literal, the <i><a>bnl2bn</a></i> function is applied to the same blank node identifier, `_:eve`).
         This is problematic, as it introduces a form of unintentional <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-skolem-iri">skolemization</a>, removing the scoping of serialized blank nodes and allowing them to be universally referenced so long as they are wrapped in an enclosing composite type.
       </p>
         
