@@ -41,8 +41,6 @@
 		:bnodes-sparql-08
 		:bnodes-sparql-09
 		:bnodes-sparql-10
-
-# TODO: SPARQL query and Turtle
     ) .
 
 :bnodes-turtle-01  rdf:type  mf:QueryEvaluationTest ;
