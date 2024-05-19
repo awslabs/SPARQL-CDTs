@@ -41,6 +41,11 @@
 		:bnodes-sparql-08
 		:bnodes-sparql-09
 		:bnodes-sparql-10
+
+		:bnodes-turtle-sparql-01
+		:bnodes-turtle-sparql-02
+		:bnodes-turtle-sparql-03
+		:bnodes-turtle-sparql-04
     ) .
 
 :bnodes-turtle-01  rdf:type  mf:QueryEvaluationTest ;
