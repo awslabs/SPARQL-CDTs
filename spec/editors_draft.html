@@ -1492,7 +1492,7 @@
               <li>If <var>elmt<sub>2</sub></var> is <a>null</a> and <var>elmt<sub>1</sub></var> is not <a>null</a>, return `false`.</li>
               <li>If neither <var>elmt<sub>1</sub></var> nor <var>elmt<sub>2</sub></var> is <a>null</a>, then:
                 <ol>
-                  <li>If <var>elmt<sub>1</sub></var> is a blank node and <var>elmt<sub>2</sub></var> is a blank node, terminate with an error.</li>
+                  <li>If <var>elmt<sub>1</sub></var> is a blank node, <var>elmt<sub>2</sub></var> is a blank node, and they are not the same blank node, terminate with an error.</li>
                   <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in an error, terminate with an error.</li>
                   <li>If evaluating the SPARQL expression <var>elmt<sub>1</sub></var> = <var>elmt<sub>2</sub></var> results in `false`, return `false`.</li>
                 </ol>
@@ -1551,7 +1551,7 @@
               <li>If <var>v<sub>2</sub></var> is <a>null</a> and <var>v<sub>1</sub></var> is not <a>null</a>, return `false`.</li>
               <li>If neither <var>v<sub>1</sub></var> nor <var>v<sub>2</sub></var> is <a>null</a>, then:
                 <ol>
-                  <li>If <var>v<sub>1</sub></var> is a blank node and <var>v<sub>2</sub></var> is a blank node, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
+                  <li>If <var>v<sub>1</sub></var> is a blank node, <var>v<sub>2</sub></var> is a blank node, and they are not the same blank node, then set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
                   <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in an error, set |error| to `true` and move on to the next map entry in <var>map<sub>1</sub></var> (i.e., skip over the remaining instructions within this for loop).</li>
                   <li>If evaluating the SPARQL expression <var>v<sub>2</sub></var> = <var>v<sub>1</sub></var> results in `false`, return `false`.</li>
                 </ol>
