@@ -10,5 +10,6 @@
         <fold/manifest.ttl>
         <list-functions/manifest.ttl>
         <map-functions/manifest.ttl>
+        <bnodes/manifest.ttl>
     ) ;
 .
