@@ -3383,7 +3383,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose <a>cdt:List literal</a> objects' <a>term lists</a> contain different blank nodes and where the literals' blank node identifiers MUST be different and MUST NOT be "b0" (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
+      <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
       <pre id="load-renaming-blank-example-load-twice"
          title="Repeated loading of cdt:List literals with a blank node"
          data-transform="updateExample"
