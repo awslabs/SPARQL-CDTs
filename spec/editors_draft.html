@@ -3333,20 +3333,25 @@ The result is G.
     <section>
       <h2>Importing Requirements</h2>
       <p>
-        Conforming implementations MUST process <a>cdt:List literal</a>s and <a>cdt:Map literal</a>s during loading, replacing, in their lexical form, any substring _:<var>id</var>
+        Conforming implementations MUST process <a>cdt:List literal</a>s and <a>cdt:Map literal</a>s during loading, replacing, in their lexical form, any substring <var>bnl</var>
         matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
-        with a string "_:"+<var>b</var> where <var>b</var> is a blank node identifier, such that
+        with a string <var>bnl'</var> such that
       </p>
       
       <ul>
-        <li><i><a>bnl2bn</a></i>(<var>b</var>) must be a fresh blank node not already used in the SPARQL system or RDF Dataset, and</li>
-        <li>within the scope of the document being processed, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
-        <li>within the scope of the document being processed, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
+        <li>
+          <var>bnl'</var> also matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, and
+        </li>
         <li>
           if the format of the document being processed has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
-          and the blank node identifier <var>id</var> appears both inside and outside of such literals,
-          and the parser for this document format emits a blank node <var>B</var> for occurrences of <var>id</var> outside of the literals,
-          then the rewritten blank node identifier <var>b</var> MUST be a lexical form that maps to <var>B</var> in the lexical-to-value mapping (that is, <i><a>bnl2bn</a></i>(<var>b</var>) = <var>B</var>).
+          and <var>id</var> is the blank node identifier represented by <var>bnl</var> (i.e., <var>bnl</var> is of the form `_:`<var>id</var>),
+          then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>)=<var>B</var> where <var>B</var> is the blank node that the parser for this document emits for occurrences of <var>id</var> outside of the literals, and
+        </li>
+        <li>
+          if the format of the document being processed does not have a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals, then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>) is a fresh blank node not already used in the SPARQL system or RDF Dataset, and
+        </li>
+        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value, and</li>
+        <li>within the scope of the document being processed, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>.</li>
         </li>
       </ul>
 
