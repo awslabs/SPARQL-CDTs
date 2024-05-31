@@ -6,10 +6,11 @@
 <> a mf:Manifest ;
     rdfs:label "SPARQL Composite Datatype tests" ;
     mf:include (
-        <unfold/manifest.ttl>
+        <bnodes/manifest.ttl>
         <fold/manifest.ttl>
         <list-functions/manifest.ttl>
         <map-functions/manifest.ttl>
-        <bnodes/manifest.ttl>
+        <orderby/manifest.ttl>
+        <unfold/manifest.ttl>
     ) ;
 .
