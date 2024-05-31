@@ -3333,7 +3333,7 @@ The result is G.
     <section>
       <h2>Importing Requirements</h2>
       <p>
-        Conforming implementations MUST process <a>cdt:List literal</a>s and <a>cdt:Map literal</a>s during loading, replacing, in their lexical form, any substring <var>bnl</var>
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading, replacing, in their lexical form, any substring <var>bnl</var>
         matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
         with a string <var>bnl'</var> such that
       </p>
@@ -3368,7 +3368,10 @@ The result is G.
         <li>The loading of a SPARQL result obtained from a SPARQL service when evaluating a <a data-cite="SPARQL11-FEDERATED-QUERY#service">`SERVICE`</a> pattern [[SPARQL11-FEDERATED-QUERY]]</li>
       </ul>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-example-simple"></a>, data with `_:b0` in a <a>cdt:List literal</a> MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that is NOT "b0" (<a href="#load-renaming-blank-example-simple-result"></a>):
+      <p>
+        As an example, consider the Turtle document in <a href="#load-renaming-blank-example-simple"></a>.
+        Loading this document MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that is <em>not</em> "b0" (e.g., <a href="#load-renaming-blank-example-simple-result"></a>).
+      </p>
       <pre id="load-renaming-blank-example-simple"
          title="Loading of a cdt:List literal with a blank node"
          data-transform="updateExample"
@@ -3388,7 +3391,9 @@ The result is G.
       -->
       </pre>
 
-      <p>Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (<a href="#load-renaming-blank-example-load-twice-result"></a>):</p>
+      <p>
+        Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
+      </p>
       <pre id="load-renaming-blank-example-load-twice"
          title="Repeated loading of cdt:List literals with a blank node"
          data-transform="updateExample"
@@ -3410,7 +3415,9 @@ The result is G.
       -->
       </pre>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (<a href="#load-renaming-blank-example-consistent-ids-result"></a>):</p>
+      <p>
+        Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (e.g., <a href="#load-renaming-blank-example-consistent-ids-result"></a>).
+      </p>
       <pre id="load-renaming-blank-example-consistent-ids"
          title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal"
          data-transform="updateExample"
@@ -3430,7 +3437,7 @@ The result is G.
       -->
       </pre>
 
-      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a system-internal representation with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (<a href="#load-renaming-blank-reuse-result"></a>):</p>
+      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a system-internal representation with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (e.g., <a href="#load-renaming-blank-reuse-result"></a>).</p>
       <pre id="load-renaming-blank-reuse"
          title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal"
          data-transform="updateExample"
@@ -3454,7 +3461,7 @@ The result is G.
     <section>
       <h2>Exporting Requirements</h2>
       <p>
-        Conforming implementations MUST process <a>cdt:List literal</a>s and <a>cdt:Map literal</a>s during export, replacing, in their lexical form, any substring _:<var>id</var>
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export, replacing, in their lexical form, any substring _:<var>id</var>
         matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
         with a string "_:"+<var>b</var> where <var>b</var> is a blank node identifier, such that
       </p>
@@ -3480,9 +3487,12 @@ The result is G.
         <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax via means other than responses to SPARQL graph store protocol requests</li>
       </ul>
 
-      <p>Exporting the dataset in <a href="#export-consistent-ids-turtle"></a> as Turtle MUST result in a document containing a single triple whose blank node subject has the same identifier as the blank node contained in the one-value <a>cdt:List literal</a> object (<a href="#export-consistent-ids-turtle-result"></a>):</p>
+      <p>
+        As an example, consider a single-triple RDF graph as given in <a href="#export-consistent-ids-turtle"></a>.
+        Exporting the graph as Turtle MUST result in a document containing a single triple whose blank node subject is serialized as a blank node identifier such that the same blank node identifier is in the lexical form of the <a>cdt:List literal</a> object (e.g., <a href="#export-consistent-ids-turtle-result"></a>).
+      </p>
       <pre id="export-consistent-ids-turtle"
-         title="Exporting consistent blank node identifiers shared between RDF and Composite Values"
+         title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal"
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
@@ -3491,7 +3501,7 @@ The result is G.
       -->
       </pre>
       <pre id="export-consistent-ids-turtle-result"
-         title="Exporting consistent blank node identifiers shared between RDF and Composite Values: Result"
+         title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal: Result"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
@@ -3500,9 +3510,11 @@ The result is G.
       -->
       </pre>
 
-      <p>Similarly, serializing the query results from <a href="#export-consistent-ids-srj"></a> as [[SPARQL11-RESULTS-JSON]] MUST result in a document containing a single result where the <var>b</var> blank node has the same identifier as the blank node contained in the one-value <a>cdt:List literal</a> `list` value (<a href="#export-consistent-ids-srj-result"></a>):</p>
+      <p>
+        Similarly, serializing the result of the query in <a href="#export-consistent-ids-srj"></a> as [[SPARQL11-RESULTS-JSON]] MUST result in a document containing a single result entry in which the blank node identifier for the blank node assigned to variable `?b` is the same as the blank node identifier within the lexical form of the <a>cdt:List literal</a> assigned to `?list` variable (e.g., <a href="#export-consistent-ids-srj-result"></a>).
+      </p>
       <pre id="export-consistent-ids-srj"
-         title="Exporting consistent blank node identifiers shared between RDF and Composite Values"
+         title="Exporting consistent blank node identifiers in SPARQL query results"
          data-transform="updateExample"
          data-content-type="application/sparql-query"
          class="nohighlight example">
@@ -3514,7 +3526,7 @@ The result is G.
       -->
       </pre>
       <pre id="export-consistent-ids-srj-result"
-         title="Exporting consistent blank node identifiers shared between RDF and Composite Values: Result"
+         title="Exporting consistent blank node identifiers in SPARQL query results: Result"
          data-transform="updateExample"
          data-content-type="application/sparql-results+json"
          class="nohighlight example">
