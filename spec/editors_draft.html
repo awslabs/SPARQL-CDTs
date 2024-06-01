@@ -3370,7 +3370,7 @@ The result is G.
 
       <p>
         As an example, consider the Turtle document in <a href="#load-renaming-blank-example-simple"></a>.
-        Loading this document MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that is <em>not</em> "b0" (e.g., <a href="#load-renaming-blank-example-simple-result"></a>).
+        Loading this document MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that may have been replaced during import (e.g., <a href="#load-renaming-blank-example-simple-result"></a>).
       </p>
       <pre id="load-renaming-blank-example-simple"
          title="Loading of a cdt:List literal with a blank node"
@@ -3392,7 +3392,7 @@ The result is G.
       </pre>
 
       <p>
-        Evaluating a SPARQL Update in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
+        Evaluating the SPARQL Update request in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
       </p>
       <pre id="load-renaming-blank-example-load-twice"
          title="Repeated loading of cdt:List literals with a blank node"
@@ -3416,7 +3416,7 @@ The result is G.
       </pre>
 
       <p>
-        Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object, and where that blank node MUST NOT have the identifier "b0" (e.g., <a href="#load-renaming-blank-example-consistent-ids-result"></a>).
+        Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object (e.g., <a href="#load-renaming-blank-example-consistent-ids-result"></a>).
       </p>
       <pre id="load-renaming-blank-example-consistent-ids"
          title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal"
