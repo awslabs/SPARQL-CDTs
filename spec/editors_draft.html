@@ -3392,7 +3392,7 @@ The result is G.
       </pre>
 
       <p>
-        Evaluating the SPARQL Update request in <a href="#load-renaming-blank-example-load-twice"></a> with two `INSERT DATA` operations with the same blank-node-containing <a>cdt:List literal</a> MUST result in a system-internal representation of two triples whose objects are <a>cdt:List literals</a> containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
+        Consider the `INSERT DATA` operation in <a href="#load-renaming-blank-example-load-twice"></a>, which adds a triple with a blank-node-containing <a>cdt:List literal</a>. Evaluating <em>two</em> separate SPARQL Update requests that both contain this `INSERT DATA` operation (i.e., using the same blank node identifier within the lexical form of the given cdt:List literal in both requests) MUST result in a system-internal representation of two triples whose objects are cdt:List literals containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
       </p>
       <pre id="load-renaming-blank-example-load-twice"
          title="Repeated loading of cdt:List literals with a blank node"
@@ -3400,7 +3400,6 @@ The result is G.
          data-content-type="application/sparql-update"
          class="nohighlight example">
       <!--
-      INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
       INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
       -->
       </pre>
@@ -3414,6 +3413,22 @@ The result is G.
       <http://example.org/s> <http://example.org/p2> "[ _:b003 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
       -->
       </pre>
+
+      <div class="note">
+        <p>
+          While a SPARQL Update request may contain multiple `INSERT DATA` operations, <a data-cite="SPARQL11-QUERY#grammarBNodes">it is illegal to use the same blank node identifiers across these operations</a>. This constraint extends to blank node identifiers in (the lexical form of) cdt:List and cdt:Map literals within such `INSERT DATA` operations. For instance, the following SPARQL Update request with two `INSERT DATA` operations is illegal.
+        </p>
+        <pre id="two-insert-data-operations-with-same-bnode"
+           title="Two INSERT DATA operations within a single SPARQL Update request, both with the same blank node identifier in a cdt:List literal, which makes the request syntactically incorrect"
+           data-transform="updateExample"
+           data-content-type="application/sparql-update"
+           class="nohighlight example">
+        <!--
+        INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
+        INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
+        -->
+        </pre>
+      </div>
 
       <p>
         Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object (e.g., <a href="#load-renaming-blank-example-consistent-ids-result"></a>).
