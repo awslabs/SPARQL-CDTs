@@ -54,7 +54,7 @@
 //       shortName: "rdf-star",
 //       group: "rdf-dev",
 
-      xref: ["RDF11-CONCEPTS", "SPARQL11-QUERY", "RDF11-MT"],
+      xref: ["RDF11-CONCEPTS", "SPARQL11-QUERY", "SPARQL11-UPDATE", "SPARQL11-GSP", "RDF11-MT"],
       maxTocLevel: 3,
     };
     // set publishDate and previousDate in order to make a published draft
@@ -1328,6 +1328,293 @@
 
   </section>
 
+
+  <section id="import-export-composite-values">
+    <h1>Importing and Exporting of Composite Values</h1>
+
+    <section class="informative">
+      <h2>Motivation</h2>
+      <p>
+        In the normal handling of an RDF syntax, <a data-cite="RDF11-CONCEPTS#dfn-blank-node-identifier">blank node identifiers</a> are scoped to the current document, and any identifiers used in that document are merely a syntactic convenience for referencing blank nodes freshly allocated during parsing.
+        As an example, consider the following snippet of Turtle syntax [[TURTLE]].
+      </p>
+        
+      <pre id="load-renaming-blank-example"
+         data-transform="updateExample"
+         data-content-type="text/turtle"
+         class="nohighlight example">
+      <!--
+      _:b1 ex:p4 "[ <http://example.org/alice>, <http://example.org/bob>, _:eve ]"^^cdt:List .
+      -->
+      </pre>
+      
+      <p>
+        Parsing this data as Turtle will result in a single triple whose subject is a blank node (now dissociated from the `b1` identifier), and whose object is a <a>cdt:List literal</a> that represents a three-element <a>term list</a> in which the third element is a blank node.
+        However, using a Turtle parser not aware of the <a href="#list-datatype">cdt:List datatype</a> will result in an object literal containing the substring "_:eve"; that is, the literal will keep the exact lexical form as given in the Turtle snippet above (<a href="#load-renaming-blank-example"></a>).
+        Allowing multiple such composite values, from multiple sources, to be inserted into the same RDF Dataset (e.g., via two SPARQL `LOAD` updates) presents a challenge:
+        when a system interprets the literals obtained from its Turtle parser, the <a>term lists</a> that it creates by applying the <a href="#list-datatype-lex-to-value-mapping">cdt:List lexical-to-value mapping</a> will contain the same blank nodes (because, during the mapping process for each cdt:List literal, the <i><a>bnl2bn</a></i> function is applied to the same blank node identifier, `_:eve`).
+        This is problematic, as it introduces a form of unintentional <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-skolem-iri">skolemization</a>, removing the scoping of serialized blank nodes and allowing them to be universally referenced so long as they are wrapped in an enclosing composite type.
+      </p>
+        
+      <p>
+        The following sections describe requirements that conforming SPARQL systems must comply with to support proper handling of blank nodes when importing or exporting RDF data that contains cdt:List or cdt:Map literals.
+      </p>
+    </section>
+
+    <section>
+      <h2>Importing Requirements</h2>
+      <p>
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading, replacing, in their lexical form, any substring <var>bnl</var>
+        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
+        with a string <var>bnl'</var> such that
+      </p>
+      
+      <ul>
+        <li>
+          <var>bnl'</var> also matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production, and
+        </li>
+        <li>
+          if the format of the document being processed has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
+          and <var>id</var> is the blank node identifier represented by <var>bnl</var> (i.e., <var>bnl</var> is of the form `_:`<var>id</var>),
+          then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>)=<var>B</var> where <var>B</var> is the blank node that the parser for this document emits for occurrences of <var>id</var> outside of the literals, and
+        </li>
+        <li>
+          if the format of the document being processed does not have a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals, then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>) is a fresh blank node not already used in the SPARQL system or RDF Dataset, and
+        </li>
+        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value, and</li>
+        <li>within the scope of the document being processed, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>.</li>
+        </li>
+      </ul>
+
+      <p>
+        Here, "loading" is every individual, discrete process by which composite values enter a SPARQL system or RDF Dataset. This includes (but is not limited to):
+      </p>
+
+      <ul>
+        <li>The parsing of a SPARQL Query string [[SPARQL11-QUERY]] or of a SPARQL Update string [[SPARQL11-UPDATE]], which may contain literals.</li>
+        <li>The loading of RDF data via a SPARQL <a data-cite="SPARQL11-UPDATE#load">`LOAD`</a> operation [[SPARQL11-UPDATE]]</li>
+        <li>The loading of RDF data via a single SPARQL graph store protocol request [[SPARQL11-HTTP-RDF-UPDATE]]</li>
+        <li>The loading of RDF data via any single SPARQL <a data-cite="SPARQL11-QUERY#unnamedGraph">`FROM`</a> or <a data-cite="SPARQL11-QUERY#namedGraphs">`FROM NAMED`</a> clause [[SPARQL11-QUERY]] in systems that <a data-cite="SPARQL11-SERVICE-DESCRIPTION#sd-dereferencesuris">support the dereferencing and loading of RDF data specified for the dataset to be queried</a></li>
+        <li>Importing of any RDF data to the internally-managed RDF dataset via means other than SPARQL Update statements [[SPARQL11-UPDATE]] or the SPARQL Graph Store HTTP Protocol [[SPARQL11-HTTP-RDF-UPDATE]]</li>
+        <li>The loading of a SPARQL result obtained from a SPARQL service when evaluating a <a data-cite="SPARQL11-FEDERATED-QUERY#service">`SERVICE`</a> pattern [[SPARQL11-FEDERATED-QUERY]]</li>
+      </ul>
+
+      <p>
+        As an example, consider the Turtle document in <a href="#load-renaming-blank-example-simple"></a>.
+        Loading this document MUST result in a system-internal representation of a single triple whose object is a <a>cdt:List literal</a> containing a blank node that, in the lexical form of the literal, is captured by a blank node identifier that may have been replaced during import (e.g., <a href="#load-renaming-blank-example-simple-result"></a>).
+      </p>
+      <pre id="load-renaming-blank-example-simple"
+         title="Loading of a cdt:List literal with a blank node"
+         data-transform="updateExample"
+         data-content-type="text/turtle"
+         class="nohighlight example">
+      <!--
+      ex:s ex:p1 "[ _:b0 ]"^^cdt:List .
+      -->
+      </pre>
+      <pre id="load-renaming-blank-example-simple-result"
+         title="Loading of a cdt:List literal with a blank node: Result"
+         data-transform="updateExample"
+         data-content-type="text/n-triples"
+         class="nohighlight example">
+      <!--
+      <http://example.org/s> <http://example.org/p1> "[ _:b001 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
+      -->
+      </pre>
+
+      <p>
+        Consider the `INSERT DATA` operation in <a href="#load-renaming-blank-example-load-twice"></a>, which adds a triple with a blank-node-containing <a>cdt:List literal</a>. Evaluating <em>two</em> separate SPARQL Update requests that both contain this `INSERT DATA` operation (i.e., using the same blank node identifier within the lexical form of the given cdt:List literal in both requests) MUST result in a system-internal representation of two triples whose objects are cdt:List literals containing different blank nodes that, in the lexical form of these literals, are captured by different blank node identifiers (e.g., <a href="#load-renaming-blank-example-load-twice-result"></a>).
+      </p>
+      <pre id="load-renaming-blank-example-load-twice"
+         title="Repeated loading of cdt:List literals with a blank node"
+         data-transform="updateExample"
+         data-content-type="application/sparql-update"
+         class="nohighlight example">
+      <!--
+      INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
+      -->
+      </pre>
+      <pre id="load-renaming-blank-example-load-twice-result"
+         title="Repeated loading of cdt:List literals with a blank node: Result"
+         data-transform="updateExample"
+         data-content-type="text/n-triples"
+         class="nohighlight example">
+      <!--
+      <http://example.org/s> <http://example.org/p2> "[ _:b002 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
+      <http://example.org/s> <http://example.org/p2> "[ _:b003 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
+      -->
+      </pre>
+
+      <div class="note">
+        <p>
+          While a SPARQL Update request may contain multiple `INSERT DATA` operations, <a data-cite="SPARQL11-QUERY#grammarBNodes">it is illegal to use the same blank node identifiers across these operations</a>. This constraint extends to blank node identifiers in (the lexical form of) cdt:List and cdt:Map literals within such `INSERT DATA` operations. For instance, the following SPARQL Update request with two `INSERT DATA` operations is illegal.
+        </p>
+        <pre id="two-insert-data-operations-with-same-bnode"
+           title="Two INSERT DATA operations within a single SPARQL Update request, both with the same blank node identifier in a cdt:List literal, which makes the request syntactically incorrect"
+           data-transform="updateExample"
+           data-content-type="application/sparql-update"
+           class="nohighlight example">
+        <!--
+        INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
+        INSERT DATA { <s> <p2> "[ _:b0 ]"^^cdt:List } ;
+        -->
+        </pre>
+      </div>
+
+      <p>
+        Loading the Turtle in <a href="#load-renaming-blank-example-consistent-ids"></a> with a triple with `_:b0` appearing in both the subject position and inside a <a>cdt:List literal</a> object MUST result in a system-internal representation with a single triple whose subject is the same blank node as contained in the single-element <a>cdt:List literal</a> object (e.g., <a href="#load-renaming-blank-example-consistent-ids-result"></a>).
+      </p>
+      <pre id="load-renaming-blank-example-consistent-ids"
+         title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal"
+         data-transform="updateExample"
+         data-content-type="text/turtle"
+         class="nohighlight example">
+      <!--
+      _:b0 ex:p3 "[ _:b0 ]"^^cdt:List .
+      -->
+      </pre>
+      <pre id="load-renaming-blank-example-consistent-ids-result"
+         title="Producing consistent blank node identifiers shared between a cdt:List literal and the RDF data that contains this literal: Result"
+         data-transform="updateExample"
+         data-content-type="text/n-triples"
+         class="nohighlight example">
+      <!--
+      _:b004 <http://example.org/p3> "[ _:b004 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
+      -->
+      </pre>
+
+      <p>Loading the Turtle in <a href="#load-renaming-blank-reuse"></a> with a triple with a <a>cdt:Map literal</a> containing two map entries, both having the same blank node as their value, MUST result in a system-internal representation with a single triple whose <a>cdt:Map literal</a> object contains two map entries having the same blank node value, and whose identifier MUST NOT be "b0" (e.g., <a href="#load-renaming-blank-reuse-result"></a>).</p>
+      <pre id="load-renaming-blank-reuse"
+         title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal"
+         data-transform="updateExample"
+         data-content-type="text/turtle"
+         class="nohighlight example">
+      <!--
+      ex:s ex:p3 "{ 'this': _:b0, 'again': _:b0 }"^^cdt:Map .
+      -->
+      </pre>
+      <pre id="load-renaming-blank-reuse-result"
+         title="Consistent rewriting of blank node identifiers that are used multiple times in a cdt:Map literal: Result"
+         data-transform="updateExample"
+         data-content-type="text/n-triples"
+         class="nohighlight example">
+      <!--
+      <http://example.org/s> <http://example.org/p3> "{'this': _:b005,'again': _:b005}"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/Map> .
+      -->
+      </pre>
+    </section>
+
+    <section>
+      <h2>Exporting Requirements</h2>
+      <p>
+        TODO
+      </p>
+<!--
+      <p>
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export, replacing, in their lexical form, any substring _:<var>id</var>
+        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
+        with a string "_:"+<var>b</var> where <var>b</var> is a blank node identifier, such that
+      </p>
+
+      <ul>
+        <li>within the scope of the document being serialized, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
+        <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
+        <li>
+          assuming that the format of the document being serialized has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
+          and the blank node <var>B</var> is contained in the data to be serialized both inside and outside of composite value literals,
+          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var> (both inside and outside of composite values)
+          <div class="note">
+            Regarding the assumption in the previous point, we are not aware of serialization formats for RDF in which blank nodes cannot be identified explicitly by blank node identifiers. We note, however, if there was such a format, it would have the problem that the identity of a blank node cannot be preserved in such a serialization if the blank note is used both within a cdt:List or a cdt:Map literal and outside of such literals (i.e., directly in the RDF data that contains these literals).
+          </div>
+        </li>
+      </ul>
+
+      <p>
+        Here, "exporting" is any single process by which a SPARQL system serializes data in a form to be consumed by external processes in other systems. This includes (but is not limited to):
+      </p>
+
+      <ul>
+        <li>Serializing the result of a SPARQL query in a concrete syntax such as [[SPARQL11-RESULTS-JSON]] or [[SPARQL11-RESULTS-CSV-TSV]]</li>
+        <li>Serializing the RDF graph resulting from a SPARQL CONSTRUCT or DESCRIBE query in a concrete RDF serialization format such as [[TURTLE]]</li>
+        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax (such as [[N-QUADS]]) in response to a SPARQL graph store protocol request [[SPARQL11-HTTP-RDF-UPDATE]]</li>
+        <li>Serializing the full or partial contents of an RDF dataset in a concrete syntax via means other than responses to SPARQL graph store protocol requests</li>
+      </ul>
+
+      <p>
+        As an example, consider a single-triple RDF graph as given in <a href="#export-consistent-ids-turtle"></a>.
+        Exporting the graph as Turtle MUST result in a document containing a single triple whose blank node subject is serialized as a blank node identifier such that the same blank node identifier is in the lexical form of the <a>cdt:List literal</a> object (e.g., <a href="#export-consistent-ids-turtle-result"></a>).
+      </p>
+      <pre id="export-consistent-ids-turtle"
+         title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal"
+         data-transform="updateExample"
+         data-content-type="text/n-triples"
+         class="nohighlight example">
+-->
+      <!--
+      _:b004 <http://example.org/p3> "[ _:b004 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
+      -->
+<!--
+      </pre>
+      <pre id="export-consistent-ids-turtle-result"
+         title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal: Result"
+         data-transform="updateExample"
+         data-content-type="text/turtle"
+         class="nohighlight example">
+-->
+      <!--
+      _:xyz ex:p3 "[ _:xyz ]"^^cdt:List .
+      -->
+<!--
+      </pre>
+
+      <p>
+        Similarly, serializing the result of the query in <a href="#export-consistent-ids-srj"></a> as [[SPARQL11-RESULTS-JSON]] MUST result in a document containing a single result entry in which the blank node identifier for the blank node assigned to variable `?b` is the same as the blank node identifier within the lexical form of the <a>cdt:List literal</a> assigned to `?list` variable (e.g., <a href="#export-consistent-ids-srj-result"></a>).
+      </p>
+      <pre id="export-consistent-ids-srj"
+         title="Exporting consistent blank node identifiers in SPARQL query results"
+         data-transform="updateExample"
+         data-content-type="application/sparql-query"
+         class="nohighlight example">
+-->
+      <!--
+      SELECT ?b ?list WHERE {
+        BIND(BNODE() AS ?b)
+        BIND(cdt:List(?b) AS ?list)
+      }
+      -->
+<!--
+      </pre>
+      <pre id="export-consistent-ids-srj-result"
+         title="Exporting consistent blank node identifiers in SPARQL query results: Result"
+         data-transform="updateExample"
+         data-content-type="application/sparql-results+json"
+         class="nohighlight example">
+-->
+      <!--
+{
+  "head": {
+    "vars": [ "b", "list" ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "b": { "type": "bnode", "value": "_:b123" }
+        "list": {
+          "datatype": "http://w3id.org/awslabs/neptune/SPARQL-CDTs/List",
+          "type": "literal",
+          "value": "[_:b123]"
+        }
+      }
+    ]
+  }
+}
+      -->
+<!--
+      </pre>
+-->
+    </section>
+      
+  </section>
 
 
   <section id="extension-of-sparql-operators">
