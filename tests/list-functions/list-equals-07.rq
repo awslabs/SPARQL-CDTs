@@ -3,5 +3,5 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
 	BIND( ( "[_:b]"^^cdt:List = "[_:b]"^^cdt:List ) AS ?result )
-	FILTER( ! BOUND(?result) )
+	FILTER( ?result = true )
 }
