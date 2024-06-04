@@ -3476,6 +3476,10 @@ The result is G.
     <section>
       <h2>Exporting Requirements</h2>
       <p>
+        TODO
+      </p>
+<!--
+      <p>
         Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export, replacing, in their lexical form, any substring _:<var>id</var>
         matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
         with a string "_:"+<var>b</var> where <var>b</var> is a blank node identifier, such that
@@ -3514,18 +3518,22 @@ The result is G.
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
+-->
       <!--
       _:b004 <http://example.org/p3> "[ _:b004 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
       -->
+<!--
       </pre>
       <pre id="export-consistent-ids-turtle-result"
          title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal: Result"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
+-->
       <!--
       _:xyz ex:p3 "[ _:xyz ]"^^cdt:List .
       -->
+<!--
       </pre>
 
       <p>
@@ -3536,18 +3544,21 @@ The result is G.
          data-transform="updateExample"
          data-content-type="application/sparql-query"
          class="nohighlight example">
+-->
       <!--
       SELECT ?b ?list WHERE {
         BIND(BNODE() AS ?b)
         BIND(cdt:List(?b) AS ?list)
       }
       -->
+<!--
       </pre>
       <pre id="export-consistent-ids-srj-result"
          title="Exporting consistent blank node identifiers in SPARQL query results: Result"
          data-transform="updateExample"
          data-content-type="application/sparql-results+json"
          class="nohighlight example">
+-->
       <!--
 {
   "head": {
@@ -3567,8 +3578,10 @@ The result is G.
   }
 }
       -->
+<!--
       </pre>
     </section>
+-->
       
   </section>
 
