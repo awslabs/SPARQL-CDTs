@@ -1518,8 +1518,8 @@
         <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
         <li>
           assuming that the format of the document being serialized has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
-          and the blank node <var>B</var> is contained in the data to be serialized both inside and outside of composite value literals,
-          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var> (both inside and outside of composite values)
+          if the blank node <var>B</var> = <i><a>bnl2bn</a></i>("_:" + <var>id</var>) is contained in the data to be serialized outside of cdt:List and cdt:Map literals,
+          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var>, both inside and outside of the cdt:List and cdt:Map literals.
           <div class="note">
             Regarding the assumption in the previous point, we are not aware of serialization formats for RDF in which blank nodes cannot be identified explicitly by blank node identifiers. We note, however, if there was such a format, it would have the problem that the identity of a blank node cannot be preserved in such a serialization if the blank note is used both within a cdt:List or a cdt:Map literal and outside of such literals (i.e., directly in the RDF data that contains these literals).
           </div>
