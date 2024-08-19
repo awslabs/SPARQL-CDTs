@@ -771,7 +771,7 @@
     rdfs:comment    "bnodes appearing both inside and outside of a CDT literal in SPARQL results need to be serialized with the same identifier so they reference the same value" ;
     dawgt:approval  dawgt:Proposed ;
     mf:action
-         [ qt:constructedData [
+         [ qt:constructDataFile [
              qt:query  <bnodes-export-rdf-01-construct.rq> ;
              qt:format "text/turtle"
            ] ;
@@ -783,7 +783,7 @@
     rdfs:comment    "bnodes appearing both inside and outside of a CDT literal in SPARQL results need to be serialized with the same identifier so they reference the same value" ;
     dawgt:approval  dawgt:Proposed ;
     mf:action
-         [ qt:constructedData [
+         [ qt:constructDataFile [
              qt:query  <bnodes-export-rdf-01-construct.rq> ;
              qt:format "application/n-triples"
            ] ;
@@ -795,7 +795,7 @@
     rdfs:comment    "bnodes appearing both inside and outside of a CDT literal in SPARQL results need to be serialized with the same identifier so they reference the same value" ;
     dawgt:approval  dawgt:Proposed ;
     mf:action
-         [ qt:constructedData [
+         [ qt:constructDataFile [
              qt:query  <bnodes-export-rdf-01-construct.rq> ;
              qt:format "application/rdf+xml"
            ] ;
