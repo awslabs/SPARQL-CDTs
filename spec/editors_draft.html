@@ -1364,9 +1364,10 @@
     <section>
       <h2>Importing Requirements</h2>
       <p>
-        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading, replacing, in their lexical form, any substring <var>bnl</var>
-        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
-        with a string <var>bnl'</var> such that
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading as follows.
+        In the lexical form of these literals, every substring <var>bnl</var>
+        that would match the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the <a href="#list-datatype-lexspace">grammar</a> when parsing the whole lexical form
+        MUST be replaced by a string <var>bnl'</var> such that
       </p>
       
       <ul>
@@ -1381,7 +1382,7 @@
         <li>
           if the format of the document being processed does not have a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals, then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>) is a fresh blank node not already used in the SPARQL system or RDF Dataset, and
         </li>
-        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value, and</li>
+        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value (this applies recursively also to cdt:List and cdt:Map literals contained as elements within the term list or term map of other such literals), and</li>
         <li>within the scope of the document being processed, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>.</li>
         </li>
       </ul>
@@ -1508,16 +1509,17 @@
       <h2>Exporting Requirements</h2>
 
       <p>
-        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export, replacing, in their lexical form, any substring <var>bnl</var>
-        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
-        with a string <var>bnl'</var> such that
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export as follows.
+        In the lexical form of these literals, every substring <var>bnl</var>
+        that would match the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the <a href="#list-datatype-lexspace">grammar</a> when parsing the whole lexical form
+        MUST be replaced by a string <var>bnl'</var> such that
       </p>
 
       <ul>
         <li>
           <var>bnl'</var> also matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production; i.e., <var>bnl'</var> is of the form _:<var>b</var> where <var>b</var> is a blank node identifier, and
         </li>
-        <li>within the scope of the document being serialized, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value, and</li>
+        <li>within the scope of the document being serialized, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value (this applies recursively also to cdt:List and cdt:Map literals contained as elements within the term list or term map of other such literals), and</li>
         <li>within the scope of the document being serialized, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>, and</li>
         <li>
           assuming that the format of the document being serialized has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
