@@ -3,8 +3,8 @@ PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 # IRIs as map values cannot be compared to literals
 ASK {
-	BIND( "{1: <http://example.org/b>}"^^cdt:Map AS ?map1 )
-	BIND( "{1: 42}"^^cdt:Map AS ?map2 )
+	BIND( cdt:Map( 1, <http://example.org/b> ) AS ?map1 )
+	BIND( cdt:Map( 1, 42 ) AS ?map2 )
 	BIND( (?map1 >= ?map2 ) AS ?result )
 	FILTER( ! BOUND(?result) )
 }

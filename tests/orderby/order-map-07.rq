@@ -5,7 +5,7 @@ ASK {
 	{
 		SELECT * WHERE {
 			VALUES (?id ?map) {
-				(1  "{ <http://example.org/2> : 42 }"^^cdt:Map)
+				(1  "   { <http://example.org/2> : 42 }"^^cdt:Map)
 				(2  "{  <http://example.org/1> : 42 }"^^cdt:Map)
 			}
 		}

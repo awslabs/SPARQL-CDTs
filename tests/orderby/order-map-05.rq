@@ -5,7 +5,7 @@ ASK {
 	{
 		SELECT * WHERE {
 			VALUES (?id ?map) {
-				(1  "{ '1'^^<http://www.w3.org/2001/XMLSchema#string>: 42 }"^^cdt:Map)   # note, different datatype
+				(1  "  { '1'^^<http://www.w3.org/2001/XMLSchema#string>: 42 }"^^cdt:Map)   # note, different datatype
 				(2  "{  '2'^^<http://www.w3.org/2001/XMLSchema#integer>: 42 }"^^cdt:Map)
 			}
 		}

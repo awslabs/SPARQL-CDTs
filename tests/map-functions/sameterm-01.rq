@@ -2,5 +2,7 @@ PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
-	FILTER(SAMETERM("{}"^^cdt:Map, "{}"^^cdt:Map))
+	BIND( cdt:Map() AS ?map1 )
+	BIND( cdt:Map() AS ?map2 )
+	FILTER(SAMETERM( ?map1, ?map2))
 }
