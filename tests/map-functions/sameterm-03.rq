@@ -2,6 +2,6 @@ PREFIX cdt:    <http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
 ASK {
-	BIND( cdt:Map(1, '2'^^<http://www.w3.org/2001/XMLSchema#integer>) AS ?map2 )
-	FILTER(! SAMETERM("{1: 2}"^^cdt:Map, ?map2) )
+	BIND( cdt:Map(1, 2) AS ?map1 )
+	FILTER(! SAMETERM(?map1, "{1: '2'^^<http://www.w3.org/2001/XMLSchema#integer>}"^^cdt:Map) )
 }
