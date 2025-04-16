@@ -18,13 +18,15 @@ We have extended the Java-based RDF programming framework [Apache Jena](https://
 To try this implementation, [download the latest release](https://jena.apache.org/download/index.cgi) of Jena, unpack it, and use the [ARQ command line programs](https://jena.apache.org/documentation/query/cmds.html) of Jena to run SPARQL queries that use the features defined in the specification.
 
 Alternatively, and even easier, you can also simply run such SPARQL queries via the [online SPARQL query processor](https://sparql.org/sparql.html) at https://sparql.org/, which is built on Jena. As an initial example, you may try the following query for which you do not even need a file with RDF data.
-```sparql
+```
 PREFIX cdt:	<http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
 PREFIX ex:	<http://example.org/>
 
-SELECT ?list ?elmt ?key ?value WHERE {
-  BIND( cdt:List(1, "hello"@en, ex:test) AS ?list )
-  BIND( cdt:get(?list, 3) AS ?elmt )
+SELECT ?list3 ?elmt ?key ?value WHERE {
+  BIND( "[1, 'hello'@en]"^^cdt:List AS ?list1 ) # provide the literal directly
+  BIND( cdt:List(ex:test, 42) AS ?list2 )       # or use the cdt:List constructor
+  BIND( cdt:concat(?list1, ?list2) AS ?list3 )
+  BIND( cdt:get(?list3, 3) AS ?elmt )
 
   UNFOLD( "{ 'hello': 'world' }"^^cdt:Map AS ?key, ?value )
 }
