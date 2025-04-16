@@ -13,11 +13,22 @@ The **latest version of the specification document**, which includes an [informa
 
 ## Implementations
 ### Apache Jena
-We have extended the Java-based RDF programming framework [Apache Jena](https://jena.apache.org/) with a complete implementation of all the features defined in the specification. This extension has been merged into the official [Jena Github repository](https://github.com/apache/jena/) (see PR https://github.com/apache/jena/pull/2695) and will become part of the next Jena release (which will probably be version 5.2.0).
+We have extended the Java-based RDF programming framework [Apache Jena](https://jena.apache.org/) with a complete implementation of all the features defined in the specification. This extension has become part of the official Jena releases in [version 5.2.0](https://lists.apache.org/thread/ynf70r2z6cs7x48cvytqqk5bxh6qln9l).
 
-To try this implementation you currently need to compile the source code first. To this end, clone the aforementioned Jena repository to your computer, enter the directory with the local copy of the repository, and [compile the project using Maven as described in the Jena documentation](https://github.com/apache/jena/blob/main/BUILD.md#build-the-source). Thereafter, you should be able to use the [ARQ command line programs](https://jena.apache.org/documentation/query/cmds.html) of Jena to run SPARQL queries that use the features defined in the specification.
+To try this implementation, [download the latest release](https://jena.apache.org/download/index.cgi) of Jena, unpack it, and use the [ARQ command line programs](https://jena.apache.org/documentation/query/cmds.html) of Jena to run SPARQL queries that use the features defined in the specification.
 
-Alternatively, after cloning the repository, you can [import the source code into the Eclipse IDE](https://jena.apache.org/tutorials/using_jena_with_eclipse.html) and, then, run the programs within the IDE. For instance, right click on the file jena-cmds/src/main/java/arq/arq.java in the 'Package Explorer' window of Eclipse and select 'Run As'->'Run Configurations ...' in the pop-up menu. Next, in the 'Run Configurations' dialog that appears, go to the 'Arguments' tab, enter the arguments with which you want to start the program (try the --help argument to see which arguments can be used), and then click the 'Apply' button and the 'Run' button. You can also run the tests of our test suite, for which you need to use the file jena-cmds/src/*test*/java/arq/rdftests.java in the 'Package Explorer' window of Eclipse.
+Alternatively, and even easier, you can also simply run such SPARQL queries via the [online SPARQL query processor](https://sparql.org/sparql.html) at https://sparql.org/, which is built on Jena. As an initial example, you may try the following query for which you do not even need a file with RDF data.
+```sparql
+PREFIX cdt:	<http://w3id.org/awslabs/neptune/SPARQL-CDTs/>
+PREFIX ex:	<http://example.org/>
+
+SELECT ?list ?elmt ?key ?value WHERE {
+  BIND( cdt:List(1, "hello"@en, ex:test) AS ?list )
+  BIND( cdt:get(?list, 3) AS ?elmt )
+
+  UNFOLD( "{ 'hello': 'world' }"^^cdt:Map AS ?key, ?value )
+}
+```
 
 ### Attean
 We have also extended the Perl-based RDF programming framework [Attean](https://github.com/kasei/attean) with a complete implementation of the specification. This extension has become part of [Attean version 0.034](https://metacpan.org/release/GWILLIAMS/Attean-0.034).
