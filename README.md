@@ -35,6 +35,9 @@ SELECT ?list3 ?elmt ?key ?value WHERE {
 ### Attean
 We have also extended the Perl-based RDF programming framework [Attean](https://github.com/kasei/attean) with a complete implementation of the specification. This extension has become part of [Attean version 0.034](https://metacpan.org/release/GWILLIAMS/Attean-0.034).
 
+### SPARQL-CDT-Tools
+We are working on a collection of command-line tools related to the approach. Currently, it contains a tool to convert RDF data that uses [RDF collections](https://www.w3.org/TR/rdf-mt/#collections) to RDF data in which the collections are replaced by [cdt:List literals](https://awslabs.github.io/SPARQL-CDTs/spec/latest.html#list-datatype). The relevant repository is: https://github.com/hartig/SPARQL-CDT-Tools
+
 ### Other implementations?
 If you have another implementation, let us know!
 
