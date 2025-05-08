@@ -39,7 +39,7 @@ We have also extended the Perl-based RDF programming framework [Attean](https://
 We are working on a collection of command-line tools related to the approach. Currently, it contains a tool to convert RDF data that uses [RDF collections](https://www.w3.org/TR/rdf-mt/#collections) to RDF data in which the collections are replaced by [cdt:List literals](https://awslabs.github.io/SPARQL-CDTs/spec/latest.html#list-datatype). The relevant repository is: https://github.com/hartig/SPARQL-CDT-Tools
 
 ### DCM2RDF
-[DCM2RDF](https://github.com/ebremer/dcm2rdf) is tool that extracts metadata from DICOM files and converts this metadata into an RDF representation. Since [version 1.1.0](https://github.com/ebremer/dcm2rdf/releases/tag/1.1.0), the tool supports the option to use cdt:List literals to represent polygonal data.
+[DCM2RDF](https://github.com/ebremer/dcm2rdf) is tool that extracts metadata from DICOM files and converts this metadata into an RDF representation. Since [version 1.1.0](https://github.com/ebremer/dcm2rdf/releases/tag/1.1.0), the tool supports the option to use cdt:List literals to represent any array-like structure that exists in DICOM.
 
 ### Other implementations?
 If you have another implementation, let us know!
