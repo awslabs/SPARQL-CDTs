@@ -1364,9 +1364,10 @@
     <section>
       <h2>Importing Requirements</h2>
       <p>
-        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading, replacing, in their lexical form, any substring <var>bnl</var>
-        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
-        with a string <var>bnl'</var> such that
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during loading as follows.
+        In the lexical form of these literals, every substring <var>bnl</var>
+        that would match the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the <a href="#list-datatype-lexspace">grammar</a> when parsing the whole lexical form
+        MUST be replaced by a string <var>bnl'</var> such that
       </p>
       
       <ul>
@@ -1381,7 +1382,7 @@
         <li>
           if the format of the document being processed does not have a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals, then <var>bnl'</var> must be picked such that <i><a>bnl2bn</a></i>(<var>bnl'</var>) is a fresh blank node not already used in the SPARQL system or RDF Dataset, and
         </li>
-        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value, and</li>
+        <li>within the scope of the document being processed, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value (this applies recursively also to cdt:List and cdt:Map literals contained as elements within the term list or term map of other such literals), and</li>
         <li>within the scope of the document being processed, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>.</li>
         </li>
       </ul>
@@ -1506,23 +1507,24 @@
 
     <section>
       <h2>Exporting Requirements</h2>
+
       <p>
-        TODO
-      </p>
-<!--
-      <p>
-        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export, replacing, in their lexical form, any substring _:<var>id</var>
-        matching the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the grammar
-        with a string "_:"+<var>b</var> where <var>b</var> is a blank node identifier, such that
+        Conforming implementations MUST process <a>cdt:List literals</a> and <a>cdt:Map literals</a> during export as follows.
+        In the lexical form of these literals, every substring <var>bnl</var>
+        that would match the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production of the <a href="#list-datatype-lexspace">grammar</a> when parsing the whole lexical form
+        MUST be replaced by a string <var>bnl'</var> such that
       </p>
 
       <ul>
-        <li>within the scope of the document being serialized, all occurrences of <var>id</var> used as a blank node identifier (both inside and outside of composite values) are replaced with the same <var>b</var> value, and</li>
-        <li>within the scope of the document being serialized, two distinct <var>id</var> blank node identifiers are replaced with distinct <var>b</var> values, and</li>
+        <li>
+          <var>bnl'</var> also matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production; i.e., <var>bnl'</var> is of the form _:<var>b</var> where <var>b</var> is a blank node identifier, and
+        </li>
+        <li>within the scope of the document being serialized, all occurrences of <var>bnl</var> used to represent a blank node identifier within the lexical forms of cdt:List and cdt:Map literals are replaced with the same <var>bnl'</var> value (this applies recursively also to cdt:List and cdt:Map literals contained as elements within the term list or term map of other such literals), and</li>
+        <li>within the scope of the document being serialized, no other substring that matches the <a data-cite="TURTLE#grammar-production-BLANK_NODE_LABEL">`BLANK_NODE_LABEL`</a> production within the lexical form of a cdt:List or cdt:Map literal is replaced by the same substring <var>bnl'</var>, and</li>
         <li>
           assuming that the format of the document being serialized has a mechanism for explicitly identifying blank nodes outside of cdt:List and cdt:Map literals (e.g., `_:b1` syntax in N-Triples and in Turtle, `rdf:nodeID` in RDF/XML),
-          and the blank node <var>B</var> is contained in the data to be serialized both inside and outside of composite value literals,
-          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var> (both inside and outside of composite values)
+          if the blank node <var>B</var> = <i><a>bnl2bn</a></i>(<var>bnl</var>) is contained in the data to be serialized outside of cdt:List and cdt:Map literals,
+          then the serializer for this document format MUST serialize <var>B</var> using the blank node identifier <var>b</var>, both inside and outside of the cdt:List and cdt:Map literals.
           <div class="note">
             Regarding the assumption in the previous point, we are not aware of serialization formats for RDF in which blank nodes cannot be identified explicitly by blank node identifiers. We note, however, if there was such a format, it would have the problem that the identity of a blank node cannot be preserved in such a serialization if the blank note is used both within a cdt:List or a cdt:Map literal and outside of such literals (i.e., directly in the RDF data that contains these literals).
           </div>
@@ -1549,22 +1551,18 @@
          data-transform="updateExample"
          data-content-type="text/n-triples"
          class="nohighlight example">
--->
       <!--
       _:b004 <http://example.org/p3> "[ _:b004 ]"^^<http://w3id.org/awslabs/neptune/SPARQL-CDTs/List> .
       -->
-<!--
       </pre>
       <pre id="export-consistent-ids-turtle-result"
          title="Exporting consistent blank node identifiers for blank nodes shared between a cdt:List literal and the RDF data that contains this literal: Result"
          data-transform="updateExample"
          data-content-type="text/turtle"
          class="nohighlight example">
--->
       <!--
       _:xyz ex:p3 "[ _:xyz ]"^^cdt:List .
       -->
-<!--
       </pre>
 
       <p>
@@ -1575,21 +1573,18 @@
          data-transform="updateExample"
          data-content-type="application/sparql-query"
          class="nohighlight example">
--->
       <!--
       SELECT ?b ?list WHERE {
         BIND(BNODE() AS ?b)
         BIND(cdt:List(?b) AS ?list)
       }
       -->
-<!--
       </pre>
       <pre id="export-consistent-ids-srj-result"
          title="Exporting consistent blank node identifiers in SPARQL query results: Result"
          data-transform="updateExample"
          data-content-type="application/sparql-results+json"
          class="nohighlight example">
--->
       <!--
 {
   "head": {
@@ -1609,9 +1604,7 @@
   }
 }
       -->
-<!--
       </pre>
--->
     </section>
       
   </section>
