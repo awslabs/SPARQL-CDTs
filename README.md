@@ -1,10 +1,9 @@
 # SPARQL-CDTs
-(CDTs = Composite Data Types)
 
-This repository contains the artifacts for a specification that defines an approach to represent composite values (lists and maps, in particular) as literals in RDF data, and to extend SPARQL with features related to such literals. These extensions include
-* an aggregation function to produce these composite values,
-* functions to operate on these composite values in expressions, and
-* a new operator to unfold such composite values into their individual components.
+This repository contains the artifacts for a specification that defines composite data types (CDTs) to represent lists and maps as literals in RDF data, and extends the SPARQL query language with features related to these CDTs. These features include
+* an aggregation function to produce such composite values,
+* functions to operate on the composite values in expressions, and
+* a new operator to unfold the composite values into their individual components.
 
 The **latest version of the specification document**, which includes an [informal description of the approach](https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html#description), is published under the following permanent identifier:
 * https://w3id.org/awslabs/neptune/SPARQL-CDTs/spec/latest.html
