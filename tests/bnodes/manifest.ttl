@@ -66,6 +66,7 @@
 		:bnodes-sparql-07
 		:bnodes-sparql-08
 		:bnodes-sparql-09
+		:bnodes-sparql-10
 
 		:bnodes-sparql-11
 		:bnodes-sparql-12
@@ -569,6 +570,15 @@
     mf:action
          [ qt:data   <empty.ttl> ;
            qt:query  <bnodes-sparql-09.rq> ] ;
+    mf:result  <true.srx> .
+
+:bnodes-sparql-10  rdf:type  mf:QueryEvaluationTest ;
+    mf:name         "bnodes-sparql-10" ;
+    rdfs:comment    "same blank node identifier within two different cdt:List literals, where one of them is constructed using STRDT" ;
+    dawgt:approval  dawgt:Proposed ;
+    mf:action
+         [ qt:data   <empty.ttl> ;
+           qt:query  <bnodes-sparql-10.rq> ] ;
     mf:result  <true.srx> .
 
 :bnodes-sparql-11  rdf:type  mf:QueryEvaluationTest ;
